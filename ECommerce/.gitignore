@@ -9,7 +9,7 @@
 /vendor/
 ###< symfony/framework-bundle ###
 /config/packages/doctrine.yaml
-
+symfony.lock
 ###> symfony/web-server-bundle ###
 /.web-server-pid
 ###< symfony/web-server-bundle ###
