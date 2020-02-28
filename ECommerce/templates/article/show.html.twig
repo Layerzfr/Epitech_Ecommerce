@@ -47,6 +47,13 @@
                 <th>Promotion</th>
                 <td>{{ article.promotion }}</td>
             </tr>
+        <tr>
+            <th>Images</th>
+            <td>{% for image in article.images %}
+                <img src="{{ image.lien }}"></img>
+            {% endfor %}
+            </td>
+        </tr>
         </tbody>
     </table>
 

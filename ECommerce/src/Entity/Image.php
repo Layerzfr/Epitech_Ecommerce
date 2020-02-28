@@ -37,24 +37,24 @@ class Image
     private $isDescription;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="image")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Article", inversedBy="image")
      */
-    private $article;
+    private $articles;
 
     /**
      * @return mixed
      */
-    public function getArticle()
+    public function getArticles()
     {
-        return $this->article;
+        return $this->articles;
     }
 
     /**
-     * @param mixed $article
+     * @param mixed $articles
      */
-    public function setArticle($article)
+    public function setArticles($articles)
     {
-        $this->article = $article;
+        $this->articles = $articles;
     }
 
 

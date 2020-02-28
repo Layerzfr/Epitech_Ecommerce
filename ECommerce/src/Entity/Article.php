@@ -16,6 +16,11 @@ class Article
      */
     private $id;
 
+    public function __toString()
+    {
+        return $this->getNom();
+    }
+
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -67,24 +72,24 @@ class Article
     private $cart;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="article")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Image", inversedBy="articles",  cascade={"persist"})
      */
-    private $image;
+    private $images;
 
     /**
      * @return mixed
      */
-    public function getImage()
+    public function getImages()
     {
-        return $this->image;
+        return $this->images;
     }
 
     /**
-     * @param mixed $image
+     * @param mixed $images
      */
-    public function setImage($image)
+    public function setImages($images)
     {
-        $this->image = $image;
+        $this->images = $images;
     }
 
     /**
