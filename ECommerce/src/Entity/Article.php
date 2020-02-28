@@ -27,12 +27,12 @@ class Article
     private $categorie;
 
     /**
-     * @ORM\Column(type="string", length=60000)
+     * @ORM\Column(type="text")
      */
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=60000)
+     * @ORM\Column(type="text")
      */
     private $caracteristiques;
 
