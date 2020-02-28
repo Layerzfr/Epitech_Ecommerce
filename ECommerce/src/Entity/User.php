@@ -78,6 +78,29 @@ class User extends BaseUser
     private $commandes;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Panier", mappedBy="user")
+     */
+    private $cart;
+
+    /**
+     * @return mixed
+     */
+    public function getCart()
+    {
+        return $this->cart;
+    }
+
+    /**
+     * @param mixed $cart
+     */
+    public function setCart($cart)
+    {
+        $this->cart = $cart;
+    }
+
+
+
+    /**
      * @return mixed
      */
     public function getCommandes()

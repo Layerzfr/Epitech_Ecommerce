@@ -61,6 +61,29 @@ class Article
      */
     private $promotion;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Panier", mappedBy="user")
+     */
+    private $cart;
+
+    /**
+     * @return mixed
+     */
+    public function getCart()
+    {
+        return $this->cart;
+    }
+
+    /**
+     * @param mixed $cart
+     */
+    public function setCart($cart)
+    {
+        $this->cart = $cart;
+    }
+
+
+
     public function getId(): ?int
     {
         return $this->id;

@@ -32,6 +32,50 @@ class Panier
     private $commandes;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cart")
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="cart")
+     */
+    private $article;
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getArticle()
+    {
+        return $this->article;
+    }
+
+    /**
+     * @param mixed $article
+     */
+    public function setArticle($article)
+    {
+        $this->article = $article;
+    }
+
+
+
+    /**
      * @return mixed
      */
     public function getCommandes()
