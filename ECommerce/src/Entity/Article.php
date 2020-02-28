@@ -67,6 +67,27 @@ class Article
     private $cart;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="article")
+     */
+    private $image;
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    /**
      * @return mixed
      */
     public function getCart()

@@ -36,6 +36,29 @@ class Image
      */
     private $isDescription;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="image")
+     */
+    private $article;
+
+    /**
+     * @return mixed
+     */
+    public function getArticle()
+    {
+        return $this->article;
+    }
+
+    /**
+     * @param mixed $article
+     */
+    public function setArticle($article)
+    {
+        $this->article = $article;
+    }
+
+
+
     public function getId(): ?int
     {
         return $this->id;
