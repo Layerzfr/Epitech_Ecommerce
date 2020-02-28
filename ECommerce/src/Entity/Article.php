@@ -1,0 +1,176 @@
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
+ */
+class Article
+{
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nom;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $categorie;
+
+    /**
+     * @ORM\Column(type="string", length=60000)
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="string", length=60000)
+     */
+    private $caracteristiques;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2)
+     */
+    private $prixUnitaire;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2)
+     */
+    private $poids;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $qteEnStock;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isNew;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $promotion;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getCategorie(): ?string
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(string $categorie): self
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCaracteristiques(): ?string
+    {
+        return $this->caracteristiques;
+    }
+
+    public function setCaracteristiques(string $caracteristiques): self
+    {
+        $this->caracteristiques = $caracteristiques;
+
+        return $this;
+    }
+
+    public function getPrixUnitaire(): ?string
+    {
+        return $this->prixUnitaire;
+    }
+
+    public function setPrixUnitaire(string $prixUnitaire): self
+    {
+        $this->prixUnitaire = $prixUnitaire;
+
+        return $this;
+    }
+
+    public function getPoids(): ?string
+    {
+        return $this->poids;
+    }
+
+    public function setPoids(string $poids): self
+    {
+        $this->poids = $poids;
+
+        return $this;
+    }
+
+    public function getQteEnStock(): ?int
+    {
+        return $this->qteEnStock;
+    }
+
+    public function setQteEnStock(int $qteEnStock): self
+    {
+        $this->qteEnStock = $qteEnStock;
+
+        return $this;
+    }
+
+    public function getIsNew(): ?bool
+    {
+        return $this->isNew;
+    }
+
+    public function setIsNew(bool $isNew): self
+    {
+        $this->isNew = $isNew;
+
+        return $this;
+    }
+
+    public function getPromotion(): ?int
+    {
+        return $this->promotion;
+    }
+
+    public function setPromotion(int $promotion): self
+    {
+        $this->promotion = $promotion;
+
+        return $this;
+    }
+}
