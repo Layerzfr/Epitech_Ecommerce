@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommandeRepository")
@@ -15,6 +16,148 @@ class Commande
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\NotNull
+     * @var string
+     */
+    protected $deliveryCountry;
+
+    /**
+     * @var string
+     * @Assert\NotNull
+     * @ORM\Column(type="string")
+     */
+    protected $deliveryCity;
+
+    /**
+     * @var string
+     * @Assert\NotNull
+     * @ORM\Column(type="string")
+     */
+    protected $deliveryZip;
+
+    /**
+     * @var string
+     * @Assert\NotNull
+     * @ORM\Column(type="string")
+     */
+    protected $mail_vendeur;
+
+    /**
+     * @var string
+     * @Assert\NotNull
+     * @ORM\Column(type="string")
+     */
+    protected $nom_vendeur;
+
+    /**
+     * @return string
+     */
+    public function getMailVendeur()
+    {
+        return $this->mail_vendeur;
+    }
+
+    /**
+     * @param string $mail_vendeur
+     * @return Commande
+     */
+    public function setMailVendeur(string $mail_vendeur)
+    {
+        $this->mail_vendeur = $mail_vendeur;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNomVendeur()
+    {
+        return $this->nom_vendeur;
+    }
+
+    /**
+     * @param string $nom_vendeur
+     * @return Commande
+     */
+    public function setNomVendeur(string $nom_vendeur)
+    {
+        $this->nom_vendeur = $nom_vendeur;
+        return $this;
+    }
+
+    /**
+     * @var string
+     * @Assert\NotNull
+     * @ORM\Column(type="string")
+     */
+    protected $deliveryAddress;
+
+    /**
+     * @return string
+     */
+    public function getDeliveryCountry()
+    {
+        return $this->deliveryCountry;
+    }
+
+    /**
+     * @param string $deliveryCountry
+     */
+    public function setDeliveryCountry(string $deliveryCountry)
+    {
+        $this->deliveryCountry = $deliveryCountry;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeliveryCity()
+    {
+        return $this->deliveryCity;
+    }
+
+    /**
+     * @param string $deliveryCity
+     */
+    public function setDeliveryCity(string $deliveryCity)
+    {
+        $this->deliveryCity = $deliveryCity;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeliveryZip()
+    {
+        return $this->deliveryZip;
+    }
+
+    /**
+     * @param string $deliveryZip
+     */
+    public function setDeliveryZip(string $deliveryZip)
+    {
+        $this->deliveryZip = $deliveryZip;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeliveryAddress()
+    {
+        return $this->deliveryAddress;
+    }
+
+    /**
+     * @param string $deliveryAddress
+     */
+    public function setDeliveryAddress(string $deliveryAddress)
+    {
+        $this->deliveryAddress = $deliveryAddress;
+    }
 
     /**
      * @ORM\Column(type="string", length=255)

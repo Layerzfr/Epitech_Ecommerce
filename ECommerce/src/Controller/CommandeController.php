@@ -44,7 +44,13 @@ class CommandeController extends AbstractController
                 'mode_livraison' => $item->getModeLivraison(),
                 'qte' => $item->getQte(),
                 'prix_article_commande' => $item->getPrixArticleCommande(),
-                'frais_port' => $item->getFraisPort()
+                'frais_port' => $item->getFraisPort(),
+                'delivery_country' => $item->getDeliveryCountry(),
+                'delivery_city' => $item->getDeliveryCity(),
+                'delivery_zip' => $item->getDeliveryZip(),
+                'delivery_address' => $item->getDeliveryAddress(),
+                'mail_vendeur' => $item->getMailVendeur(),
+                'nom_vendeur' => $item->getNomVendeur()
             );
         }
         return new JsonResponse($arrayCollection);
@@ -64,7 +70,13 @@ class CommandeController extends AbstractController
             'mode_livraison' => $commande->getModeLivraison(),
             'qte' => $commande->getQte(),
             'prix_article_commande' => $commande->getPrixArticleCommande(),
-            'frais_port' => $commande->getFraisPort()
+            'frais_port' => $commande->getFraisPort(),
+            'delivery_country' => $commande->getDeliveryCountry(),
+            'delivery_city' => $commande->getDeliveryCity(),
+            'delivery_zip' => $commande->getDeliveryZip(),
+            'delivery_address' => $commande->getDeliveryAddress(),
+            'mail_vendeur' => $commande->getMailVendeur(),
+            'nom_vendeur' => $commande->getNomVendeur()
         );
 
         return new JsonResponse($arrayCollection);
@@ -85,6 +97,12 @@ class CommandeController extends AbstractController
         $commande->setQte(1);
         $commande->setPrixArticleCommande(19.20);
         $commande->setFraisPort(40);
+        $commande->setDeliveryCountry('create');
+        $commande->setDeliveryCity('create');
+        $commande->setDeliveryZip('create');
+        $commande->setDeliveryAddress('create');
+        $commande->setMailVendeur('create');
+        $commande->setNomVendeur('create');
 
         $arrayCollection[] = array(
             'id' => $commande->getId(),
@@ -93,7 +111,13 @@ class CommandeController extends AbstractController
             'mode_livraison' => $commande->getModeLivraison(),
             'qte' => $commande->getQte(),
             'prix_article_commande' => $commande->getPrixArticleCommande(),
-            'frais_port' => $commande->getFraisPort()
+            'frais_port' => $commande->getFraisPort(),
+            'delivery_country' => $commande->getDeliveryCountry(),
+            'delivery_city' => $commande->getDeliveryCity(),
+            'delivery_zip' => $commande->getDeliveryZip(),
+            'delivery_address' => $commande->getDeliveryAddress(),
+            'mail_vendeur' => $commande->getMailVendeur(),
+            'nom_vendeur' => $commande->getNomVendeur()
         );
 
         $entityManager->persist($commande);
@@ -118,6 +142,12 @@ class CommandeController extends AbstractController
         $commande->setQte(1);
         $commande->setPrixArticleCommande(19.20);
         $commande->setFraisPort(40);
+        $commande->setDeliveryCountry('mdoif');
+        $commande->setDeliveryCity('mdoif');
+        $commande->setDeliveryZip('mdoif');
+        $commande->setDeliveryAddress('mdoif');
+        $commande->setMailVendeur('mdoif');
+        $commande->setNomVendeur('mdoif');
 
         $arrayCollection[] = array(
             'id' => $commande->getId(),
@@ -126,7 +156,13 @@ class CommandeController extends AbstractController
             'mode_livraison' => $commande->getModeLivraison(),
             'qte' => $commande->getQte(),
             'prix_article_commande' => $commande->getPrixArticleCommande(),
-            'frais_port' => $commande->getFraisPort()
+            'frais_port' => $commande->getFraisPort(),
+            'delivery_country' => $commande->getDeliveryCountry(),
+            'delivery_city' => $commande->getDeliveryCity(),
+            'delivery_zip' => $commande->getDeliveryZip(),
+            'delivery_address' => $commande->getDeliveryAddress(),
+            'mail_vendeur' => $commande->getMailVendeur(),
+            'nom_vendeur' => $commande->getNomVendeur()
         );
 
         $entityManager->persist($commande);
