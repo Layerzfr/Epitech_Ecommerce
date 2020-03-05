@@ -1,12 +1,56 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <link href="{{ asset('css/Nav.css') }}" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Heebo&display=swap" rel="stylesheet">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+
+    <div class="HEADER">
+        <div class="Navbar">
+            <div class="NavbarColumnLogo">
+                <img src="{{ asset('icon/Logo.png') }}" style="width:42%;height: 85%;margin-top: auto;margin-bottom: auto;">
+                <div class="Trait"></div>
+            </div>
+
+            <div class="NavbarColumn">
+                <div class="ItemArrows">
+                    <a class="MenuText">Catégories</a>
+                    <i class="fa fa-caret-down"></i>
+                </div>
+            </div>
+
+            <div class="NavbarColumn">
+                <div class="Item">
+                    <a class="MenuText">Nouveautés</a>
+                </div>
+            </div>
+
+            <div class="NavbarColumn">
+                <div class="Item">
+                    <a class="MenuText">Promotions</a>
+                </div>
+            </div>
+
+            <div class="TraitSecond"></div>
+        </div>
+
+    </div>
+
+    <div>
+        <img src="https://www.tombreton.com/wp-content/uploads/2015/05/pixabay.com_banque-dimages-gratuites_tombreton.jpg"
+             alt=""/>
+    </div>
+    <div>
+        <img src="https://www.tombreton.com/wp-content/uploads/2015/05/pixabay.com_banque-dimages-gratuites_tombreton.jpg"
+             alt=""/>
+    </div>
+</head>
+<body>
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
 </html>

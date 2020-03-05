@@ -1,0 +1,78 @@
+.HEADER {
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    height: 13%;
+    width: 100%;
+    background-color: #FAFAFA;
+}
+
+.Navbar {
+    display: flex;
+    height: 58%;
+    width: 90%;
+    background-color: white;
+    -webkit-box-shadow: 0px 2px 5px 2px rgba(191,191,191,0.36);
+    -moz-box-shadow: 0px 2px 5px 2px rgba(191,191,191,0.36);
+    box-shadow: 0px 2px 5px 2px rgba(191,191,191,0.36);
+}
+
+.NavbarColumnLogo {
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin-right: 3%;
+    align-self: center;
+    margin-left: 3%;
+}
+
+.NavbarColumn {
+    margin-right: 8%;
+    align-self: center;
+}
+
+.NavbarColumn:hover a {
+    color: #A0A0A0;
+    cursor: pointer;
+}
+
+.NavbarColumn:hover i.fa.fa-caret-down{
+    color: #A0A0A0;
+    cursor: pointer;
+}
+
+.Arrow {
+    background: url("../icon/Down-Arrow.png") no-repeat;
+    background-size: 10%;
+}
+
+.MenuText {
+    font-family: 'Heebo', sans-serif, medium;
+    font-size: 17px;
+    color: #707070;
+}
+
+i.fa.fa-caret-down {
+    color: #707070
+}
+
+.Logo {
+    background: url("../icon/Logo.png") no-repeat;
+    background-size: 20%;
+}
+
+.Trait {
+    margin-left: 37%;
+    position: relative;
+    width: 1.5%;
+    background-color: #EAEAEA;
+}
+
+.TraitSecond {
+    margin-left: 37%;
+    position: relative;
+    width: 1.5%;
+    background-color: #EAEAEA;
+}
+
+
