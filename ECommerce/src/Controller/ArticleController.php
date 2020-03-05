@@ -195,8 +195,11 @@ class ArticleController extends AbstractController
      */
     public function show(Article $article): Response
     {
+        $session = $this->get('session');
+        $cartElements = $session->get('cartElements');
         return $this->render('article/show.html.twig', [
             'article' => $article,
+            'cart' => $cartElements
         ]);
     }
 

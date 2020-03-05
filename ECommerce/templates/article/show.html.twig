@@ -3,6 +3,18 @@
 {% block title %}Article{% endblock %}
 
 {% block body %}
+
+
+    <p>PANIER QTY : {{ cart | length }}</p>
+    {% set total = 0 %}
+    {% for item in cart %}
+        <img src="{{ item.image }}">
+        <p> Nom : {{ item.nom }}</p>
+        <p>{{ item.qty }}</p>
+        <p>{{ item.qty * item.unitPrice }} €</p>
+        {% set total = total + item.qty * item.unitPrice %}
+    {% endfor %}
+   Total : {{ total }} €
     <h1>Article</h1>
 
     <table class="table">
@@ -57,9 +69,41 @@
         </tbody>
     </table>
 
+    <div>
+        <label>Quantité:</label>
+        <input type="number" id="qty" value="1">
+    </div>
+    <button id="test"> Ajouter au panier</button>
+
     <a href="{{ path('article_index') }}">back to list</a>
 
     <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
 
     {{ include('article/_delete_form.html.twig') }}
+
+    <script>
+        let imageArticle;
+        {% for image in article.images %}
+        {% if loop.first %}
+            imageArticle = "{{ image.lien }}";
+        {% endif %}
+        {% endfor %}
+        $('#test').click(function () {
+            let data = {
+                id: "{{ article.id }}",
+                nom: "{{ article.nom }}",
+                qty: $('#qty').val(),
+                unitPrice: {{ article.prixUnitaire }},
+                image: imageArticle
+            };
+            $.ajax({
+                type: "POST",
+                url: '/addToCart',
+                data: data,
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+        })
+    </script>
 {% endblock %}
