@@ -13,11 +13,15 @@ class HomeController extends AbstractController
      */
     public function index()
     {
+        $session = $this->get('session');
+
+        $cartElements = $session->get('cartElements');
         $articles = $this->getDoctrine()->getRepository(Article::class)
             ->findAll();
         return $this->render('home/index.html.twig', [
             'articles' => $articles,
             'controller_name' => 'HomeController',
+            'cart' => $cartElements,
         ]);
     }
 }

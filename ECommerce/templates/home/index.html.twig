@@ -9,7 +9,8 @@
 </style>
 
 <div class="example-wrapper">
-
+ {{ dump(cart) }}
+    <button id="test">Ajouter au panier</button>
     {% for article in articles %}
         {{ article.nom }}       {# Appel des données avec une boucle for, ici "articles" qui se trouve dans Home Controller ligne 19 #}
             {% for image in article.images %}
@@ -23,4 +24,16 @@
         <li>Your template at <code><a href="{{ 'C:/wamp64/www/WEB_ecommerce_2019/ECommerce/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
     </ul>
 </div>
+
+    <script>
+        $('#test').click(function () {
+            $.ajax({
+                type: "POST",
+                url: 'addToCart',
+                data: null
+                // success: success,
+                // dataType: dataType
+            });
+        })
+    </script>
 {% endblock %}
