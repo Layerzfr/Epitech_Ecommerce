@@ -18,6 +18,19 @@ class HomeController extends AbstractController
         $cartElements = $session->get('cartElements');
         $articles = $this->getDoctrine()->getRepository(Article::class)
             ->findAll();
+        return $this->render('home/Home_Test.html.twig', [
+            'articles' => $articles,
+            'controller_name' => 'HomeController',
+        ]);
+    }
+
+    /**
+     * @Route("/Article", name="Article")
+     */
+    public function Article()
+    {
+        $articles = $this->getDoctrine()->getRepository(Article::class)
+            ->findAll();
         return $this->render('home/index.html.twig', [
             'articles' => $articles,
             'controller_name' => 'HomeController',
