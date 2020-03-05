@@ -27,6 +27,132 @@ class CommandeController extends AbstractController
     }
 
     /**
+     * @Route("/api/getAllCommandes", name="apiGetAllCommandes", methods={"GET"})
+     */
+    public function apiGetAllCommandes()
+    {
+        $commandes = $this->getDoctrine()->getRepository(Commande::class)->findAll();
+
+        $arrayCollection = [];
+
+        /** @var Commande $item */
+        foreach($commandes as $item) {
+            $arrayCollection[] = array(
+                'id' => $item->getId(),
+                'etat' => $item->getEtat(),
+                'date_commande' => $item->getDateCommande(),
+                'mode_livraison' => $item->getModeLivraison(),
+                'qte' => $item->getQte(),
+                'prix_article_commande' => $item->getPrixArticleCommande(),
+                'frais_port' => $item->getFraisPort()
+            );
+        }
+        return new JsonResponse($arrayCollection);
+    }
+
+    /**
+     * @Route("/api/getCommande/{id}", name="apiGetCommande", methods={"GET"})
+     */
+    public function apiGetCommande($id)
+    {
+        $commande = $this->getDoctrine()->getRepository(Commande::class)->find($id);
+
+        $arrayCollection[] = array(
+            'id' => $commande->getId(),
+            'etat' => $commande->getEtat(),
+            'date_commande' => $commande->getDateCommande(),
+            'mode_livraison' => $commande->getModeLivraison(),
+            'qte' => $commande->getQte(),
+            'prix_article_commande' => $commande->getPrixArticleCommande(),
+            'frais_port' => $commande->getFraisPort()
+        );
+
+        return new JsonResponse($arrayCollection);
+    }
+
+    /**
+     * @Route("/api/createCommande", name="apiCreateCommande", methods={"POST"})
+     */
+    public function apiCreateCommande()
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $commande = new Commande();
+
+        $commande->setEtat('commande');
+        $commande->setDateCommande(new \DateTime());
+        $commande->setModeLivraison('Chronopost');
+        $commande->setQte(1);
+        $commande->setPrixArticleCommande(19.20);
+        $commande->setFraisPort(40);
+
+        $arrayCollection[] = array(
+            'id' => $commande->getId(),
+            'etat' => $commande->getEtat(),
+            'date_commande' => $commande->getDateCommande(),
+            'mode_livraison' => $commande->getModeLivraison(),
+            'qte' => $commande->getQte(),
+            'prix_article_commande' => $commande->getPrixArticleCommande(),
+            'frais_port' => $commande->getFraisPort()
+        );
+
+        $entityManager->persist($commande);
+
+        $entityManager->flush();
+
+        return new JsonResponse($arrayCollection);
+    }
+
+    /**
+     * @Route("/api/manageCommande/{id}", name="apiManageCommande", methods={"POST"})
+     */
+    public function apiManageCommande($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        /** @var  Commande $commande */
+        $commande = $this->getDoctrine()->getRepository(Commande::class)->find($id);
+
+        $commande->setEtat('en cours d\'acheminement');
+        $commande->setDateCommande(new \DateTime());
+        $commande->setModeLivraison('modif');
+        $commande->setQte(1);
+        $commande->setPrixArticleCommande(19.20);
+        $commande->setFraisPort(40);
+
+        $arrayCollection[] = array(
+            'id' => $commande->getId(),
+            'etat' => $commande->getEtat(),
+            'date_commande' => $commande->getDateCommande(),
+            'mode_livraison' => $commande->getModeLivraison(),
+            'qte' => $commande->getQte(),
+            'prix_article_commande' => $commande->getPrixArticleCommande(),
+            'frais_port' => $commande->getFraisPort()
+        );
+
+        $entityManager->persist($commande);
+
+        $entityManager->flush();
+
+        return new JsonResponse($arrayCollection);
+    }
+
+    /**
+     * @Route("/api/deleteCommande/{id}", name="apiDeleteCommande", methods={"POST"})
+     */
+    public function apiDeleteCommande($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $commande = $this->getDoctrine()->getRepository(Commande::class)->find($id);
+
+        $entityManager->remove($commande);
+
+        $entityManager->flush();
+
+        return new JsonResponse(array("deletion" => "success"));
+    }
+
+
+    /**
      * @Route("/new", name="commande_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
