@@ -14,8 +14,12 @@ class CartController extends AbstractController
      */
     public function index()
     {
+        $session = $this->get('session');
+
+        $cartElements = $session->get('cartElements');
         return $this->render('cart/index.html.twig', [
             'controller_name' => 'CartController',
+            'cart' => $cartElements,
         ]);
     }
 
