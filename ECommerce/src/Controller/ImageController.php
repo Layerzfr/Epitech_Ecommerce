@@ -6,6 +6,7 @@ use App\Entity\Image;
 use App\Form\ImageType;
 use App\Repository\ImageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,6 +24,117 @@ class ImageController extends AbstractController
         return $this->render('image/index.html.twig', [
             'images' => $imageRepository->findAll(),
         ]);
+    }
+
+    /**
+     * @Route("/api/getAllImages", name="apiGetAllImages", methods={"GET"})
+     */
+    public function apiGetAllImages()
+    {
+        $images = $this->getDoctrine()->getRepository(Image::class)->findAll();
+
+        $arrayCollection = [];
+
+        /** @var Image $item */
+        foreach($images as $item) {
+            $arrayCollection[] = array(
+                'id' => $item->getId(),
+                'lien' => $item->getLien(),
+                'is_principale' => $item->getIsPrincipale(),
+                'is_secondaire' => $item->getIsSecondaire(),
+                'is_description' => $item->getIsDescription()
+            );
+        }
+        return new JsonResponse($arrayCollection);
+    }
+
+    /**
+     * @Route("/api/getImage/{id}", name="apiGetImage", methods={"GET"})
+     */
+    public function apiGetImage($id)
+    {
+        $image = $this->getDoctrine()->getRepository(Image::class)->find($id);
+
+        $arrayCollection[] = array(
+            'id' => $image->getId(),
+            'lien' => $image->getLien(),
+            'is_principale' => $image->getIsPrincipale(),
+            'is_secondaire' => $image->getIsSecondaire(),
+            'is_description' => $image->getIsDescription()
+        );
+
+        return new JsonResponse($arrayCollection);
+    }
+
+    /**
+     * @Route("/api/createImage", name="apiCreateImage", methods={"POST"})
+     */
+    public function apiCreateImage()
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $image = new Image();
+        $image->setLien('create');
+        $image->setIsPrincipale(true);
+        $image->setIsSecondaire(false);
+        $image->setIsDescription(false);
+
+        $arrayCollection[] = array(
+            'id' => $image->getId(),
+            'lien' => $image->getLien(),
+            'is_principale' => $image->getIsPrincipale(),
+            'is_secondaire' => $image->getIsSecondaire(),
+            'is_description' => $image->getIsDescription()
+        );
+
+        $entityManager->persist($image);
+
+        $entityManager->flush();
+
+        return new JsonResponse($arrayCollection);
+    }
+
+    /**
+     * @Route("/api/manageImage/{id}", name="apiManageImage", methods={"POST"})
+     */
+    public function apiManageImage($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $image = $this->getDoctrine()->getRepository(Image::class)->find($id);
+
+        $image->setLien('modif');
+        $image->setIsPrincipale(false);
+        $image->setIsSecondaire(true);
+        $image->setIsDescription(false);
+
+        $arrayCollection[] = array(
+            'id' => $image->getId(),
+            'lien' => $image->getLien(),
+            'is_principale' => $image->getIsPrincipale(),
+            'is_secondaire' => $image->getIsSecondaire(),
+            'is_description' => $image->getIsDescription()
+        );
+
+        $entityManager->persist($image);
+
+        $entityManager->flush();
+
+        return new JsonResponse($arrayCollection);
+    }
+
+    /**
+     * @Route("/api/deleteImage/{id}", name="apiDeleteImage", methods={"POST"})
+     */
+    public function apiDeleteImage($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $image = $this->getDoctrine()->getRepository(Image::class)->find($id);
+
+        $entityManager->remove($image);
+
+        $entityManager->flush();
+
+        return new JsonResponse(array("deletion" => "success"));
     }
 
     /**
