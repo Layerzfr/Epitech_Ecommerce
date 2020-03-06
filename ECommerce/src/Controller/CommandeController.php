@@ -110,7 +110,16 @@ class CommandeController extends AbstractController
         $commande->setDeliveryAddress('create');
         $commande->setMailVendeur('create');
         $commande->setNomVendeur('create');
-        $commande->setCodeCommand(1);
+
+        /** @var Commande $code_command */
+        $code_command = $this->getDoctrine()->getRepository(Commande::class)->findLast();
+
+        if($code_command) {
+            $commande->setCodeCommand($code_command->getCodeCommand() + 1);
+        } else {
+            $commande->setCodeCommand(1);
+        }
+
 
         $arrayCollection[] = array(
             'id' => $commande->getId(),
