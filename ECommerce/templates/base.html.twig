@@ -6,17 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Heebo&display=swap" rel="stylesheet">
-    <script
-            src="https://code.jquery.com/jquery-3.4.1.js"
-            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-            crossorigin="anonymous"></script>
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
 
     <div class="HEADER">
         <div class="Navbar">
             <div class="NavbarColumnLogo">
-                <img src="{{ asset('icon/Logo.png') }}" style="width:42%;height: 85%;margin-top: auto;margin-bottom: auto;">
+                <img src="{{ asset('icon/Logo.png') }}"
+                     style="width: 37%;margin-top: auto;margin-bottom: auto;margin-left: auto;margin-right: auto;">
+
                 <div class="Trait"></div>
             </div>
 
@@ -39,7 +37,17 @@
                 </div>
             </div>
 
-            <div class="TraitSecond"></div>
+            <div class="NavbarTrait">
+                <div class="TraitSecond"></div>
+                <div class="search-container">
+                    <div style="display: flex;height: 100%;width: 100%;margin-top: auto;margin-bottom: auto;padding-left: 7%;padding-right: 10%;">
+                        <img src="{{ asset('../icon/SearchIcon.png') }}"
+                             style="margin-right: 6%;align-self: center;width: 6%;height: 50%;">
+                        <input type="text" name="search" placeholder="Chercher un produit, une marque…">
+                    </div>
+                </div>
+                <div class="TraitThird"></div>
+            </div>
         </div>
 
     </div>
