@@ -27,6 +27,16 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * @Route("/promotion", name="article_promotion", methods={"GET"})
+     */
+    public function promotion(ArticleRepository $articleRepository): Response
+    {
+        return $this->render('article/index.html.twig', [
+            'articles' => $articleRepository->findAllPromo(),
+        ]);
+    }
+
+    /**
      * @Route("/api/getAllArticles", name="apiGetAllArticles", methods={"GET"})
      */
     public function apiGetAllArticles()

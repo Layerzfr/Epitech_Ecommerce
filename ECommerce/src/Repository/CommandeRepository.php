@@ -19,6 +19,14 @@ class CommandeRepository extends ServiceEntityRepository
         parent::__construct($registry, Commande::class);
     }
 
+    public function findLast() {
+        $qb = $this->createQueryBuilder('tc');
+        $qb->setMaxResults( 1 );
+        $qb->orderBy('tc.id', 'DESC');
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
     // /**
     //  * @return Commande[] Returns an array of Commande objects
     //  */

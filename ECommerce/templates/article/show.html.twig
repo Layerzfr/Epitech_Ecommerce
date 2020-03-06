@@ -13,6 +13,7 @@
         <p>{{ item.qty }}</p>
         <p>{{ item.qty * item.unitPrice }} €</p>
         {% set total = total + item.qty * item.unitPrice %}
+        <button onclick="removeFromCart({{ item.id }})">Retirer du panier</button>
     {% endfor %}
    Total : {{ total }} €
     <h1>Article</h1>
@@ -104,6 +105,20 @@
                     console.log(data);
                 }
             });
-        })
+        });
+
+        function removeFromCart(id) {
+            let data = {
+                id: id
+            };
+            $.ajax({
+                type: "POST",
+                url: '/removeFromCart',
+                data: data,
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+        }
     </script>
 {% endblock %}

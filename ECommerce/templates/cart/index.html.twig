@@ -38,9 +38,36 @@
                     // This function shows a transaction success message to your buyer.
                     console.log(details);
                     alert('Transaction completed by ' + details.payer.name.given_name);
+                    createCommand(details)
                 });
             }
         }).render('#paypal-button-container');
+
+
+        function createCommand(details) {
+            let data = {
+            {% for item in cart %}
+            item_{{ loop.index }} : {
+                id: {{item.id}},
+                qty: {{ item.qty }},
+                country: details.payer.address.country_code,
+                city: details.payer.address.admin_area_2,
+                zip: details.payer.address.postal_code,
+                address: details.payer.address.address_line_1,
+                mailVendeur: details.purchase_units[0].payee.email_address,
+                nomVendeur: details.purchase_units[0].soft_descriptor,
+                    },
+            {% endfor %}
+        }
+            $.ajax({
+                type: "POST",
+                url: '/commande/api/createCommande',
+                data: data,
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+        }
     </script>
 </div>
 {% endblock %}
