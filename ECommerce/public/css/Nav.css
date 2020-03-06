@@ -201,8 +201,30 @@ i.fa.fa-caret-down {
     height: 50%;
 }
 
-.CartLogo:hover {
-    background-color: #8959A8;
+/*.CartLogo {
+    margin-left: auto;
+    margin-right: 50%;
+    align-self: center;
+    height: 40%;
+    margin-bottom: 4%;
 }
+
+.Underline {
+    margin-top: 3%;
+    position: absolute;
+    background-color: #DD5252;
+    height: 3%;
+    width: 4%;
+    margin-left: 2.4%;
+}
+
+.Number {
+    margin-top: 1%;
+    position: absolute;
+    margin-left: 5.2%;
+    font-family: 'Heebo', sans-serif, medium;
+    font-size: 18px;
+    color: #707070;
+}*/
 
 
