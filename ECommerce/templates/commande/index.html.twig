@@ -19,24 +19,17 @@
             </tr>
         </thead>
         <tbody>
+
+        {% set currentCommandId = 0 %}
         {% for commande in commandes %}
-            <tr>
-                <td>{{ commande.id }}</td>
-                <td>{{ commande.etat }}</td>
-                <td>{{ commande.dateCommande ? commande.dateCommande|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ commande.modeLivraison }}</td>
-                <td>{{ commande.qte }}</td>
-                <td>{{ commande.prixArticleCommande }}</td>
-                <td>{{ commande.fraisPort }}</td>
-                <td>
-                    <a href="{{ path('commande_show', {'id': commande.id}) }}">show</a>
-                    <a href="{{ path('commande_edit', {'id': commande.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
+            {% if currentCommandId is not same as (commande.codeCommand) %}
+                <tr>
+                    <td>
+                        <a href="{{ path('commande_show', {'id': commande.id}) }}">Commande du {{ commande.dateCommande ? commande.dateCommande|date('Y-m-d H:i:s') : '' }}</a>
+                    </td>
+                </tr>
+                {% set currentCommandId = commande.codeCommand %}
+            {% endif %}
         {% endfor %}
         </tbody>
     </table>
