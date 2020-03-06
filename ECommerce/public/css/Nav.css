@@ -194,14 +194,14 @@ i.fa.fa-caret-down {
     }
 }
 
-.CartLogo {
+.CartLogo0 {
     margin-left: auto;
     margin-right: auto;
     align-self: center;
     height: 50%;
 }
 
-/*.CartLogo {
+.CartLogo1 {
     margin-left: auto;
     margin-right: 50%;
     align-self: center;
@@ -225,6 +225,5 @@ i.fa.fa-caret-down {
     font-family: 'Heebo', sans-serif, medium;
     font-size: 18px;
     color: #707070;
-}*/
-
+}
 
