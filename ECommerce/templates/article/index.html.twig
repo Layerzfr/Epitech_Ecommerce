@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Image</th>
                 <th>Nom</th>
                 <th>Categorie</th>
                 <th>Description</th>
@@ -25,6 +26,13 @@
         {% for article in articles %}
             <tr>
                 <td>{{ article.id }}</td>
+                <td>
+                    {% for image in article.images %}
+                        {% if loop.first %}
+                            <img src="{{ image.lien }}">
+                        {% endif %}
+                    {% endfor %}
+                </td>
                 <td>{{ article.nom }}</td>
                 <td>{{ article.categorie }}</td>
                 <td>{{ article.description }}</td>
