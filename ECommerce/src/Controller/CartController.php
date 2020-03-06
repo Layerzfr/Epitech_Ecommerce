@@ -24,6 +24,20 @@ class CartController extends AbstractController
     }
 
     /**
+     * @Route("/getCart", name="getCart")
+     */
+    public function getMyCart()
+    {
+        $session = $this->get('session');
+
+        $cartElements = $session->get('cartElements');
+
+        return new JsonResponse(array(
+            'cart' => $cartElements
+        ));
+    }
+
+    /**
      * @Route("/addToCart", name="addToCart", methods={"POST"})
      */
     public function addToCart()

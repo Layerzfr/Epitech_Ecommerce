@@ -46,7 +46,7 @@
                     <div style="display: flex;height: 100%;width: 100%;margin-top: auto;margin-bottom: auto;padding-left: 7%;padding-right: 10%;">
                         <img src="{{ asset('../icon/SearchIcon.png') }}"
                              style="margin-right: 6%;align-self: center;width: 6%;height: 50%;">
-                        <input type="text" name="search" placeholder="Chercher un produit, une marque…">
+                        <input type="text" name="search" placeholder="Chercher un produit, une marque…" onkeyup="searchItem(this.value)">
                     </div>
                 </div>
                 <div class="TraitThird"></div>
@@ -61,5 +61,32 @@
 <body>
 {% block body %}{% endblock %}
 {% block javascripts %}{% endblock %}
+
+<script>
+    function searchItem(term) {
+        console.log(term);
+        let data = {
+            'term' : term,
+        };
+        $.ajax({
+            type: "POST",
+            data: data,
+            url: '/article/api/searchByterm',
+            data: data,
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    }
+    $(window).ready(function () {
+        $.ajax({
+            type: "POST",
+            url: '/getCart',
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    })
+</script>
 </body>
 </html>

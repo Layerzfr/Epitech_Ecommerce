@@ -19,6 +19,17 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
+    public function findByTerm($term)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.nom like :term')
+            ->setParameter('term', '%'.$term.'%')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function findAllPromo()
     {
         return $this->createQueryBuilder('a')
