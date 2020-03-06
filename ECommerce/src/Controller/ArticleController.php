@@ -23,6 +23,7 @@ class ArticleController extends AbstractController
     {
         return $this->render('article/index.html.twig', [
             'articles' => $articleRepository->findAll(),
+            'currentPage' => 'Nouveautés'
         ]);
     }
 
@@ -33,6 +34,7 @@ class ArticleController extends AbstractController
     {
         return $this->render('article/index.html.twig', [
             'articles' => $articleRepository->findAllPromo(),
+            'currentPage' => 'Promotions'
         ]);
     }
 

@@ -31,12 +31,24 @@
             <div class="NavbarColumn">
                 <div class="Item">
                     <a class="MenuText" href="/article" >Nouveautés</a>
+                    {% if currentPage is defined %}
+                        {% if currentPage is same as ('Nouveautés') %}
+                            <div class="active UnderlineMenu"></div>
+                        {% endif %}
+                    {% endif %}
+                    <div class="UnderlineMenu"></div>
                 </div>
             </div>
 
             <div class="NavbarColumn">
                 <div class="Item">
                     <a class="MenuText"  href="/article/promotion">Promotions</a>
+                    {% if currentPage is defined %}
+                        {% if currentPage is same as ('Promotions') %}
+                            <div class="active UnderlineMenu"></div>
+                        {% endif %}
+                    {% endif %}
+                    <div class="UnderlineMenu"></div>
                 </div>
             </div>
 
