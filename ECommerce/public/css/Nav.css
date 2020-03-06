@@ -102,6 +102,10 @@ i.fa.fa-caret-down {
     display: flex;
 }
 
+.Cart:hover {
+    cursor: pointer;
+}
+
 .Trait {
     width: 1.1%;
     background-color: #EAEAEA;
@@ -225,5 +229,23 @@ i.fa.fa-caret-down {
     font-family: 'Heebo', sans-serif, medium;
     font-size: 18px;
     color: #707070;
+}
+
+.active, .Item:hover .UnderlineMenu {
+    margin-top: 0.3%;
+    position: absolute;
+    background-color: #DD5252;
+    height: 2%;
+    width: 6%;
+    margin-left: 0.1%;
+}
+
+.active .UnderlineMenu{
+    margin-top: 0.3%;
+    position: absolute;
+    background-color: #DD5252;
+    height: 2%;
+    width: 6%;
+    margin-left: 0.1%;
 }
 
