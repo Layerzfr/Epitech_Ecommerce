@@ -96,49 +96,54 @@ class CommandeController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
 
-        $commande = new Commande();
-
-        $commande->setEtat('commande');
-        $commande->setDateCommande(new \DateTime());
-        $commande->setModeLivraison('Chronopost');
-        $commande->setQte(1);
-        $commande->setPrixArticleCommande(19.20);
-        $commande->setFraisPort(40);
-        $commande->setDeliveryCountry('create');
-        $commande->setDeliveryCity('create');
-        $commande->setDeliveryZip('create');
-        $commande->setDeliveryAddress('create');
-        $commande->setMailVendeur('create');
-        $commande->setNomVendeur('create');
-
         /** @var Commande $code_command */
         $code_command = $this->getDoctrine()->getRepository(Commande::class)->findLast();
 
-        if($code_command) {
-            $commande->setCodeCommand($code_command->getCodeCommand() + 1);
-        } else {
-            $commande->setCodeCommand(1);
+        foreach ($_POST as $produit) {
+
+
+            $commande = new Commande();
+
+            $commande->setEtat('Commandé');
+            $commande->setDateCommande(new \DateTime());
+            $commande->setModeLivraison('Chronopost');
+            $commande->setQte(1);
+            $commande->setPrixArticleCommande(19.20);
+            $commande->setFraisPort(40);
+            $commande->setDeliveryCountry('create');
+            $commande->setDeliveryCity('create');
+            $commande->setDeliveryZip('create');
+            $commande->setDeliveryAddress('create');
+            $commande->setMailVendeur('create');
+            $commande->setNomVendeur('create');
+
+
+            if ($code_command) {
+                $commande->setCodeCommand($code_command->getCodeCommand() + 1);
+            } else {
+                $commande->setCodeCommand(1);
+            }
+
+
+            $arrayCollection[] = array(
+                'id' => $commande->getId(),
+                'etat' => $commande->getEtat(),
+                'date_commande' => $commande->getDateCommande(),
+                'mode_livraison' => $commande->getModeLivraison(),
+                'qte' => $commande->getQte(),
+                'prix_article_commande' => $commande->getPrixArticleCommande(),
+                'frais_port' => $commande->getFraisPort(),
+                'delivery_country' => $commande->getDeliveryCountry(),
+                'delivery_city' => $commande->getDeliveryCity(),
+                'delivery_zip' => $commande->getDeliveryZip(),
+                'delivery_address' => $commande->getDeliveryAddress(),
+                'mail_vendeur' => $commande->getMailVendeur(),
+                'nom_vendeur' => $commande->getNomVendeur(),
+                'code_command' => $commande->getCodeCommand()
+            );
+
+            $entityManager->persist($commande);
         }
-
-
-        $arrayCollection[] = array(
-            'id' => $commande->getId(),
-            'etat' => $commande->getEtat(),
-            'date_commande' => $commande->getDateCommande(),
-            'mode_livraison' => $commande->getModeLivraison(),
-            'qte' => $commande->getQte(),
-            'prix_article_commande' => $commande->getPrixArticleCommande(),
-            'frais_port' => $commande->getFraisPort(),
-            'delivery_country' => $commande->getDeliveryCountry(),
-            'delivery_city' => $commande->getDeliveryCity(),
-            'delivery_zip' => $commande->getDeliveryZip(),
-            'delivery_address' => $commande->getDeliveryAddress(),
-            'mail_vendeur' => $commande->getMailVendeur(),
-            'nom_vendeur' => $commande->getNomVendeur(),
-            'code_command' => $commande->getCodeCommand()
-        );
-
-        $entityManager->persist($commande);
 
         $entityManager->flush();
 
