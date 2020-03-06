@@ -22,8 +22,11 @@ class CommandeController extends AbstractController
      */
     public function index(CommandeRepository $commandeRepository): Response
     {
+        $currentUser = $this->getUser();
         return $this->render('commande/index.html.twig', [
-            'commandes' => $commandeRepository->findAll(),
+            'commandes' => $commandeRepository->findBy([
+                'user'=> $currentUser
+            ]),
         ]);
     }
 
@@ -157,6 +160,11 @@ class CommandeController extends AbstractController
 
         $entityManager->flush();
 
+        $arrayCollection['idCommande'] = $code_command->getCodeCommand() + 1;
+
+        $session = $this->get('session');
+        $session->set('cartElements', array());
+
         return new JsonResponse($arrayCollection);
     }
 
@@ -256,8 +264,20 @@ class CommandeController extends AbstractController
      */
     public function show(Commande $commande): Response
     {
+        if($commande->getUser() !== $this->getUser()){
+            return $this->redirectToRoute('commande_index');
+        }
+
+        $commandes = $this->getDoctrine()->getRepository(Commande::class)->findBy([
+            'code_command' => $commande->getCodeCommand()
+        ]);
         return $this->render('commande/show.html.twig', [
-            'commande' => $commande,
+            'commandes' => $commandes,
+            'address' => $commande->getDeliveryAddress(),
+            'city' => $commande->getDeliveryCity(),
+            'zip' => $commande->getDeliveryZip(),
+            'country' => $commande->getDeliveryCountry(),
+            'etat' => $commande->getEtat()
         ]);
     }
 

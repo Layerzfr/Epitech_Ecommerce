@@ -14,6 +14,7 @@
         {% set total = total + item.qty * item.unitPrice %}
     {% endfor %}
     Total : {{ total }} €
+    {% if app.user %}
 
     <div id="paypal-button-container">
 
@@ -64,10 +65,14 @@
                 url: '/commande/api/createCommande',
                 data: data,
                 success: function (data) {
-                    console.log(data);
+                    window.location.replace("/commande/"+data.idCommande);
                 }
             });
         }
     </script>
+
+        {% else %}
+        <a href="/login">Veuillez vous connecter</a>
+    {% endif %}
 </div>
 {% endblock %}
