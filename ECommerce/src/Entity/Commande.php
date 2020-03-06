@@ -53,6 +53,29 @@ class Commande
     protected $nom_vendeur;
 
     /**
+     * @var int
+     * @Assert\NotNull
+     * @ORM\Column(type="integer")
+     */
+    protected $code_command;
+
+    /**
+     * @return int
+     */
+    public function getCodeCommand()
+    {
+        return $this->code_command;
+    }
+
+    /**
+     * @param int $code_command
+     */
+    public function setCodeCommand(int $code_command)
+    {
+        $this->code_command = $code_command;
+    }
+
+    /**
      * @return string
      */
     public function getMailVendeur()
