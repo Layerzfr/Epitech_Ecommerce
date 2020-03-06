@@ -33,8 +33,12 @@ class CartController extends AbstractController
         $session = $this->get('session');
 
         $cartElements = $session->get('cartElements');
-        if(count($cartElements) === 0 ) {
-            $session->set('cartElements', array());
+        if (is_array(($cartElements))) {
+            if (sizeof($cartElements) === 0) {
+                $session->set('cartElements', array());
+            }
+        } else {
+            $cartElements = array();
         }
 
         array_push($cartElements, $_POST);

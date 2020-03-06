@@ -16,7 +16,8 @@
     <div class="HEADER">
         <div class="Navbar">
             <div class="NavbarColumnLogo">
-                <img src="{{ asset('icon/Logo.png') }}" style="width:42%;height: 85%;margin-top: auto;margin-bottom: auto;">
+                <img src="{{ asset('icon/Logo.png') }}" class="Logo" onclick="window.location.href='/'">
+
                 <div class="Trait"></div>
             </div>
 
@@ -39,18 +40,22 @@
                 </div>
             </div>
 
-            <div class="TraitSecond"></div>
+            <div class="NavbarTrait">
+                <div class="TraitSecond"></div>
+                <div class="search-container">
+                    <div style="display: flex;height: 100%;width: 100%;margin-top: auto;margin-bottom: auto;padding-left: 7%;padding-right: 10%;">
+                        <img src="{{ asset('../icon/SearchIcon.png') }}"
+                             style="margin-right: 6%;align-self: center;width: 6%;height: 50%;">
+                        <input type="text" name="search" placeholder="Chercher un produit, une marque…">
+                    </div>
+                </div>
+                <div class="TraitThird"></div>
+                <div class="Cart">
+                    <img src="{{ asset('../icon/Cart.png') }}" class="CartLogo">
+                </div>
+            </div>
         </div>
 
-    </div>
-
-    <div>
-        <img src="https://www.tombreton.com/wp-content/uploads/2015/05/pixabay.com_banque-dimages-gratuites_tombreton.jpg"
-             alt=""/>
-    </div>
-    <div>
-        <img src="https://www.tombreton.com/wp-content/uploads/2015/05/pixabay.com_banque-dimages-gratuites_tombreton.jpg"
-             alt=""/>
     </div>
 </head>
 <body>
