@@ -75,6 +75,7 @@ input[type=text]:focus {
     font-family: 'Heebo', sans-serif, medium;
     font-size: 17px;
     color: #707070;
+    text-decoration: none;
 }
 
 i.fa.fa-caret-down {
@@ -85,8 +86,20 @@ i.fa.fa-caret-down {
 }
 
 .Logo {
-    background: url("../icon/Logo.png") no-repeat;
-    background-size: 20%;
+    width: 37%;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.Logo:hover {
+    cursor: pointer;
+}
+
+.Cart {
+    width: 19%;
+    display: flex;
 }
 
 .Trait {
@@ -179,6 +192,17 @@ i.fa.fa-caret-down {
     .topnav input[type=text] {
         border: 1px solid #ccc;
     }
+}
+
+.CartLogo {
+    margin-left: auto;
+    margin-right: auto;
+    align-self: center;
+    height: 50%;
+}
+
+.CartLogo:hover {
+    background-color: #8959A8;
 }
 
 
