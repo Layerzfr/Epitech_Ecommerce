@@ -50,34 +50,41 @@ class CommandeController extends AbstractController
                 'delivery_zip' => $item->getDeliveryZip(),
                 'delivery_address' => $item->getDeliveryAddress(),
                 'mail_vendeur' => $item->getMailVendeur(),
-                'nom_vendeur' => $item->getNomVendeur()
+                'nom_vendeur' => $item->getNomVendeur(),
+                'code_command' => $item->getCodeCommand()
             );
         }
         return new JsonResponse($arrayCollection);
     }
 
     /**
-     * @Route("/api/getCommande/{id}", name="apiGetCommande", methods={"GET"})
+     * @Route("/api/getCommande/{code_command}", name="apiGetCommande", methods={"GET"})
      */
-    public function apiGetCommande($id)
+    public function apiGetCommande($code_command)
     {
-        $commande = $this->getDoctrine()->getRepository(Commande::class)->find($id);
+        $commande = $this->getDoctrine()->getRepository(Commande::class)->findBy(['code_command' => $code_command]);
 
-        $arrayCollection[] = array(
-            'id' => $commande->getId(),
-            'etat' => $commande->getEtat(),
-            'date_commande' => $commande->getDateCommande(),
-            'mode_livraison' => $commande->getModeLivraison(),
-            'qte' => $commande->getQte(),
-            'prix_article_commande' => $commande->getPrixArticleCommande(),
-            'frais_port' => $commande->getFraisPort(),
-            'delivery_country' => $commande->getDeliveryCountry(),
-            'delivery_city' => $commande->getDeliveryCity(),
-            'delivery_zip' => $commande->getDeliveryZip(),
-            'delivery_address' => $commande->getDeliveryAddress(),
-            'mail_vendeur' => $commande->getMailVendeur(),
-            'nom_vendeur' => $commande->getNomVendeur()
-        );
+        $arrayCollection = [];
+
+        /** @var Commande $item */
+        foreach($commande as $item) {
+            $arrayCollection[] = array(
+                'id' => $item->getId(),
+                'etat' => $item->getEtat(),
+                'date_commande' => $item->getDateCommande(),
+                'mode_livraison' => $item->getModeLivraison(),
+                'qte' => $item->getQte(),
+                'prix_article_commande' => $item->getPrixArticleCommande(),
+                'frais_port' => $item->getFraisPort(),
+                'delivery_country' => $item->getDeliveryCountry(),
+                'delivery_city' => $item->getDeliveryCity(),
+                'delivery_zip' => $item->getDeliveryZip(),
+                'delivery_address' => $item->getDeliveryAddress(),
+                'mail_vendeur' => $item->getMailVendeur(),
+                'nom_vendeur' => $item->getNomVendeur(),
+                'code_command' => $item->getCodeCommand()
+            );
+        }
 
         return new JsonResponse($arrayCollection);
     }
@@ -103,6 +110,7 @@ class CommandeController extends AbstractController
         $commande->setDeliveryAddress('create');
         $commande->setMailVendeur('create');
         $commande->setNomVendeur('create');
+        $commande->setCodeCommand(1);
 
         $arrayCollection[] = array(
             'id' => $commande->getId(),
@@ -117,7 +125,8 @@ class CommandeController extends AbstractController
             'delivery_zip' => $commande->getDeliveryZip(),
             'delivery_address' => $commande->getDeliveryAddress(),
             'mail_vendeur' => $commande->getMailVendeur(),
-            'nom_vendeur' => $commande->getNomVendeur()
+            'nom_vendeur' => $commande->getNomVendeur(),
+            'code_command' => $commande->getCodeCommand()
         );
 
         $entityManager->persist($commande);
@@ -148,6 +157,7 @@ class CommandeController extends AbstractController
         $commande->setDeliveryAddress('mdoif');
         $commande->setMailVendeur('mdoif');
         $commande->setNomVendeur('mdoif');
+        $commande->setCodeCommand(223);
 
         $arrayCollection[] = array(
             'id' => $commande->getId(),
@@ -162,7 +172,8 @@ class CommandeController extends AbstractController
             'delivery_zip' => $commande->getDeliveryZip(),
             'delivery_address' => $commande->getDeliveryAddress(),
             'mail_vendeur' => $commande->getMailVendeur(),
-            'nom_vendeur' => $commande->getNomVendeur()
+            'nom_vendeur' => $commande->getNomVendeur(),
+            'code_command' => $commande->getCodeCommand()
         );
 
         $entityManager->persist($commande);
@@ -173,14 +184,19 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("/api/deleteCommande/{id}", name="apiDeleteCommande", methods={"POST"})
+     * @Route("/api/deleteCommande/{code_command}", name="apiDeleteCommande", methods={"POST"})
      */
-    public function apiDeleteCommande($id)
+    public function apiDeleteCommande($code_command)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $commande = $this->getDoctrine()->getRepository(Commande::class)->find($id);
+        $commande = $this->getDoctrine()->getRepository(Commande::class)->findBy(['code_command' => $code_command]);
 
-        $entityManager->remove($commande);
+        /** @var Commande $item */
+        foreach($commande as $item) {
+                $entityManager->remove($item);
+        }
+
+
 
         $entityManager->flush();
 
