@@ -1,0 +1,19 @@
+.Body {
+    display: flex;
+    margin-top: 7%;
+    margin-left: 5%;
+    margin-right: 3.85%;
+}
+
+.Publicité {
+    display: flex;
+    margin-top: 4%;
+    width: 100%;
+    height: 100%;
+}
+
+.ImagePub {
+    background: url("../Pub/Pub_01.png") no-repeat;
+    width: 100%;
+    height: 50%
+}

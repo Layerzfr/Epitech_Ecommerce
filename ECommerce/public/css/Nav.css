@@ -9,6 +9,10 @@
     background-color: #FAFAFA;
 }
 
+body {
+    background-color: #FAFAFA;
+}
+
 input[type=text] {
     font-family: 'Heebo', sans-serif, medium;
     color: #969696;
