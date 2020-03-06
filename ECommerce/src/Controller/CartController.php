@@ -45,4 +45,32 @@ class CartController extends AbstractController
             'success' => true,
         ));
     }
+
+    /**
+     * @Route("/removeFromCart", name="removeFromCart", methods={"POST"})
+     */
+    public function removeFromCart()
+    {
+        $content = $_POST;
+        $session = $this->get('session');
+
+        $cartElements = $session->get('cartElements');
+        if(count($cartElements) === 0 ) {
+            $session->set('cartElements', array());
+        }
+
+        foreach($cartElements as $key => $value) {
+            if($value['id'] === $content['id']) {
+                unset($cartElements[$key]);
+            }
+        }
+
+        $session->set('cartElements', $cartElements);
+
+        return new JsonResponse(array(
+            'success' => $cartElements,
+        ));
+    }
+
+
 }
