@@ -67,9 +67,9 @@ class Article
     private $promotion;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Panier", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Commande", mappedBy="article")
      */
-    private $cart;
+    private $commande;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Image", inversedBy="articles",  cascade={"persist"})
@@ -222,4 +222,22 @@ class Article
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCommande()
+    {
+        return $this->commande;
+    }
+
+    /**
+     * @param mixed $commande
+     */
+    public function setCommande($commande)
+    {
+        $this->commande = $commande;
+    }
+
+
 }

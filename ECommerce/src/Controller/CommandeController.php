@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\Commande;
 use App\Form\CommandeType;
 use App\Repository\CommandeRepository;
@@ -104,18 +105,27 @@ class CommandeController extends AbstractController
 
             $commande = new Commande();
 
+            /** @var Article $article */
+            $article = $this->getDoctrine()->getRepository(Article::class)->find($produit['id']);
+
             $commande->setEtat('Commandé');
             $commande->setDateCommande(new \DateTime());
             $commande->setModeLivraison('Chronopost');
-            $commande->setQte(1);
-            $commande->setPrixArticleCommande(19.20);
-            $commande->setFraisPort(40);
-            $commande->setDeliveryCountry('create');
-            $commande->setDeliveryCity('create');
-            $commande->setDeliveryZip('create');
-            $commande->setDeliveryAddress('create');
-            $commande->setMailVendeur('create');
-            $commande->setNomVendeur('create');
+            $commande->setQte($produit['qty']);
+            $commande->setPrixArticleCommande($article->getPrixUnitaire());
+            $commande->setFraisPort(20);
+            $commande->setDeliveryCountry($produit['country']);
+            $commande->setDeliveryCity($produit['city']);
+            $commande->setDeliveryZip($produit['zip']);
+            $commande->setDeliveryAddress($produit['address']);
+            $commande->setMailVendeur($produit['mailVendeur']);
+            $commande->setNomVendeur($produit['nomVendeur']);
+
+            $commande->setUser( $this->getUser());
+
+            $commande->setArticle($article);
+
+
 
 
             if ($code_command) {

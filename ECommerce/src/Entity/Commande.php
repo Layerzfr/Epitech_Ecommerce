@@ -218,9 +218,27 @@ class Commande
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Panier", inversedBy="commandes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="commande")
      */
-    private $cart;
+    private $article;
+
+    /**
+     * @return mixed
+     */
+    public function getArticle()
+    {
+        return $this->article;
+    }
+
+    /**
+     * @param mixed $article
+     */
+    public function setArticle($article)
+    {
+        $this->article = $article;
+    }
+
+
 
     /**
      * @return mixed
