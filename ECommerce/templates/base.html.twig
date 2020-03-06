@@ -51,7 +51,11 @@
                 </div>
                 <div class="TraitThird"></div>
                 <div class="Cart">
-                    <img src="{{ asset('../icon/Cart.png') }}" class="CartLogo">
+                    <img src="{{ asset('../icon/Cart.png') }}" class="CartLogo0">
+                    <div class="Panier-line"></div>
+                    <div class="Panier-number">
+                        {% block cartNumber %}{% endblock %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -63,6 +67,8 @@
 {% block javascripts %}{% endblock %}
 
 <script>
+    var cartNumber = 0;
+
     function searchItem(term) {
         console.log(term);
         let data = {
@@ -83,6 +89,18 @@
             type: "POST",
             url: '/getCart',
             success: function (data) {
+                cartNumber = data.cart.length;
+                if (cartNumber > 0) {
+                    $('.Panier-number').replaceWith('<div class="Panier-number">' + data.cart.length + '</div>');
+                }
+                if (cartNumber > 0) {
+                    $('.CartLogo0').addClass('CartLogo1');
+                    $('.CartLogo1').removeClass('CartLogo0');
+                    $('.Panier-line').addClass('Underline');
+                    $('.Underline').removeClass('Panier-line');
+                    $('.Panier-number').addClass('Number');
+                    $('.Number').removeClass('Panier-number');
+                }
                 console.log(data);
             }
         });
