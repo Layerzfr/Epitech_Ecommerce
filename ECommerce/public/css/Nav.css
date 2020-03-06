@@ -102,6 +102,10 @@ i.fa.fa-caret-down {
     display: flex;
 }
 
+.Cart:hover {
+    cursor: pointer;
+}
+
 .Trait {
     width: 1.1%;
     background-color: #EAEAEA;
