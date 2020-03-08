@@ -1,19 +1,84 @@
-.Body {
+.body-pub {
     display: flex;
-    margin-top: 7%;
+    margin-bottom: 2%;
+    margin-top: 6%;
     margin-left: 5%;
     margin-right: 3.85%;
 }
 
-.Publicité {
+.body-promotions {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+    margin-right: 3.85%;
+}
+
+.body-nouveautés {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+    margin-right: 3.85%;
+}
+
+.body-nouveautés p {
+    font-family: 'Heebo', sans-serif, bold;
+    font-size: 25px;
+    color: #707070;
+    text-decoration: none;
+    margin-bottom: auto;
+}
+
+.body-promotions p {
+    font-family: 'Heebo', sans-serif, bold;
+    font-size: 25px;
+    color: #707070;
+    text-decoration: none;
+    margin-bottom: auto;
+}
+
+.publicité {
     display: flex;
     margin-top: 4%;
     width: 100%;
     height: 100%;
 }
 
-.ImagePub {
+.imagePub {
     background: url("../Pub/Pub_01.png") no-repeat;
     width: 100%;
     height: 50%
+}
+
+.promotions-home {
+    display: flex;
+    align-items: center;
+}
+
+.horizontal-big {
+    width: 11%;
+    height: 7px;
+    background-color: #7699A7;
+    z-index: 1;
+}
+
+.trait-horizontal {
+    width: 90%;
+    height: 1.3px;
+    background-color: #707070;
+    z-index: 0;
+}
+
+.promotion-produit {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    width: 100%;
+    height: 50%;
+}
+
+.produit-home-promotion {
+    margin-top: 3%;
+    width: 15%;
+    background-color: red;
 }
