@@ -7,12 +7,20 @@
     <link href="{{ asset('css/Article.css') }}" rel="stylesheet"/>
 
     <div class="article">
-        <div>
+        <div class="cell-img">
             {% for image in article.images %}
-                <img src="{{ image.lien }}" class="img-100"/>
+                <img src="{{ image.lien }}" class="img-60"/>
             {% endfor %}
         </div>
-        <p>{{ article.nom }}</p>
+        <div class="information-article">
+            <p class="title">{{ article.nom }}</p>
+            <p class="stock-texte">{% if article.qteEnStock > 0 %}
+                    <img src="{{ asset('icon/yes-stock.png') }}" class="stock">
+                {% else %}
+                    <img src="{{ asset('icon/no-stock.png') }}" class="stock">
+                {% endif %}
+                En stock</p>
+        </div>
     </div>
 
     <table class="table">
