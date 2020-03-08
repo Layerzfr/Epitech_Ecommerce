@@ -4,68 +4,38 @@
 
 {% block body %}
 
+    <link href="{{ asset('css/Article.css') }}" rel="stylesheet"/>
 
-    <p>PANIER QTY : {{ cart | length }}</p>
-    {% set total = 0 %}
-    {% for item in cart %}
-        <img src="{{ item.image }}">
-        <p> Nom : {{ item.nom }}</p>
-        <p>{{ item.qty }}</p>
-        <p>{{ item.qty * item.unitPrice }} €</p>
-        {% set total = total + item.qty * item.unitPrice %}
-        <button onclick="removeFromCart({{ item.id }})">Retirer du panier</button>
-    {% endfor %}
-   Total : {{ total }} €
-    <h1>Article</h1>
+    <div class="article">
+        <div>
+            {% for image in article.images %}
+                <img src="{{ image.lien }}" class="img-100"/>
+            {% endfor %}
+        </div>
+        <p>{{ article.nom }}</p>
+    </div>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ article.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ article.nom }}</td>
-            </tr>
-            <tr>
-                <th>Categorie</th>
-                <td>{{ article.categorie }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ article.description }}</td>
-            </tr>
-            <tr>
-                <th>Caracteristiques</th>
-                <td>{{ article.caracteristiques }}</td>
-            </tr>
-            <tr>
-                <th>PrixUnitaire</th>
-                <td>{{ article.prixUnitaire }}</td>
-            </tr>
-            <tr>
-                <th>Poids</th>
-                <td>{{ article.poids }}</td>
-            </tr>
-            <tr>
-                <th>QteEnStock</th>
-                <td>{{ article.qteEnStock }}</td>
-            </tr>
-            <tr>
-                <th>IsNew</th>
-                <td>{{ article.isNew ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Promotion</th>
-                <td>{{ article.promotion }}</td>
-            </tr>
         <tr>
-            <th>Images</th>
-            <td>{% for image in article.images %}
-                <img src="{{ image.lien }}"></img>
-            {% endfor %}
-            </td>
+            <th>Categorie</th>
+            <td>{{ article.categorie }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ article.description }}</td>
+        </tr>
+        <tr>
+            <th>Caracteristiques</th>
+            <td>{{ article.caracteristiques }}</td>
+        </tr>
+        <tr>
+            <th>PrixUnitaire</th>
+            <td>{{ article.prixUnitaire }}</td>
+        </tr>
+        <tr>
+            <th>QteEnStock</th>
+            <td>{{ article.qteEnStock }}</td>
         </tr>
         </tbody>
     </table>
@@ -86,7 +56,7 @@
         let imageArticle;
         {% for image in article.images %}
         {% if loop.first %}
-            imageArticle = "{{ image.lien }}";
+        imageArticle = "{{ image.lien }}";
         {% endif %}
         {% endfor %}
         $('#test').click(function () {
