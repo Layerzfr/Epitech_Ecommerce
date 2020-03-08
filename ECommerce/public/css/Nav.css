@@ -13,7 +13,7 @@ body {
     background-color: #FAFAFA;
 }
 
-input[type=text] {
+.navSearch {
     font-family: 'Heebo', sans-serif, medium;
     color: #969696;
     width: 100%;
@@ -22,7 +22,7 @@ input[type=text] {
     border: hidden;
 }
 
-input[type=text]:focus {
+.navSearch:focus {
     outline: none;
 }
 
