@@ -78,7 +78,78 @@
 }
 
 .produit-home-promotion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
     margin-top: 3%;
-    width: 15%;
-    background-color: red;
+    width: 17%;
+    background-color: white;
+    -webkit-box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+    -moz-box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+    box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+}
+
+.produit-home-promotion p {
+    font-family: 'Heebo', sans-serif, medium;
+    font-size: 14px;
+    color: #707070;
+    text-decoration: none;
+    margin-top: 0;
+}
+
+.produit-home-promotion p:hover {
+    font-family: 'Heebo', sans-serif, medium;
+    font-size: 14px;
+    color: #707070;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 0;
+}
+
+.produit-home-promotion a {
+    font-family: 'Heebo', sans-serif, medium;
+    font-size: 14px;
+    color: #7699A7;
+    text-decoration: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.img-100 {
+    padding: 10px 10px 10px 10px;
+    width: 85%;
+}
+
+.img-100:hover {
+    cursor: pointer;
+    width: 85%;
+}
+
+.voir-plus {
+    width: 85px;
+    display: flex;
+    align-items: center;
+    align-self: center;
+}
+
+.voir-plus img {
+    margin-top: 33px;
+    width: 36px;
+}
+
+.voir-plus img:hover {
+    -webkit-animation: rotation 0.5s;
+    cursor: pointer;
+    margin-top: 33px;
+    width: 36px;
+}
+
+@-webkit-keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(90deg);
+    }
 }
