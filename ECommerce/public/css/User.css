@@ -1,0 +1,94 @@
+.user-flex {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10%;
+    margin-left: 5%;
+    margin-right: 3.85%;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    height: auto;
+    width: 100%;
+    margin: 1%;
+    background-color: white;
+    -webkit-box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+    -moz-box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+    box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+}
+
+.user-info p {
+    font-family: 'Heebo', sans-serif, regular;
+    font-size: 19px;
+    color: #707070;
+    text-decoration: none;
+    margin: 5% 9% 5% 9%;
+}
+
+.user-setting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    height: auto;
+    width: 40%;
+    margin: 1%;
+    background-color: white;
+    -webkit-box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+    -moz-box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+    box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+}
+
+.user-setting p {
+    font-family: 'Heebo', sans-serif, regular;
+    padding: 1px;
+    font-size: 16px;
+    margin: 0;
+    color: #707070;
+    text-decoration: none;
+}
+
+.name {
+    font-family: 'Heebo', sans-serif, regular;
+    font-style: italic;
+    padding: 1px;
+    font-size: 16px;
+    margin: 0;
+    color: #707070;
+    text-decoration: none;
+}
+
+.disconnect {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.disconnect a {
+    font-family: 'Heebo', sans-serif, regular;
+    padding: 8px;
+    background-color: #DD5252;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 1%;
+    color: white;
+    text-decoration: none;
+}
+
+.disconnect a:hover {
+    cursor: pointer;
+    background-color: #733645;
+}
+
+.user-img {
+    background: black;
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+    margin-top: 6%;
+    margin-bottom: 6%;
+}
