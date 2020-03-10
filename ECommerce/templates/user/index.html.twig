@@ -9,12 +9,23 @@
     <div class="user-flex">
         <div class="user-setting">
             <div class="user-img">
-
+                <img src="{{ asset('icon/user.png') }}"/>
+                {#{% if user.image %}
+                    <img src="{{ asset('icon/user.png') }}"/>
+                    {% else %}
+                    <img src="{{ user.image }}">
+                {% endif %}#}
             </div>
             <p>Bonjour</p>
-            <p class="name">CUL</p>
+            <p class="name">{{ user.username }}</p>
             <div class="disconnect">
                 <a>ME DÉCONNECTER</a>
+            </div>
+            <div class="information-setting">
+                <p style="margin: auto;">Mes informations</p>
+            </div>
+            <div class="information-commandes">
+                <p style="margin: auto;" >Mes commandes</p>
             </div>
         </div>
         <div class="user-info">

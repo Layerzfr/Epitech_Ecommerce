@@ -57,7 +57,7 @@
     font-style: italic;
     padding: 1px;
     font-size: 16px;
-    margin: 0;
+    margin-bottom: 5% !important;
     color: #707070;
     text-decoration: none;
 }
@@ -85,10 +85,53 @@
 }
 
 .user-img {
-    background: black;
+    background: white;
     border-radius: 50%;
     height: 100px;
     width: 100px;
     margin-top: 6%;
     margin-bottom: 6%;
+    border: 1px solid #E5E5E5;
+    -webkit-box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+    -moz-box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+    box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+}
+
+.user-img img {
+    margin: auto;
+    margin-top: 9px;
+}
+
+.information-setting {
+    justify-content: center;
+    margin-top: 10%;
+    width: 100%;
+    height: 50px;
+    border-top: 2px solid #E0E0E0;
+    border-bottom: 2px solid #E0E0E0;
+    background-color: white;
+    display: flex;
+}
+
+.information-commandes {
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+    background-color: #c6c6c6;
+    display: flex;
+}
+
+.information-commandes:focus {
+    background-color: red;
+}
+
+.information-commandes:hover p{
+    cursor: pointer;
+    color: white;
+}
+
+.information-commandes:hover{
+    cursor: pointer;
+    color: white;
+    background-color: #707070;
 }
