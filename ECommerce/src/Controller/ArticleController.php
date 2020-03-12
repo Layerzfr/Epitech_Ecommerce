@@ -102,16 +102,28 @@ class ArticleController extends AbstractController
 
         $arrayCollection = [];
 
-        //TODO
-//        foreach ($articles as $article)
-//        {
-//            $arrayCollection[] = {}
-//        }
+
+        /** @var Article $item */
+        foreach($articles as $item) {
 
 
+            $arrayCollection[] = array(
+                'id' => $item->getId(),
+                'nom' => $item->getNom(),
+                'categorie' => $item->getCategorie(),
+                'description' => $item->getDescription(),
+                'caracteristiques' => $item->getCaracteristiques(),
+                'prix_unitaire' => $item->getPrixUnitaire(),
+                'poids' => $item->getPoids(),
+                'qte_en_stock' => $item->getQteEnStock(),
+                'is_new' => $item->getIsNew(),
+                'promotion' => $item->getPromotion(),
+                'image' => $item->getImages()->first()->getLien(),
+            );
+        }
 
         return new JsonResponse([
-            'articles' => $articles
+            'articles' => $arrayCollection
         ]);
     }
 
