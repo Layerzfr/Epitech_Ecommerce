@@ -3,7 +3,7 @@
 {% block title %}Hello CartController!{% endblock %}
 
 {% block body %}
-<div>
+<div style="display: flex; flex-direction: column; align-content: center; margin-top: 20%">
     <p>PANIER QTY : {{ cart | length }}</p>
     {% set total = 0 %}
     {% for item in cart %}
