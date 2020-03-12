@@ -163,17 +163,23 @@
 
 .btn {
     display: flex;
+    align-items: center;
+    margin-top: 27%;
     flex-direction: column;
     border: none;
     outline: none;
     padding: 12px 16px;
-    background-color: #f1f1f1;
     cursor: pointer;
+    font-family: 'Heebo', sans-serif, medium;
+    font-size: 14px;
+    color: #ffffff;
+    background: #5c9cd8;
+    border-radius: 4px;
 }
 
 /* Add a light grey background on mouse-over */
 .btn:hover {
-    background-color: #ddd;
+    background-color: #4588b4;
 }
 
 .slidecontainer {
@@ -226,6 +232,7 @@
     display: flex;
     align-content: center;
     z-index: 10;
+    margin-top: 14%;
 }
 
 /** Custom Select **/
@@ -238,14 +245,15 @@
     display: none;
 }
 .custom-select {
+    width: 178px !important;
     position: relative;
     display: inline-block;
 }
 .custom-select-trigger {
     position: relative;
     display: block;
-    padding: 0 165% 0 40%;
-    font-size: 22px;
+    padding: 0 84px 0 22px;
+    font-size: 20px;
     font-weight: 300;
     color: #fff;
     line-height: 45px;
