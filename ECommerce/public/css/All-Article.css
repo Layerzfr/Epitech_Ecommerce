@@ -163,17 +163,23 @@
 
 .btn {
     display: flex;
+    align-items: center;
+    margin-top: 27%;
     flex-direction: column;
     border: none;
     outline: none;
     padding: 12px 16px;
-    background-color: #f1f1f1;
     cursor: pointer;
+    font-family: 'Heebo', sans-serif, medium;
+    font-size: 14px;
+    color: #ffffff;
+    background: #5c9cd8;
+    border-radius: 4px;
 }
 
 /* Add a light grey background on mouse-over */
 .btn:hover {
-    background-color: #ddd;
+    background-color: #4588b4;
 }
 
 .slidecontainer {
@@ -226,6 +232,7 @@
     display: flex;
     align-content: center;
     z-index: 10;
+    margin-top: 14%;
 }
 
 /** Custom Select **/
@@ -238,18 +245,18 @@
     display: none;
 }
 .custom-select {
+    width: 178px !important;
     position: relative;
     display: inline-block;
 }
 .custom-select-trigger {
     position: relative;
     display: block;
-    width: 130px;
-    padding: 0 84px 0 22px;
-    font-size: 22px;
+    padding-left: 30px;
+    font-size: 15px;
     font-weight: 300;
     color: #fff;
-    line-height: 60px;
+    line-height: 45px;
     background: #5c9cd8;
     border-radius: 4px;
     cursor: pointer;
@@ -275,7 +282,7 @@
     position: absolute;
     display: block;
     top: 100%; left: 0; right: 0;
-    min-width: 100%;
+    min-width: 80%;
     margin: 15px 0;
     border: 1px solid #b5b5b5;
     border-radius: 4px;
@@ -338,6 +345,7 @@
 .tg-list {
     text-align: center;
     display: -webkit-box;
+    padding: 0;
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -489,6 +497,35 @@
 .tgl-flip:checked + .tgl-btn:active:after {
     -webkit-transform: rotateY(20deg);
     transform: rotateY(20deg);
+}
+
+.text-toggle {
+    font-family: 'Heebo', sans-serif, medium;
+    font-size: 19px;
+    margin-left: 11%;
+    color: #707070;
+    text-decoration: none;
+}
+
+.toggle-button {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+}
+
+.price-select {
+    font-family: 'Heebo', sans-serif, medium;
+    font-size: 19px;
+    color: #707070;
+    text-decoration: none;
+    margin: 0;
+
+}
+
+.filterContainer {
+    display: flex;
+    flex-direction: column;
+    width: 68%;
 }
 
 

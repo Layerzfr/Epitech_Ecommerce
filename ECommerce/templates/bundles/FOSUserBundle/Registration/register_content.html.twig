@@ -11,35 +11,27 @@
 
     <link href="{{ asset('css/Login.css') }}" rel="stylesheet"/>
 
-    <div action="{{ path("fos_user_security_check") }}" method="post">
-        <form action="{{ path("fos_user_security_check") }}" method="post">
+    <div action="{{ path("fos_user_registration_register") }}" method="post">
+        <form action="{{ path("fos_user_registration_register") }}" method="post">
+            {{ form_widget(form._token) }}
             <div id="slideBox">
                 <div class="topLayer">
                     <div class="right">
                         <div class="content">
                             <h2>Register</h2>
+                            {{ form_errors(form) }}
                             <form id="form-login" method="post" onsubmit="return false;">
                                 <div class="form-element form-stack">
-                                    <label for="username" class="form-label">{{ 'username'|trans }}</label>
-                                    <input id="username" type="text" name="_username" value=""
-                                           required="required"
-                                           autocomplete="username">
+                                    {{ form_label(form.username) }}
+                                    {{ form_widget(form.username) }}
                                 </div>
                                 <div class="form-element form-stack">
-                                    <label for="password" class="form-label">{{ 'password'|trans }}</label>
-                                    <input id="password" type="password" name="_password" required="required"
-                                           autocomplete="current-password">
+                                    {{form_label(form.plainPassword)}}
+                                    {{form_widget(form.plainPassword)}}
                                 </div>
                                 <div class="form-element form-stack">
-                                    <label for="password" class="form-label">{{ 'Repeat password'|trans }}</label>
-                                    <input id="password" type="password" name="_password" required="required"
-                                           autocomplete="current-password">
-                                </div>
-                                <div class="form-element form-stack">
-                                    <label for="username" class="form-label">{{ 'adress mail'|trans }}</label>
-                                    <input id="username" type="text" name="_adressmail" value=""
-                                           required="required"
-                                           autocomplete="username">
+                                    {{ form_label(form.email) }}
+                                    {{ form_widget(form.email) }}
                                 </div>
                                 <div class="form-element form-submit">
                                     <button class="login" type="submit" value="{{ 'registration.submit'|trans }}">Sign

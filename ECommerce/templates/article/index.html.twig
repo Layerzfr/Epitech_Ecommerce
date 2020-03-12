@@ -9,35 +9,34 @@
 
     <div class="articleWithFilter">
         <div class="filter" id="myBtnContainer">
-
-            <div class="center">
-                <select name="sources" id="sources" class="custom-select sources" placeholder="Catégorie">
-                </select>
-            </div>
-
-            <select class="custom-dropdown" id="select">
-                <option></option>
-            </select>
-            <button class="btn" onclick="filter()"> Show all</button>
-            <ul class="tg-list">
-                <input class="tgl tgl-skewed" id="cb3" type="checkbox" onclick="checkNew()"/>
-                <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="cb3"></label>
-                <p>Nouveaux</p>
-            </ul>
-            <ul class="tg-list">
-                <input class="tgl tgl-skewed" id="cb3" type="checkbox" onclick="onlyPromo()"/>
-                <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="cb3"></label>
-                <p>En promotion</p>
-            </ul>
-            <ul class="tg-list">
-                <input class="tgl tgl-skewed" id="cb3" type="checkbox" onclick="onlyStock()"/>
-                <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="cb3"></label>
-                <p>En stock</p>
-            </ul>
-            <div style="z-index: 0;">
-                <p id="price">1</p>
-                <input type="range" min="1" max="1000" value="1" class="slider" id="myRange"
-                       onchange="minFilter($(this).val())">
+            <div class="filterContainer">
+                <button class="btn" onclick="filter()"> Show all</button>
+                <div class="center">
+                    <select name="sources" id="sources" class="custom-select sources" placeholder="Catégorie">
+                    </select>
+                </div>
+                <div class="toggle-button">
+                    <ul class="tg-list">
+                        <input class="tgl tgl-skewed" id="cb3" type="checkbox" onclick="checkNew()"/>
+                        <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="cb3"></label>
+                        <p class="text-toggle">Nouveaux</p>
+                    </ul>
+                    <ul class="tg-list">
+                        <input class="tgl tgl-skewed" id="cb4" type="checkbox" onclick="onlyPromo()"/>
+                        <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="cb4"></label>
+                        <p class="text-toggle">Promotion</p>
+                    </ul>
+                    <ul class="tg-list">
+                        <input class="tgl tgl-skewed" id="cb5" type="checkbox" onclick="onlyStock()"/>
+                        <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="cb5"></label>
+                        <p class="text-toggle">Stock</p>
+                    </ul>
+                </div>
+                <div style="z-index: 0;">
+                    <p class="price-select" id="price">1</p>
+                    <input type="range" min="1" max="1000" value="1" class="slider" id="myRange"
+                           onchange="minFilter($(this).val())">
+                </div>
             </div>
         </div>
 
@@ -129,7 +128,7 @@
             url: '/article/api/getCategories',
             success: function (data) {
                 data.forEach(element => {
-                    $('#sources').append('<option value="'+element+'">' + element + '</option>')
+                    $('#sources').append('<option value="' + element + '">' + element + '</option>')
                 });
                 test();
             }
@@ -210,7 +209,7 @@
                     '                        <img class="img-10" src="' + element.image + '">\n' +
                     '                <div class="nom-description">\n' +
                     '                    <p class="text">' + element.nom + '</p>\n' +
-                    '                    <p class="crop">' + element.caracteristiques + '</p>\n' +
+                    '                    <p class="crop">' + element.caracteristiques.substr(0,25) + '...</p>\n' +
                     '                </div>\n' +
                     '                <div class="stock-price">\n' +
                     '                    <p class="prix">' + element.prixUnitaire + '&#8364</p>\n' +
