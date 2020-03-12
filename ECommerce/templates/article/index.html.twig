@@ -8,17 +8,63 @@
 
 
     <div class="articleWithFilter">
-        <div id="myBtnContainer">
-            <select id="select">
+        <div class="filter" id="myBtnContainer">
+
+            <div class="select-box">
+                <div class="select-box__current" tabindex="1">
+                    <div class="select-box__value">
+                        <input class="select-box__input" type="radio" id="0" value="1" name="Ben" checked="checked"/>
+                        <p class="select-box__input-text">Cream</p>
+                    </div>
+                    <div class="select-box__value">
+                        <input class="select-box__input" type="radio" id="1" value="2" name="Ben" checked="checked"/>
+                        <p class="select-box__input-text">Cheese</p>
+                    </div>
+                    <div class="select-box__value">
+                        <input class="select-box__input" type="radio" id="2" value="3" name="Ben" checked="checked"/>
+                        <p class="select-box__input-text">Milk</p>
+                    </div>
+                    <div class="select-box__value">
+                        <input class="select-box__input" type="radio" id="3" value="4" name="Ben" checked="checked"/>
+                        <p class="select-box__input-text">Honey</p>
+                    </div>
+                    <div class="select-box__value">
+                        <input class="select-box__input" type="radio" id="4" value="5" name="Ben" checked="checked"/>
+                        <p class="select-box__input-text">Catégorie</p>
+                    </div>
+                    <img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg"
+                         alt="Arrow Icon" aria-hidden="true"/>
+                </div>
+                <ul class="select-box__list">
+                    <li>
+                        <label class="select-box__option" for="0" aria-hidden="aria-hidden">Cream</label>
+                    </li>
+                    <li>
+                        <label class="select-box__option" for="1" aria-hidden="aria-hidden">Cheese</label>
+                    </li>
+                    <li>
+                        <label class="select-box__option" for="2" aria-hidden="aria-hidden">Milk</label>
+                    </li>
+                    <li>
+                        <label class="select-box__option" for="3" aria-hidden="aria-hidden">Honey</label>
+                    </li>
+                    <li>
+                        <label class="select-box__option" for="4" aria-hidden="aria-hidden">Toast</label>
+                    </li>
+                </ul>
+            </div>
+
+            <select class="custom-dropdown" id="select">
                 <option></option>
             </select>
             <button class="btn" onclick="filter()"> Show all</button>
             <button class="btn" onclick="checkNew()"> Nouveaux</button>
             <button class="btn" onclick="onlyPromo()"> En promotion</button>
             <button class="btn" onclick="onlyStock()"> En stock</button>
-            <div>
+            <div style="z-index: 0;">
                 <p id="price">1</p>
-                <input type="range" min="1" max="1000" value="1" class="slider" id="myRange" onchange="minFilter($(this).val())">
+                <input type="range" min="1" max="1000" value="1" class="slider" id="myRange"
+                       onchange="minFilter($(this).val())">
             </div>
         </div>
 
@@ -74,18 +120,18 @@
 
 
         {% for article in articles %}
-            var newArticle = [];
-            newArticle['isNew'] = "{{ article.isNew ? 'New' : null }}";
-            newArticle['nom'] = "{{ article.nom }}";
-            newArticle['caracteristiques'] = "{{ article.caracteristiques |truncate(30, true)}}";
-            newArticle['prixUnitaire'] = "{{ article.prixUnitaire }}";
+        var newArticle = [];
+        newArticle['isNew'] = "{{ article.isNew ? 'New' : null }}";
+        newArticle['nom'] = "{{ article.nom }}";
+        newArticle['caracteristiques'] = "{{ article.caracteristiques |truncate(30, true) }}";
+        newArticle['prixUnitaire'] = "{{ article.prixUnitaire }}";
         {% if article.qteEnStock > 0 %}
         newArticle['isqteEnStock'] = "<img src=\"{{ asset('icon/yes-stock.png') }}\" class=\"stock\">"
         {% else %}
         newArticle['isqteEnStock'] = "<img src=\"{{ asset('icon/no-stock.png') }}\" class=\"stock\">";
         {% endif %}
-            newArticle['qteEnStock'] = "{{ article.qteEnStock }}";
-            newArticle['promotion'] = "{{ article.promotion }}";
+        newArticle['qteEnStock'] = "{{ article.qteEnStock }}";
+        newArticle['promotion'] = "{{ article.promotion }}";
         newArticle['categorie'] = "{{ article.categorie }}";
         {% if article.promotion > 0 %}
         newArticle['ispromotion'] = "-{{ article.promotion }}";
@@ -93,7 +139,7 @@
         newArticle['ispromotion'] = "";
         {% endif %}
 
-            newArticle['id'] = "{{ article.id }}";
+        newArticle['id'] = "{{ article.id }}";
         {% for image in article.images %}
         {% if loop.first %}
         newArticle['image'] = "{{ image.lien }}";
@@ -101,7 +147,7 @@
         {% endfor %}
 
 
-            articles.push(newArticle);
+        articles.push(newArticle);
         {% endfor %}
 
 
@@ -110,7 +156,7 @@
             url: '/article/api/getCategories',
             success: function (data) {
                 data.forEach(element => {
-                    $('#select').append('<option>'+element+'</option>')
+                    $('#select').append('<option>' + element + '</option>')
                 });
             }
         });
@@ -120,8 +166,7 @@
             showArticles();
         });
 
-        function filter()
-        {
+        function filter() {
             showAll = true;
             articles = [];
             $.ajax({
@@ -131,24 +176,24 @@
 
                     data.forEach(element => {
                         var newArticle = [];
-                        if(element.is_new) {
+                        if (element.is_new) {
                             newArticle['isNew'] = 'New';
                         } else {
                             newArticle['isNew'] = '';
                         }
-                        newArticle['nom'] = ""+element.nom;
-                        newArticle['caracteristiques'] = ""+element.caracteristiques;
-                        newArticle['prixUnitaire'] = ""+element.prix_unitaire;
-                        newArticle['categorie'] = ""+element.categorie;
-                        if(element.qte_en_stock > 0) {
+                        newArticle['nom'] = "" + element.nom;
+                        newArticle['caracteristiques'] = "" + element.caracteristiques;
+                        newArticle['prixUnitaire'] = "" + element.prix_unitaire;
+                        newArticle['categorie'] = "" + element.categorie;
+                        if (element.qte_en_stock > 0) {
                             newArticle['isqteEnStock'] = "<img src=\"{{ asset('icon/yes-stock.png') }}\" class=\"stock\">"
                         } else {
                             newArticle['isqteEnStock'] = "<img src=\"{{ asset('icon/no-stock.png') }}\" class=\"stock\">";
                         }
-                        newArticle['qteEnStock'] = ""+element.qte_en_stock;
-                        newArticle['promotion'] = ""+element.promotion;
-                        if(element.promotion > 0) {
-                            newArticle['ispromotion'] = "-"+element.promotion;
+                        newArticle['qteEnStock'] = "" + element.qte_en_stock;
+                        newArticle['promotion'] = "" + element.promotion;
+                        if (element.promotion > 0) {
+                            newArticle['ispromotion'] = "-" + element.promotion;
                         } else {
                             newArticle['ispromotion'] = "";
                         }
@@ -164,21 +209,21 @@
 
             showArticles();
         }
-        function showArticles()
-        {
+
+        function showArticles() {
             $('.all-article').html('');
             articles.forEach(element => {
                 console.log(element.prixUnitaire);
-                if(min >= parseInt(element.prixUnitaire)) {
+                if (min >= parseInt(element.prixUnitaire)) {
                     return;
                 }
-                if(category !== "") {
-                    if(category !== element.categorie) {
+                if (category !== "") {
+                    if (category !== element.categorie) {
                         return;
                     }
                 }
-                if(showAll === false) {
-                    if(((isNew === true && element.isNew === '') || (isNew === false && element.isNew === 'New')) || ((isPromo === true && element.promotion <= 0) || (isPromo === false && element.promotion > 0) )
+                if (showAll === false) {
+                    if (((isNew === true && element.isNew === '') || (isNew === false && element.isNew === 'New')) || ((isPromo === true && element.promotion <= 0) || (isPromo === false && element.promotion > 0))
                         || ((isStock === true && element.isqteEnStock === "<img src=\"{{ asset('icon/no-stock.png') }}\" class=\"stock\">") || (isStock === false && element.isqteEnStock === "<img src=\"{{ asset('icon/yes-stock.png') }}\" class=\"stock\">"))
                     ) {
                         return;
@@ -186,26 +231,27 @@
                 }
                 $('.all-article').append(
                     '<div class="article">\n' +
-                        '<p class="new">'+element.isNew+'</p>\n'+
-                '                        <img class="img-10" src="'+element.image+'">\n' +
-                '                <div class="nom-description">\n' +
-                '                    <p class="text">'+element.nom+'</p>\n' +
-                '                    <p class="crop">'+element.caracteristiques+'</p>\n' +
-                '                </div>\n' +
-                '                <div class="stock-price">\n' +
-                '                    <p class="prix">'+element.prixUnitaire+'&#8364</p>\n'+
-                        '<p class="stock-texte">'+element.isqteEnStock+' En stock</p>'+
+                    '<p class="new">' + element.isNew + '</p>\n' +
+                    '                        <img class="img-10" src="' + element.image + '">\n' +
+                    '                <div class="nom-description">\n' +
+                    '                    <p class="text">' + element.nom + '</p>\n' +
+                    '                    <p class="crop">' + element.caracteristiques + '</p>\n' +
+                    '                </div>\n' +
+                    '                <div class="stock-price">\n' +
+                    '                    <p class="prix">' + element.prixUnitaire + '&#8364</p>\n' +
+                    '<p class="stock-texte">' + element.isqteEnStock + ' En stock</p>' +
 
-                '                </div>\n' +
-                '                <p class="text-promotion">\n' + element.ispromotion + '</p>\n' +
-                '                <div class="show-edit">\n' +
-                '                    <a href="/article/'+element.id+'">show</a>\n'+
-                '                    <a href="/article/'+element.id+'/edit">Edit</a>\n'
+                    '                </div>\n' +
+                    '                <p class="text-promotion">\n' + element.ispromotion + '</p>\n' +
+                    '                <div class="show-edit">\n' +
+                    '                    <a href="/article/' + element.id + '">show</a>\n' +
+                    '                    <a href="/article/' + element.id + '/edit">Edit</a>\n'
                 );
             })
         }
 
         showArticles();
+
         function readMore() {
             var dots = document.getElementById("dots");
             var moreText = document.getElementById("more");
@@ -222,7 +268,7 @@
             }
         }
 
-        $('#myRange').on("change mousemove", function() {
+        $('#myRange').on("change mousemove", function () {
             $('#price').html($(this).val());
         });
     </script>
