@@ -37,13 +37,21 @@ class CommandeController extends AbstractController
      */
     public function facture($id, Pdf $pdf)
     {
+        $factures = $this->getDoctrine()->getRepository(Commande::class)->findBy([
+            'code_command' => $id
+        ]);
+
+        $facture = $this->getDoctrine()->getRepository(Commande::class)->findOneBy([
+            'code_command' => $id
+        ]);
         $html = $this->renderView('invoice/index.html.twig', array(
-            'some'  => $id
+            'facture' => $facture,
+            'factures'  => $factures,
         ));
 
         return new PdfResponse(
             $pdf->getOutputFromHtml($html),
-            'file.pdf'
+            'facture.pdf'
         );
     }
 
