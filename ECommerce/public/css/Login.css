@@ -227,6 +227,10 @@ button.off.login {
     color: #7699A7;
 }
 
+.vide {
+    margin-top: 2%;
+}
+
 button:focus, button:active, button:hover {
     box-shadow: 0 4px 7px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
 }
