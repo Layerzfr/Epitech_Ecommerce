@@ -14,10 +14,18 @@
     {% block stylesheets %}{% endblock %}
 
     <div class="HEADER">
-        <div class="user">
-            <img src="{{ asset('icon/user.png') }}">
-            <p onclick="window.location.href='user/user'">Compte</p>
-        </div>
+
+        {% if app.user %}
+            <div class="user">
+                <img src="{{ asset('icon/user.png') }}">
+                <p onclick="window.location.href='/user/user'">Compte</p>
+            </div>
+            {% else %}
+                <div class="user">
+                    <img src="{{ asset('icon/user.png') }}">
+                    <p onclick="window.location.href='/login'">Se connecter</p>
+                </div>
+        {% endif %}
         <div class="Navbar">
             <div class="NavbarColumnLogo">
                 <img src="{{ asset('icon/Logo.png') }}" class="Logo" onclick="window.location.href='/'">
