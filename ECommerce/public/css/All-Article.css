@@ -57,6 +57,10 @@
 }
 
 .crop {
+    font-family: 'Heebo', sans-serif, medium;
+    font-size: 14px;
+    color: #454545;
+    text-decoration: none;
     white-space: nowrap;
     width: 100%;
     overflow: hidden;

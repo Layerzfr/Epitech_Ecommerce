@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link href="{{ asset('css/Login.css') }}" rel="stylesheet"/>
+
+    {% if csrf_token %}
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+    {% endif %}
+
+    {#<form action="{{ path("fos_user_security_check") }}" method="post">
+        {% if csrf_token %}
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+        {% endif %}
+    </form>#}
+    <div action="{{ path("fos_user_security_check") }}" method="post">
+        <form action="{{ path("fos_user_security_check") }}" method="post">
+            <div id="slideBox">
+                <div class="topLayer">
+                    <div class="right">
+                        <div class="content">
+                            <h2>Login</h2>
+                            <form id="form-login" method="post" onsubmit="return false;">
+                                <div class="form-element form-stack">
+                                    <label for="username" class="form-label">{{ 'username'|trans }}</label>
+                                    <input id="username" type="text" name="_username" value="{{ last_username }}"
+                                           required="required"
+                                           autocomplete="username">
+                                </div>
+                                <div class="form-element form-stack">
+                                    <label for="password" class="form-label">{{ 'password'|trans }}</label>
+                                    <input id="password" type="password" name="_password" required="required"
+                                           autocomplete="current-password">
+                                </div>
+                                <div class="form-element form-submit">
+                                    <button id="_submit" class="login" type="submit" name="_submit"
+                                            onclick="{{ 'submit'|trans }}">Log In
+                                    </button>
+                                    <button id="goRight" class="login off" name="signup"
+                                            onclick="window.location.href='register'">Sign Up
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
