@@ -3,24 +3,184 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-{#<div class="example-wrapper">
+    <link href="{{ asset('css/Home.css') }}" rel="stylesheet"/>
 
-    {% for article in articles %}
-        {{ article.nom }}       #}{# Appel des données avec une boucle for, ici "articles" qui se trouve dans Home Controller ligne 19 #}{#
-            {% for image in article.images %}
-                <img src="{{ image.lien }}"/>
-            {% endfor %}
-    {% endfor %}
+    <div class="structure">
+        <div class="body-pub">
+            <div class="publicité">
+                <img src="{{ asset('Pub/Pub_01.png') }}" class="imagePub">
+            </div>
+            <div class="promotions-home">
+            </div>
+        </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/WEB_ecommerce_2019/ECommerce/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/WEB_ecommerce_2019/ECommerce/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-</div>#}
+        <div class="body-promotions">
+            <p>Promotions</p>
+            <div class="promotions-home">
+                <div class="horizontal-big"></div>
+                <div class="trait-horizontal"></div>
+            </div>
+            <div class="promotion-produit">
+                <div class="produit-home-promotion">
+                    {% for article in articles %}
+                        {% if article.id is same as(4) %}
+                            {% for image in article.images %}
+                                {% if loop.first %}
+                                    <img src="{{ image.lien }}" class="img-100"
+                                         onclick="window.location.href='article/4'"/>
+                                {% endif %}
+                            {% endfor %}
+                            <p onclick="window.location.href='article/4'">{{ article.nom }}</p>
+                            <a> {{ article.prixUnitaire }} &#8364</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="produit-home-promotion">
+                    {% for article in articles %}
+                        {% if article.id is same as(5) %}
+                            {% for image in article.images %}
+                                {% if loop.first %}
+                                    <img src="{{ image.lien }}" class="img-100"
+                                         onclick="window.location.href='article/5'"/>
+                                {% endif %}
+                            {% endfor %}
+                            <p onclick="window.location.href='article/5'">{{ article.nom }}</p>
+                            <a> {{ article.prixUnitaire }} &#8364</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="produit-home-promotion">
+                    {% for article in articles %}
+                        {% if article.id is same as(6) %}
+                            {% for image in article.images %}
+                                {% if loop.first %}
+                                    <img src="{{ image.lien }}" class="img-100"
+                                         onclick="window.location.href='article/6'"/>
+                                {% endif %}
+                            {% endfor %}
+                            <p onclick="window.location.href='article/6'">{{ article.nom }}</p>
+                            <a> {{ article.prixUnitaire }} &#8364</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="produit-home-promotion">
+                    {% for article in articles %}
+                        {% if article.id is same as(7) %}
+                            {% for image in article.images %}
+                                {% if loop.first %}
+                                    <img src="{{ image.lien }}" class="img-100"
+                                         onclick="window.location.href='article/7'"/>
+                                {% endif %}
+                            {% endfor %}
+                            <p onclick="window.location.href='article/7'">{{ article.nom }}</p>
+                            <a> {{ article.prixUnitaire }} &#8364</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="produit-home-promotion">
+                    {% for article in articles %}
+                        {% if article.id is same as(8) %}
+                            {% for image in article.images %}
+                                {% if loop.first %}
+                                    <img src="{{ image.lien }}" class="img-100"
+                                         onclick="window.location.href='article/8'"/>
+                                {% endif %}
+                            {% endfor %}
+                            <p onclick="window.location.href='article/8'">{{ article.nom }}</p>
+                            <a> {{ article.prixUnitaire }} &#8364</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="voir-plus">
+                <img src="{{ asset('icon/cross_01.png') }}" onclick="window.location.href='article/promotion'">
+            </div>
+        </div>
+
+        <div class="body-promotions">
+            <p>Nouveautés</p>
+            <div class="promotions-home">
+                <div class="horizontal-big"></div>
+                <div class="trait-horizontal"></div>
+            </div>
+            <div class="promotion-produit">
+                <div class="produit-home-promotion">
+                    {% for article in articles %}
+                        {% if article.id is same as(4) %}
+                            {% for image in article.images %}
+                                {% if loop.first %}
+                                    <img src="{{ image.lien }}" class="img-100"
+                                         onclick="window.location.href='article/4'"/>
+                                {% endif %}
+                            {% endfor %}
+                            <p onclick="window.location.href='article/4'">{{ article.nom }}</p>
+                            <a> {{ article.prixUnitaire }} &#8364</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="produit-home-promotion">
+                    {% for article in articles %}
+                        {% if article.id is same as(5) %}
+                            {% for image in article.images %}
+                                {% if loop.first %}
+                                    <img src="{{ image.lien }}" class="img-100"
+                                         onclick="window.location.href='article/5'"/>
+                                {% endif %}
+                            {% endfor %}
+                            <p onclick="window.location.href='article/5'">{{ article.nom }}</p>
+                            <a> {{ article.prixUnitaire }} &#8364</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="produit-home-promotion">
+                    {% for article in articles %}
+                        {% if article.id is same as(6) %}
+                            {% for image in article.images %}
+                                {% if loop.first %}
+                                    <img src="{{ image.lien }}" class="img-100"
+                                         onclick="window.location.href='article/6'"/>
+                                {% endif %}
+                            {% endfor %}
+                            <p onclick="window.location.href='article/6'">{{ article.nom }}</p>
+                            <a> {{ article.prixUnitaire }} &#8364</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="produit-home-promotion">
+                    {% for article in articles %}
+                        {% if article.id is same as(7) %}
+                            {% for image in article.images %}
+                                {% if loop.first %}
+                                    <img src="{{ image.lien }}" class="img-100"
+                                         onclick="window.location.href='article/7'"/>
+                                {% endif %}
+                            {% endfor %}
+                            <p onclick="window.location.href='article/7'">{{ article.nom }}</p>
+                            <a> {{ article.prixUnitaire }} &#8364</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="produit-home-promotion">
+                    {% for article in articles %}
+                        {% if article.id is same as(8) %}
+                            {% for image in article.images %}
+                                {% if loop.first %}
+                                    <img src="{{ image.lien }}" class="img-100"
+                                         onclick="window.location.href='article/8'"/>
+                                {% endif %}
+                            {% endfor %}
+                            <p onclick="window.location.href='article/8'">{{ article.nom }}</p>
+                            <a> {{ article.prixUnitaire }} &#8364</a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="voir-plus">
+                <img src="{{ asset('icon/cross_01.png') }}" onclick="window.location.href='article/promotion'">
+            </div>
+        </div>
+
+    </div>
+
 {% endblock %}

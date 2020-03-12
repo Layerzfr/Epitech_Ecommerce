@@ -2,95 +2,86 @@
 
 {% block title %}Article{% endblock %}
 
-
 {% block body %}
 
+    <link href="{{ asset('css/Article.css') }}" rel="stylesheet"/>
 
-    <p>PANIER QTY : {{ cart | length }}</p>
-    {% set total = 0 %}
-    {% for item in cart %}
-        <img src="{{ item.image }}">
-        <p> Nom : {{ item.nom }}</p>
-        <p>{{ item.qty }}</p>
-        <p>{{ item.qty * item.unitPrice }} €</p>
-        {% set total = total + item.qty * item.unitPrice %}
-        <button onclick="removeFromCart({{ item.id }})">Retirer du panier</button>
-    {% endfor %}
-   Total : {{ total }} €
-    <h1>Article</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ article.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ article.nom }}</td>
-            </tr>
-            <tr>
-                <th>Categorie</th>
-                <td>{{ article.categorie }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ article.description }}</td>
-            </tr>
-            <tr>
-                <th>Caracteristiques</th>
-                <td>{{ article.caracteristiques }}</td>
-            </tr>
-            <tr>
-                <th>PrixUnitaire</th>
-                <td>{{ article.prixUnitaire }}</td>
-            </tr>
-            <tr>
-                <th>Poids</th>
-                <td>{{ article.poids }}</td>
-            </tr>
-            <tr>
-                <th>QteEnStock</th>
-                <td>{{ article.qteEnStock }}</td>
-            </tr>
-            <tr>
-                <th>IsNew</th>
-                <td>{{ article.isNew ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Promotion</th>
-                <td>{{ article.promotion }}</td>
-            </tr>
-        <tr>
-            <th>Images</th>
-            <td>{% for image in article.images %}
-                <img src="{{ image.lien }}"></img>
-            {% endfor %}
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-    <div>
-        <label>Quantité:</label>
-        <input type="number" id="qty" value="1">
+    <div class="categorie">
+        <p class="text-categorie" onclick="window.location.href='categorie'">Catégorie</p>
+        <i class="fa fa-caret-right"></i>
+        <p class="text-lien"
+           onclick="window.location.href='categorie/{{ article.categorie }}'">{{ article.categorie }}</p>
     </div>
-    <button id="test"> Ajouter au panier</button>
 
-    <a href="{{ path('article_index') }}">back to list</a>
+    <div class="article">
+        <div class="cell-img">
+            {% for image in article.images %}
+                <img src="{{ image.lien }}" class="img-60"/>
+            {% endfor %}
+        </div>
+        <div class="information-article">
+            <p class="title">{{ article.nom }}</p>
+            <p class="stock-texte">{% if article.qteEnStock > 0 %}
+                    <img src="{{ asset('icon/yes-stock.png') }}" class="stock">
+                {% else %}
+                    <img src="{{ asset('icon/no-stock.png') }}" class="stock">
+                {% endif %}
+                En stock</p>
+            <p class="description">{{ article.description }}</p>
+            <div class="trait"></div>
+            <p class="prix">{{ article.prixUnitaire }}&#8364</p>
+            <div style="display: flex">
+                <img src="{{ asset('icon/addCart.png') }}" id="addCart" onmouseover="hover(this);"
+                     onmouseout="unhover(this);" class="addCart"/>
+                <div class="number">
+                    <div class="spinner">
+                        <input class="inputNumber" type="text" data-min="1" data-max="10" data-step="1" id="addCart">
+                        <div class="nav">
+                            <div class="up">+</div>
+                            <div class="down">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
+    <div class="text-description">
+        <p>Description</p>
+        <div class="promotions-home">
+            <div class="horizontal-big"></div>
+            <div class="trait-horizontal"></div>
+        </div>
+    </div>
 
-    {{ include('article/_delete_form.html.twig') }}
+    <div class="description-produit">
+        <p>{{ article.caracteristiques }}</p>
+    </div>
+
+    <div class="admin-a">
+        <a href="{{ path('article_index') }}">Back to list</a>
+
+        <a href="{{ path('article_edit', {'id': article.id}) }}">Edit</a>
+
+        {{ include('article/_delete_form.html.twig') }}
+    </div>
 
     <script>
+        function hover(element) {
+            element.setAttribute('src', "{{ asset('icon/addCartHover.png') }}");
+        }
+
+        function unhover(element) {
+            element.setAttribute('src', "{{ asset('icon/addCart.png') }}");
+        }
+
         let imageArticle;
         {% for image in article.images %}
         {% if loop.first %}
-            imageArticle = "{{ image.lien }}";
+        imageArticle = "{{ image.lien }}";
         {% endif %}
         {% endfor %}
-        $('#test').click(function () {
+        $('#addCart').click(function () {
             let data = {
                 id: "{{ article.id }}",
                 nom: "{{ article.nom }}",
@@ -121,5 +112,33 @@
                 }
             });
         }
+
+        // Spinner - input number
+        (function ($) {
+
+            $('.spinner').each(function () {
+
+                var spinner = $(this),
+                    input = spinner.find('input[type="text"]'),
+                    btnUp = spinner.find('.up'),
+                    btnDown = spinner.find('.down'),
+                    // options
+                    step = input.data('step'),
+                    min = input.data('min'),
+                    max = input.data('max');
+
+                input.val(min);
+
+                btnUp.click(function () {
+                    input.val() >= max ? $(this).prop("disabled", true) : input.val((input.val() * 1) + step);
+
+                });
+
+                btnDown.click(function () {
+                    input.val() <= min ? $(this).prop("disabled", true) : input.val((input.val() * 1) - step);
+                });
+
+            });
+        })(jQuery);
     </script>
 {% endblock %}

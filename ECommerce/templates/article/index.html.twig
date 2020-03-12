@@ -3,57 +3,101 @@
 {% block title %}Article index{% endblock %}
 
 {% block body %}
-    <h1>Article index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Image</th>
-                <th>Nom</th>
-                <th>Categorie</th>
-                <th>Description</th>
-                <th>Caracteristiques</th>
-                <th>PrixUnitaire</th>
-                <th>Poids</th>
-                <th>QteEnStock</th>
-                <th>IsNew</th>
-                <th>Promotion</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for article in articles %}
-            <tr>
-                <td>{{ article.id }}</td>
-                <td>
-                    {% for image in article.images %}
-                        {% if loop.first %}
-                            <img src="{{ image.lien }}">
+    <link href="{{ asset('css/All-Article.css') }}" rel="stylesheet"/>
+
+
+    <div class="articleWithFilter">
+        <div id="myBtnContainer">
+            <button class="btn" onclick="filterSelection('all')"> Show all</button>
+            <button class="btn" onclick="filterSelection('cars')"> Nouveaux</button>
+            <button class="btn" onclick="filterSelection('animals')"> En promotion</button>
+            <button class="btn" onclick="filterSelection('fruits')"> En stock</button>
+            <input type="range" min="1" max="1000" value="1" class="slider" id="myRange">
+        </div>
+
+        <div class="all-article">
+            {% for article in articles %}
+            <div class="article">
+                <p class="new">{{ article.isNew ? 'New' : null }}</p>
+                {% for image in article.images %}
+                    {% if loop.first %}
+                        <img class="img-10" src="{{ image.lien }}">
+                    {% endif %}
+                {% endfor %}
+                <div class="nom-description">
+                    <p class="text">{{ article.nom }}</p>
+                    <p class="crop">{{ article.caracteristiques }}</p>
+                </div>
+                <div class="stock-price">
+                    <p class="prix">{{ article.prixUnitaire }}&#8364</p>
+                    <p class="stock-texte">{% if article.qteEnStock > 0 %}
+                            <img src="{{ asset('icon/yes-stock.png') }}" class="stock">
+                        {% else %}
+                            <img src="{{ asset('icon/no-stock.png') }}" class="stock">
                         {% endif %}
-                    {% endfor %}
-                </td>
-                <td>{{ article.nom }}</td>
-                <td>{{ article.categorie }}</td>
-                <td>{{ article.description }}</td>
-                <td>{{ article.caracteristiques }}</td>
-                <td>{{ article.prixUnitaire }}</td>
-                <td>{{ article.poids }}</td>
-                <td>{{ article.qteEnStock }}</td>
-                <td>{{ article.isNew ? 'Yes' : 'No' }}</td>
-                <td>{{ article.promotion }}</td>
-                <td>
+                        En stock</p>
+                </div>
+                <p class="text-promotion">
+                    {% if article.promotion > 0 %}
+                        -{{ article.promotion }}%
+                    {% else %}
+                        {{ null }}
+                    {% endif %}
+                </p>
+                <div class="show-edit">
                     <a href="{{ path('article_show', {'id': article.id}) }}">show</a>
                     <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="11">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                </div>
+            </div>
+            {% else %}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Image</th>
+                    <th>Nom</th>
+                    <th>Categorie</th>
+                    <th>Description</th>
+                    <th>Caracteristiques</th>
+                    <th>PrixUnitaire</th>
+                    <th>Poids</th>
+                    <th>QteEnStock</th>
+                    <th>IsNew</th>
+                    <th>Promotion</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
 
-    <a href="{{ path('article_new') }}">Create new</a>
+                <tr>
+                    <td colspan="11">no records found</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="admin-a">
+        <a href="{{ path('article_new') }}">Create new</a>
+    </div>
+
+
+    <script>
+        function readMore() {
+            var dots = document.getElementById("dots");
+            var moreText = document.getElementById("more");
+            var btnText = document.getElementById("myBtn");
+
+            if (dots.style.display === "none") {
+                dots.style.display = "inline";
+                btnText.innerHTML = "Read more";
+                moreText.style.display = "none";
+            } else {
+                dots.style.display = "none";
+                btnText.innerHTML = "Read less";
+                moreText.style.display = "inline";
+            }
+        }
+    </script>
 {% endblock %}

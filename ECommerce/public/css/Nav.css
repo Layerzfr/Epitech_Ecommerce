@@ -9,7 +9,11 @@
     background-color: #FAFAFA;
 }
 
-input[type=text] {
+body {
+    background-color: #FAFAFA;
+}
+
+.navSearch {
     font-family: 'Heebo', sans-serif, medium;
     color: #969696;
     width: 100%;
@@ -18,7 +22,7 @@ input[type=text] {
     border: hidden;
 }
 
-input[type=text]:focus {
+.navSearch:focus {
     outline: none;
 }
 
@@ -249,3 +253,29 @@ i.fa.fa-caret-down {
     margin-left: 0.1%;
 }
 
+.user {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 40%;
+    height: 21px;
+}
+
+.user img {
+    height: 73%;
+}
+
+.user p {
+    font-family: 'Heebo', sans-serif, medium;
+    font-size: 14px;
+    color: #707070;
+    text-decoration: none;
+    margin-left: 13px;
+    margin-top: 16px;
+}
+
+.user p:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
