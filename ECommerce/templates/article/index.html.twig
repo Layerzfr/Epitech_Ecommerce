@@ -56,13 +56,13 @@
         var yesStock = "{{ asset('icon/yes-stock.png') }} }}";
         var noStock = "{{ asset('icon/no-stock.png') }} }}";
 
-        var isNew = false;
-        var isPromo = false;
-        var isStock = false;
+        var isNew = null;
+        var isPromo = null;
+        var isStock = null;
 
         var category = "";
 
-        var showAll = true;
+        var showAll = null;
         var min = 0;
 
         function checkNew() {
@@ -142,6 +142,8 @@
 
         function filter() {
             showAll = true;
+
+            isNew, isStock, isPromo = null;
             articles = [];
             $.ajax({
                 type: "GET",

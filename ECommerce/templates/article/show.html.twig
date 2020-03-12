@@ -75,6 +75,9 @@
             element.setAttribute('src', "{{ asset('icon/addCart.png') }}");
         }
 
+        var cartNumber = {{ cart | length }}
+
+
         let imageArticle;
         {% for image in article.images %}
         {% if loop.first %}
@@ -94,7 +97,10 @@
                 url: '/addToCart',
                 data: data,
                 success: function (data) {
-                    console.log(data);
+                    $('.Panier-line').replaceWith('<div class="Underline"></div>');
+                    $('.Panier-number').replaceWith('<div class="Number"></div>');
+                    cartNumber++;
+                    $('.Number').html(''+cartNumber+'');
                 }
             });
         });
