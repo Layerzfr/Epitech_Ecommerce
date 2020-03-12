@@ -6,6 +6,8 @@ use App\Entity\Article;
 use App\Entity\Commande;
 use App\Form\CommandeType;
 use App\Repository\CommandeRepository;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Knp\Snappy\Pdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +30,29 @@ class CommandeController extends AbstractController
                 'user'=> $currentUser
             ]),
         ]);
+    }
+
+    /**
+     * @Route("/facture/{id}", name="commande_facture", methods={"GET"})
+     */
+    public function facture($id, Pdf $pdf)
+    {
+        $factures = $this->getDoctrine()->getRepository(Commande::class)->findBy([
+            'code_command' => $id
+        ]);
+
+        $facture = $this->getDoctrine()->getRepository(Commande::class)->findOneBy([
+            'code_command' => $id
+        ]);
+        $html = $this->renderView('invoice/index.html.twig', array(
+            'facture' => $facture,
+            'factures'  => $factures,
+        ));
+
+        return new PdfResponse(
+            $pdf->getOutputFromHtml($html),
+            'facture.pdf'
+        );
     }
 
     /**
