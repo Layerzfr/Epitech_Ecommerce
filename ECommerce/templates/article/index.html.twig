@@ -19,9 +19,21 @@
                 <option></option>
             </select>
             <button class="btn" onclick="filter()"> Show all</button>
-            <button class="btn" onclick="checkNew()"> Nouveaux</button>
-            <button class="btn" onclick="onlyPromo()"> En promotion</button>
-            <button class="btn" onclick="onlyStock()"> En stock</button>
+            <ul class="tg-list">
+                <input class="tgl tgl-skewed" id="cb3" type="checkbox" onclick="checkNew()"/>
+                <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="cb3"></label>
+                <p>Nouveaux</p>
+            </ul>
+            <ul class="tg-list">
+                <input class="tgl tgl-skewed" id="cb3" type="checkbox" onclick="onlyPromo()"/>
+                <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="cb3"></label>
+                <p>En promotion</p>
+            </ul>
+            <ul class="tg-list">
+                <input class="tgl tgl-skewed" id="cb3" type="checkbox" onclick="onlyStock()"/>
+                <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="cb3"></label>
+                <p>En stock</p>
+            </ul>
             <div style="z-index: 0;">
                 <p id="price">1</p>
                 <input type="range" min="1" max="1000" value="1" class="slider" id="myRange"
