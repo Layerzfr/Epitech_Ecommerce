@@ -35,7 +35,7 @@
                      onmouseout="unhover(this);" class="addCart"/>
                 <div class="number">
                     <div class="spinner">
-                        <input class="inputNumber" type="text" data-min="1" data-max="10" data-step="1" id="addCart">
+                        <input class="inputNumber" type="text" data-min="1" data-max="10" data-step="1" id="addCart1">
                         <div class="nav">
                             <div class="up">+</div>
                             <div class="down">-</div>
@@ -85,7 +85,7 @@
             let data = {
                 id: "{{ article.id }}",
                 nom: "{{ article.nom }}",
-                qty: $('#qty').val(),
+                qty: $('#addCart1').val(),
                 unitPrice: {{ article.prixUnitaire }},
                 image: imageArticle
             };
