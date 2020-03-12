@@ -33,10 +33,14 @@
                 <div class="Trait"></div>
             </div>
 
-            <div class="NavbarColumn">
+            <div class="NavbarColumn" id="colcateg" onclick="categ_dropdown()">
                 <div class="ItemArrows">
                     <a class="MenuText">Catégories</a>
                     <i class="fa fa-caret-down"></i>
+                </div>
+                <div class="categ-content">
+                    <div class="categ-content-row">
+                    </div>
                 </div>
             </div>
 
@@ -140,6 +144,33 @@
                 console.log(data);
             }
         });
+    })
+
+    $.ajax({
+        type: "GET",
+        url: '/article/api/getCategories',
+        success: function (data) {
+            data.forEach(element => {
+                $('.categ-content-row').append('<a href="article/categorie/' + element + '">' + element + '</option>')
+            });
+            test();
+        }
+    });
+
+    var open = false
+    function categ_dropdown() {
+        if (open == false) {
+            $('.categ-content-row').show
+            open = !open
+        } else {
+            $('.categ-content-row').hidden
+            open = !open
+        }
+    }
+
+    $("body").not($("#colcateg")).click(function () {
+        $('.categ-content-row').hidden
+        open = false
     })
 </script>
 </body>
