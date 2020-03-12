@@ -244,12 +244,11 @@
 .custom-select-trigger {
     position: relative;
     display: block;
-    width: 130px;
-    padding: 0 84px 0 22px;
+    padding: 0 165% 0 40%;
     font-size: 22px;
     font-weight: 300;
     color: #fff;
-    line-height: 60px;
+    line-height: 45px;
     background: #5c9cd8;
     border-radius: 4px;
     cursor: pointer;
@@ -275,7 +274,7 @@
     position: absolute;
     display: block;
     top: 100%; left: 0; right: 0;
-    min-width: 100%;
+    min-width: 80%;
     margin: 15px 0;
     border: 1px solid #b5b5b5;
     border-radius: 4px;
@@ -338,6 +337,7 @@
 .tg-list {
     text-align: center;
     display: -webkit-box;
+    padding: 0;
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -489,6 +489,35 @@
 .tgl-flip:checked + .tgl-btn:active:after {
     -webkit-transform: rotateY(20deg);
     transform: rotateY(20deg);
+}
+
+.text-toggle {
+    font-family: 'Heebo', sans-serif, medium;
+    font-size: 19px;
+    margin-left: 11%;
+    color: #707070;
+    text-decoration: none;
+}
+
+.toggle-button {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+}
+
+.price-select {
+    font-family: 'Heebo', sans-serif, medium;
+    font-size: 19px;
+    color: #707070;
+    text-decoration: none;
+    margin: 0;
+
+}
+
+.filterContainer {
+    display: flex;
+    flex-direction: column;
+    width: 68%;
 }
 
 
