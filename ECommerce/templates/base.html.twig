@@ -33,7 +33,7 @@
                 <div class="Trait"></div>
             </div>
 
-            <div class="NavbarColumn" id="colcateg" onclick="categ_dropdown()">
+            <div class="NavbarColumn" id="colcateg">
                 <div class="ItemArrows">
                     <a class="MenuText">Catégories</a>
                     <i class="fa fa-caret-down"></i>
@@ -157,21 +157,18 @@
         }
     });
 
-    var open = false
-    function categ_dropdown() {
-        if (open == false) {
-            $('.categ-content-row').show
-            open = !open
-        } else {
-            $('.categ-content-row').hidden
-            open = !open
-        }
-    }
+    $('.categ-content-row').hide();
 
-    $("body").not($("#colcateg")).click(function () {
-        $('.categ-content-row').hidden
-        open = false
-    })
+    $(document).click(function(e){
+        var container = $("#colcateg");
+        if (container.has(e.target).length === 0) {
+            $('.categ-content-row').hide();
+        } else {
+            $('.categ-content-row').show();
+        }
+    });
+
+
 </script>
 </body>
 </html>
