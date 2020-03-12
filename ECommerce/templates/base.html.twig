@@ -72,6 +72,10 @@
                              style="margin-right: 6%;align-self: center;width: 6%;height: 50%;">
                         <input class="navSearch" name="search" placeholder="Chercher un produit, une marque…" onkeyup="searchItem(this.value)">
                     </div>
+                    <div class="dropdown-content">
+                        <div class="dropdown-content-row">
+                        </div>
+                    </div>
                 </div>
                 <div class="TraitThird"></div>
                 <div class="Cart" onclick="window.location.href='/cart'">
@@ -94,6 +98,10 @@
     var cartNumber = 0;
 
     function searchItem(term) {
+        if(term === '') {
+            $(".dropdown-content-row").html("")
+            return
+        }
         console.log(term);
         let data = {
             'term' : term,
@@ -105,6 +113,10 @@
             data: data,
             success: function (data) {
                 console.log(data);
+                $(".dropdown-content-row").html("")
+                data.articles.forEach(item => {
+                    $(".dropdown-content-row").append("<a href=\"/article/" + item.id + "\">" + item.nom + "</a>")
+                })
             }
         });
     }
