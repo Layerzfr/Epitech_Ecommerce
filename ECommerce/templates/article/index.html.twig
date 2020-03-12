@@ -10,72 +10,17 @@
     <div class="articleWithFilter">
         <div id="myBtnContainer">
             <button class="btn" onclick="filter()"> Show all</button>
-            <button class="btn" onclick="filterSelection('cars')"> Nouveaux</button>
-            <button class="btn" onclick="filterSelection('animals')"> En promotion</button>
-            <button class="btn" onclick="filterSelection('fruits')"> En stock</button>
-            <input type="range" min="1" max="1000" value="1" class="slider" id="myRange">
+            <button class="btn" onclick="checkNew()"> Nouveaux</button>
+            <button class="btn" onclick="onlyPromo()"> En promotion</button>
+            <button class="btn" onclick="onlyStock()"> En stock</button>
+            <div>
+                <p id="price">1</p>
+                <input type="range" min="1" max="1000" value="1" class="slider" id="myRange" onchange="minFilter($(this).val())">
+            </div>
         </div>
 
         <div class="all-article">
-{#            {% for article in articles %}#}
-{#            <div class="article">#}
-{#                <p class="new">{{ article.isNew ? 'New' : null }}</p>#}
-{#                {% for image in article.images %}#}
-{#                    {% if loop.first %}#}
-{#                        <img class="img-10" src="{{ image.lien }}">#}
-{#                    {% endif %}#}
-{#                {% endfor %}#}
-{#                <div class="nom-description">#}
-{#                    <p class="text">{{ article.nom }}</p>#}
-{#                    <p class="crop">{{ article.caracteristiques }}</p>#}
-{#                </div>#}
-{#                <div class="stock-price">#}
-{#                    <p class="prix">{{ article.prixUnitaire }}&#8364</p>#}
-{#                    <p class="stock-texte">{% if article.qteEnStock > 0 %}#}
-{#                            <img src="{{ asset('icon/yes-stock.png') }}" class="stock">#}
-{#                        {% else %}#}
-{#                            <img src="{{ asset('icon/no-stock.png') }}" class="stock">#}
-{#                        {% endif %}#}
-{#                        En stock</p>#}
-{#                </div>#}
-{#                <p class="text-promotion">#}
-{#                    {% if article.promotion > 0 %}#}
-{#                        -{{ article.promotion }}%#}
-{#                    {% else %}#}
-{#                        {{ null }}#}
-{#                    {% endif %}#}
-{#                </p>#}
-{#                <div class="show-edit">#}
-{#                    <a href="{{ path('article_show', {'id': article.id}) }}">show</a>#}
-{#                    <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>#}
-{#                </div>#}
-{#            </div>#}
-{#            {% else %}#}
-{#            <table class="table">#}
-{#                <thead>#}
-{#                <tr>#}
-{#                    <th>Id</th>#}
-{#                    <th>Image</th>#}
-{#                    <th>Nom</th>#}
-{#                    <th>Categorie</th>#}
-{#                    <th>Description</th>#}
-{#                    <th>Caracteristiques</th>#}
-{#                    <th>PrixUnitaire</th>#}
-{#                    <th>Poids</th>#}
-{#                    <th>QteEnStock</th>#}
-{#                    <th>IsNew</th>#}
-{#                    <th>Promotion</th>#}
-{#                    <th>actions</th>#}
-{#                </tr>#}
-{#                </thead>#}
-{#                <tbody>#}
 
-{#                <tr>#}
-{#                    <td colspan="11">no records found</td>#}
-{#                </tr>#}
-{#                {% endfor %}#}
-{#                </tbody>#}
-{#            </table>#}
         </div>
     </div>
     <div class="admin-a">
@@ -89,6 +34,37 @@
 
         var yesStock = "{{ asset('icon/yes-stock.png') }} }}";
         var noStock = "{{ asset('icon/no-stock.png') }} }}";
+
+        var isNew = false;
+        var isPromo = false;
+        var isStock = false;
+
+        var showAll = true;
+        var min = 0;
+
+        function checkNew() {
+            isNew = !isNew;
+            showAll = false;
+            showArticles();
+        }
+
+        function onlyPromo() {
+            showAll = false;
+            isPromo = !isPromo;
+            showArticles();
+        }
+
+        function onlyStock() {
+            showAll = false;
+            isStock = !isStock;
+            showArticles();
+        }
+
+        function minFilter(prix) {
+            min = prix;
+            $('#price').html(prix);
+            showArticles();
+        }
 
 
 
@@ -124,6 +100,7 @@
 
         function filter()
         {
+            showAll = true;
             articles = [];
             $.ajax({
                 type: "GET",
@@ -168,6 +145,17 @@
         {
             $('.all-article').html('');
             articles.forEach(element => {
+                console.log(element.prixUnitaire);
+                if(min >= parseInt(element.prixUnitaire)) {
+                    return;
+                }
+                if(showAll === false) {
+                    if(((isNew === true && element.isNew === '') || (isNew === false && element.isNew === 'New')) || ((isPromo === true && element.promotion <= 0) || (isPromo === false && element.promotion > 0) )
+                        || ((isStock === true && element.isqteEnStock === "<img src=\"{{ asset('icon/no-stock.png') }}\" class=\"stock\">") || (isStock === false && element.isqteEnStock === "<img src=\"{{ asset('icon/yes-stock.png') }}\" class=\"stock\">"))
+                    ) {
+                        return;
+                    }
+                }
                 $('.all-article').append(
                     '<div class="article">\n' +
                         '<p class="new">'+element.isNew+'</p>\n'+
@@ -205,5 +193,9 @@
                 moreText.style.display = "inline";
             }
         }
+
+        $('#myRange').on("change mousemove", function() {
+            $('#price').html($(this).val());
+        });
     </script>
 {% endblock %}
