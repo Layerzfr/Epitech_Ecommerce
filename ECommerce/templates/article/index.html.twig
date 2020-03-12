@@ -9,7 +9,7 @@
 
     <div class="articleWithFilter">
         <div id="myBtnContainer">
-            <button class="btn" onclick="filterSelection('all')"> Show all</button>
+            <button class="btn" onclick="filter()"> Show all</button>
             <button class="btn" onclick="filterSelection('cars')"> Nouveaux</button>
             <button class="btn" onclick="filterSelection('animals')"> En promotion</button>
             <button class="btn" onclick="filterSelection('fruits')"> En stock</button>
@@ -17,65 +17,65 @@
         </div>
 
         <div class="all-article">
-            {% for article in articles %}
-            <div class="article">
-                <p class="new">{{ article.isNew ? 'New' : null }}</p>
-                {% for image in article.images %}
-                    {% if loop.first %}
-                        <img class="img-10" src="{{ image.lien }}">
-                    {% endif %}
-                {% endfor %}
-                <div class="nom-description">
-                    <p class="text">{{ article.nom }}</p>
-                    <p class="crop">{{ article.caracteristiques }}</p>
-                </div>
-                <div class="stock-price">
-                    <p class="prix">{{ article.prixUnitaire }}&#8364</p>
-                    <p class="stock-texte">{% if article.qteEnStock > 0 %}
-                            <img src="{{ asset('icon/yes-stock.png') }}" class="stock">
-                        {% else %}
-                            <img src="{{ asset('icon/no-stock.png') }}" class="stock">
-                        {% endif %}
-                        En stock</p>
-                </div>
-                <p class="text-promotion">
-                    {% if article.promotion > 0 %}
-                        -{{ article.promotion }}%
-                    {% else %}
-                        {{ null }}
-                    {% endif %}
-                </p>
-                <div class="show-edit">
-                    <a href="{{ path('article_show', {'id': article.id}) }}">show</a>
-                    <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
-                </div>
-            </div>
-            {% else %}
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Image</th>
-                    <th>Nom</th>
-                    <th>Categorie</th>
-                    <th>Description</th>
-                    <th>Caracteristiques</th>
-                    <th>PrixUnitaire</th>
-                    <th>Poids</th>
-                    <th>QteEnStock</th>
-                    <th>IsNew</th>
-                    <th>Promotion</th>
-                    <th>actions</th>
-                </tr>
-                </thead>
-                <tbody>
+{#            {% for article in articles %}#}
+{#            <div class="article">#}
+{#                <p class="new">{{ article.isNew ? 'New' : null }}</p>#}
+{#                {% for image in article.images %}#}
+{#                    {% if loop.first %}#}
+{#                        <img class="img-10" src="{{ image.lien }}">#}
+{#                    {% endif %}#}
+{#                {% endfor %}#}
+{#                <div class="nom-description">#}
+{#                    <p class="text">{{ article.nom }}</p>#}
+{#                    <p class="crop">{{ article.caracteristiques }}</p>#}
+{#                </div>#}
+{#                <div class="stock-price">#}
+{#                    <p class="prix">{{ article.prixUnitaire }}&#8364</p>#}
+{#                    <p class="stock-texte">{% if article.qteEnStock > 0 %}#}
+{#                            <img src="{{ asset('icon/yes-stock.png') }}" class="stock">#}
+{#                        {% else %}#}
+{#                            <img src="{{ asset('icon/no-stock.png') }}" class="stock">#}
+{#                        {% endif %}#}
+{#                        En stock</p>#}
+{#                </div>#}
+{#                <p class="text-promotion">#}
+{#                    {% if article.promotion > 0 %}#}
+{#                        -{{ article.promotion }}%#}
+{#                    {% else %}#}
+{#                        {{ null }}#}
+{#                    {% endif %}#}
+{#                </p>#}
+{#                <div class="show-edit">#}
+{#                    <a href="{{ path('article_show', {'id': article.id}) }}">show</a>#}
+{#                    <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>#}
+{#                </div>#}
+{#            </div>#}
+{#            {% else %}#}
+{#            <table class="table">#}
+{#                <thead>#}
+{#                <tr>#}
+{#                    <th>Id</th>#}
+{#                    <th>Image</th>#}
+{#                    <th>Nom</th>#}
+{#                    <th>Categorie</th>#}
+{#                    <th>Description</th>#}
+{#                    <th>Caracteristiques</th>#}
+{#                    <th>PrixUnitaire</th>#}
+{#                    <th>Poids</th>#}
+{#                    <th>QteEnStock</th>#}
+{#                    <th>IsNew</th>#}
+{#                    <th>Promotion</th>#}
+{#                    <th>actions</th>#}
+{#                </tr>#}
+{#                </thead>#}
+{#                <tbody>#}
 
-                <tr>
-                    <td colspan="11">no records found</td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+{#                <tr>#}
+{#                    <td colspan="11">no records found</td>#}
+{#                </tr>#}
+{#                {% endfor %}#}
+{#                </tbody>#}
+{#            </table>#}
         </div>
     </div>
     <div class="admin-a">
@@ -84,6 +84,112 @@
 
 
     <script>
+
+        var articles = [];
+
+        var yesStock = "{{ asset('icon/yes-stock.png') }} }}";
+        var noStock = "{{ asset('icon/no-stock.png') }} }}";
+
+
+
+        {% for article in articles %}
+            var newArticle = [];
+            newArticle['isNew'] = "{{ article.isNew ? 'New' : null }}";
+            newArticle['nom'] = "{{ article.nom }}";
+            newArticle['caracteristiques'] = "{{ article.caracteristiques |truncate(30, true)}}";
+            newArticle['prixUnitaire'] = "{{ article.prixUnitaire }}";
+        {% if article.qteEnStock > 0 %}
+        newArticle['isqteEnStock'] = "<img src=\"{{ asset('icon/yes-stock.png') }}\" class=\"stock\">"
+        {% else %}
+        newArticle['isqteEnStock'] = "<img src=\"{{ asset('icon/no-stock.png') }}\" class=\"stock\">";
+        {% endif %}
+            newArticle['qteEnStock'] = "{{ article.qteEnStock }}";
+            newArticle['promotion'] = "{{ article.promotion }}";
+        {% if article.promotion > 0 %}
+        newArticle['ispromotion'] = "-{{ article.promotion }}";
+        {% else %}
+        newArticle['ispromotion'] = "";
+        {% endif %}
+
+            newArticle['id'] = "{{ article.id }}";
+        {% for image in article.images %}
+        {% if loop.first %}
+        newArticle['image'] = "{{ image.lien }}";
+        {% endif %}
+        {% endfor %}
+
+
+            articles.push(newArticle);
+        {% endfor %}
+
+        function filter()
+        {
+            articles = [];
+            $.ajax({
+                type: "GET",
+                url: '/article/api/getAllArticles',
+                success: function (data) {
+
+                    data.forEach(element => {
+                        var newArticle = [];
+                        if(element.is_new) {
+                            newArticle['isNew'] = 'New';
+                        } else {
+                            newArticle['isNew'] = '';
+                        }
+                        newArticle['nom'] = ""+element.nom;
+                        newArticle['caracteristiques'] = ""+element.caracteristiques;
+                        newArticle['prixUnitaire'] = ""+element.prix_unitaire;
+                        if(element.qte_en_stock > 0) {
+                            newArticle['isqteEnStock'] = "<img src=\"{{ asset('icon/yes-stock.png') }}\" class=\"stock\">"
+                        } else {
+                            newArticle['isqteEnStock'] = "<img src=\"{{ asset('icon/no-stock.png') }}\" class=\"stock\">";
+                        }
+                        newArticle['qteEnStock'] = ""+element.qte_en_stock;
+                        newArticle['promotion'] = ""+element.promotion;
+                        if(element.promotion > 0) {
+                            newArticle['ispromotion'] = "-"+element.promotion;
+                        } else {
+                            newArticle['ispromotion'] = "";
+                        }
+                        newArticle['id'] = element.id;
+                        newArticle['image'] = element.image;
+                        articles.push(newArticle);
+                    });
+                    showArticles();
+
+                    console.log(data);
+                }
+            });
+
+            showArticles();
+        }
+        function showArticles()
+        {
+            $('.all-article').html('');
+            articles.forEach(element => {
+                $('.all-article').append(
+                    '<div class="article">\n' +
+                        '<p class="new">'+element.isNew+'</p>\n'+
+                '                        <img class="img-10" src="'+element.image+'">\n' +
+                '                <div class="nom-description">\n' +
+                '                    <p class="text">'+element.nom+'</p>\n' +
+                '                    <p class="crop">'+element.caracteristiques+'</p>\n' +
+                '                </div>\n' +
+                '                <div class="stock-price">\n' +
+                '                    <p class="prix">'+element.prixUnitaire+'&#8364</p>\n'+
+                        '<p class="stock-texte">'+element.isqteEnStock+' En stock</p>'+
+
+                '                </div>\n' +
+                '                <p class="text-promotion">\n' + element.ispromotion + '</p>\n' +
+                '                <div class="show-edit">\n' +
+                '                    <a href="/article/'+element.id+'">show</a>\n'+
+                '                    <a href="/article/'+element.id+'/edit">Edit</a>\n'
+                );
+            })
+        }
+
+        showArticles();
         function readMore() {
             var dots = document.getElementById("dots");
             var moreText = document.getElementById("more");

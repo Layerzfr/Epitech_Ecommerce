@@ -47,8 +47,12 @@ class ArticleController extends AbstractController
 
         $arrayCollection = [];
 
+        $firstimage = "";
+
         /** @var Article $item */
         foreach($articles as $item) {
+
+
             $arrayCollection[] = array(
                 'id' => $item->getId(),
                 'nom' => $item->getNom(),
@@ -59,7 +63,8 @@ class ArticleController extends AbstractController
                 'poids' => $item->getPoids(),
                 'qte_en_stock' => $item->getQteEnStock(),
                 'is_new' => $item->getIsNew(),
-                'promotion' => $item->getPromotion()
+                'promotion' => $item->getPromotion(),
+                'image' => $item->getImages()->first()->getLien(),
             );
         }
         return new JsonResponse($arrayCollection);
