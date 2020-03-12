@@ -71,6 +71,24 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * @Route("/api/getCategories", name="apiGetCategories", methods={"GET"})
+     */
+    public function apiGetCategories()
+    {
+        $articles = $this->getDoctrine()->getRepository(Article::class)->findAll();
+
+        $arrayCollection = [];
+
+        /** @var Article $item */
+        foreach($articles as $item) {
+            if(!in_array($item->getCategorie(), $arrayCollection)) {
+                $arrayCollection[] = $item->getCategorie();
+            }
+        }
+        return new JsonResponse($arrayCollection);
+    }
+
+    /**
      * @Route("/api/searchByterm", name="apiSearchArticle", methods={"POST"})
      */
     public function searchByTerm()

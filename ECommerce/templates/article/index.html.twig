@@ -9,6 +9,9 @@
 
     <div class="articleWithFilter">
         <div id="myBtnContainer">
+            <select id="select">
+                <option></option>
+            </select>
             <button class="btn" onclick="filter()"> Show all</button>
             <button class="btn" onclick="checkNew()"> Nouveaux</button>
             <button class="btn" onclick="onlyPromo()"> En promotion</button>
@@ -38,6 +41,8 @@
         var isNew = false;
         var isPromo = false;
         var isStock = false;
+
+        var category = "";
 
         var showAll = true;
         var min = 0;
@@ -81,6 +86,7 @@
         {% endif %}
             newArticle['qteEnStock'] = "{{ article.qteEnStock }}";
             newArticle['promotion'] = "{{ article.promotion }}";
+        newArticle['categorie'] = "{{ article.categorie }}";
         {% if article.promotion > 0 %}
         newArticle['ispromotion'] = "-{{ article.promotion }}";
         {% else %}
@@ -97,6 +103,22 @@
 
             articles.push(newArticle);
         {% endfor %}
+
+
+        $.ajax({
+            type: "GET",
+            url: '/article/api/getCategories',
+            success: function (data) {
+                data.forEach(element => {
+                    $('#select').append('<option>'+element+'</option>')
+                });
+            }
+        });
+
+        $('#select').change(function () {
+            category = $(this).val();
+            showArticles();
+        });
 
         function filter()
         {
@@ -117,6 +139,7 @@
                         newArticle['nom'] = ""+element.nom;
                         newArticle['caracteristiques'] = ""+element.caracteristiques;
                         newArticle['prixUnitaire'] = ""+element.prix_unitaire;
+                        newArticle['categorie'] = ""+element.categorie;
                         if(element.qte_en_stock > 0) {
                             newArticle['isqteEnStock'] = "<img src=\"{{ asset('icon/yes-stock.png') }}\" class=\"stock\">"
                         } else {
@@ -148,6 +171,11 @@
                 console.log(element.prixUnitaire);
                 if(min >= parseInt(element.prixUnitaire)) {
                     return;
+                }
+                if(category !== "") {
+                    if(category !== element.categorie) {
+                        return;
+                    }
                 }
                 if(showAll === false) {
                     if(((isNew === true && element.isNew === '') || (isNew === false && element.isNew === 'New')) || ((isPromo === true && element.promotion <= 0) || (isPromo === false && element.promotion > 0) )
