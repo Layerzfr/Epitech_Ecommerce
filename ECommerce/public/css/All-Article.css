@@ -252,8 +252,8 @@
 .custom-select-trigger {
     position: relative;
     display: block;
-    padding: 0 84px 0 22px;
-    font-size: 20px;
+    padding-left: 30px;
+    font-size: 15px;
     font-weight: 300;
     color: #fff;
     line-height: 45px;
