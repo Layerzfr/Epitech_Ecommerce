@@ -20,7 +20,6 @@
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
         {% endif %}
     </form>#}
-    <div action="{{ path("fos_user_security_check") }}" method="post">
         <form action="{{ path("fos_user_security_check") }}" method="post">
             {% if csrf_token %}
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
@@ -46,7 +45,7 @@
                                     <button id="_submit" class="login" type="submit" name="_submit"
                                             onclick="{{ 'submit'|trans }}">Log In
                                     </button>
-                                    <button id="goRight" class="login off" name="signup"
+                                    <button id="goRight" type="button" class="login off" name="signup"
                                             onclick="window.location.href='register'">Sign Up
                                     </button>
                                 </div>
@@ -56,6 +55,5 @@
                 </div>
             </div>
         </form>
-    </div>
 
 {% endblock %}
