@@ -14,6 +14,10 @@
         <b class="b track"></b>
     </div>
 
+    <div class="v-switcher-wrapper">
+        <input type="range" id="switcher0" name="switcher0" class="v-switcher v-switcher-mode--tri v-switcher-state--neutral"  min="-1" max="1" step="1"/>
+    </div>
+
     <div class="articleWithFilter">
         <div class="filter" id="myBtnContainer">
             <div class="filterContainer">
@@ -379,5 +383,21 @@
         for (var i = 0; i < bubblyButtons.length; i++) {
             bubblyButtons[i].addEventListener('click', animateButton, false);
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector('[type=range]').addEventListener('change', function(e){
+                switch(e.target.value) {
+                    case '-1':
+                        e.target.className = 'v-switcher v-switcher-mode--tri v-switcher-state--passive';
+                        break;
+                    case '0':
+                        e.target.className = 'v-switcher v-switcher-mode--tri v-switcher-state--neutral';
+                        break;
+                    case '1':
+                        e.target.className = 'v-switcher v-switcher-mode--tri v-switcher-state--active';
+                        break;
+                }
+            });
+        });
     </script>
 {% endblock %}
