@@ -30,12 +30,18 @@
             <p class="description">{{ article.description }}</p>
             <div class="trait"></div>
             <p class="prix">{{ article.prixUnitaire }}&#8364</p>
+            {% set maxAdd = 10 %}
+
+            {% if article.qteEnStock < maxAdd %}
+                {% set maxAdd = article.qteEnStock %}
+            {% endif %}
+            {% if article.qteEnStock > 0 %}
             <div style="display: flex">
                 <img src="{{ asset('icon/addCart.png') }}" id="addCart" onmouseover="hover(this);"
                      onmouseout="unhover(this);" class="addCart"/>
                 <div class="number">
                     <div class="spinner">
-                        <input class="inputNumber" type="text" data-min="1" data-max="10" data-step="1" id="addCart1">
+                        <input class="inputNumber" type="text" data-min="1" data-max="{{maxAdd}}" data-step="1" id="addCart1">
                         <div class="nav">
                             <div class="up">+</div>
                             <div class="down">-</div>
@@ -43,6 +49,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
 
@@ -126,7 +133,15 @@
 
         // Spinner - input number
         (function ($) {
-
+            $('.inputNumber').keyup(function (e) {
+                if($(this).val() == 0) {
+                    $(this).val(1);
+                }
+                console.log($(this).val());
+                if($(this).val() > {{ article.qteEnStock }}) {
+                    $(this).val({{ article.qteEnStock }});
+                }
+            });
             $('.spinner').each(function () {
 
                 var spinner = $(this),
