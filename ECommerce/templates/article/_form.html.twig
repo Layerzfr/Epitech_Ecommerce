@@ -74,7 +74,7 @@
         <div class="right">
             <div class="content">
                 <h2>Nouvel article</h2>
-                <form id="form-login" method="post" onsubmit="return false;">
+                {{form_start(form)}}
                     <div class="form-element form-stack">
                         <ul class="images" data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">
                             {{ form_widget(form.images) }}
@@ -117,12 +117,12 @@
                         {{ form_widget(form.isNew) }}
                     </div>
                     <div class="form-element form-submit">
-                        <button class="login">{{ button_label|default('Ajouter') }}</button>
+                        <button class="login" type="submit">{{ button_label|default('Ajouter') }}</button>
                     </div>
                     <div style="padding-top: 10px; text-align: center; padding-bottom: 10px;">
                         <button class="login" onclick="window.location.href = '{{ path('article_index') }}';">back to list</button>
                     </div>
-                </form>
+                {{form_end(form)}}
             </div>
         </div>
     </div>
