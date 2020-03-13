@@ -128,12 +128,14 @@ body {
 .information-setting:hover p {
     cursor: pointer;
     color: white;
+    text-decoration: none;
 }
 
 .information-setting:hover {
     cursor: pointer;
     color: white;
     background-color: #707070;
+    text-decoration: none;
 }
 
 .info {
@@ -216,6 +218,7 @@ label {
 .pdf:hover:before,
 .pdf:hover:after {
     background: #e2e8f0;
+    text-decoration: none;
 }
 /*a:before{transform:translate(-30%,-60%);}*/
 
@@ -226,6 +229,7 @@ label {
 .pdf:hover {
     background: #e2e8f0;
     border-color: #9fb4cc;
+    text-decoration: none;
 }
 
 .pdf:active {
@@ -239,10 +243,12 @@ label {
 
 .pdf:hover span:first-child {
     display: inline-block;
+    text-decoration: none;
 }
 
 .pdf:hover span:last-child {
     display: none;
+    text-decoration: none;
 }
 
 .pdf-block {
@@ -258,6 +264,13 @@ label {
     font-size: 16px;
     margin: 0;
     color: #707070;
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
+.pdf-text:hover {
+    font-family: 'Heebo', sans-serif, regular;
+    font-size: 16px;
+    margin: 0;
+    color: #707070;
+    text-decoration: none !important;
+}

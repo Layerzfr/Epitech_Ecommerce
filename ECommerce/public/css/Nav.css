@@ -79,7 +79,7 @@ body {
     font-family: 'Heebo', sans-serif, medium;
     font-size: 17px;
     color: #707070;
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 i.fa.fa-caret-down {
