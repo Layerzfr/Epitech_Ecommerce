@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Json;
 
 /**
  * @Route("/user")
@@ -21,6 +23,33 @@ class UserController extends AbstractController
             'controller_name' => 'UserController',
             'user' => $this->getUser(),
         ]);
+    }
+
+    /**
+     * @Route("/api/updateInfo", name="updateInfo", methods={"POST"})
+     */
+    public function updateInfo()
+    {
+        $content = $_POST;
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+
+        $user->setEmail($content['email']);
+        $user->setUsername($content['username']);
+
+
+        $entityManager->persist($user);
+
+        $entityManager->flush();
+
+        return new JsonResponse(
+            [
+                'success' => true,
+            ]
+        );
     }
 
     /**
