@@ -136,6 +136,8 @@ class CommandeController extends AbstractController
             /** @var Article $article */
             $article = $this->getDoctrine()->getRepository(Article::class)->find($produit['id']);
 
+            $article->setQteEnStock($article->getQteEnStock() - $produit['qty']);
+
             $commande->setEtat('Commandé');
             $commande->setDateCommande(new \DateTime());
             $commande->setModeLivraison('Chronopost');
@@ -179,7 +181,7 @@ class CommandeController extends AbstractController
                 'nom_vendeur' => $commande->getNomVendeur(),
                 'code_command' => $commande->getCodeCommand()
             );
-
+            $entityManager->persist($article);
             $entityManager->persist($commande);
         }
 

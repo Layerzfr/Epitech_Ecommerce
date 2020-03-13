@@ -21,9 +21,12 @@ class ArticleController extends AbstractController
      */
     public function index(ArticleRepository $articleRepository): Response
     {
+        $session = $this->get('session');
+        $cartElements = $session->get('cartElements');
         return $this->render('article/index.html.twig', [
             'articles' => $articleRepository->findAll(),
-            'currentPage' => 'Nouveautés'
+            'currentPage' => 'Nouveautés',
+            'cart' => $cartElements
         ]);
     }
 
@@ -32,9 +35,12 @@ class ArticleController extends AbstractController
      */
     public function promotion(ArticleRepository $articleRepository): Response
     {
+        $session = $this->get('session');
+        $cartElements = $session->get('cartElements');
         return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->findAllPromo(),
-            'currentPage' => 'Promotions'
+            'articles' => $articleRepository->findAll(),
+            'currentPage' => 'Promotions',
+            'cart' => $cartElements
         ]);
     }
 
@@ -46,10 +52,13 @@ class ArticleController extends AbstractController
         $articles = $this->getDoctrine()->getRepository(Article::class)->findBy([
             'categorie' => $category
         ]);
+        $session = $this->get('session');
+        $cartElements = $session->get('cartElements');
         return $this->render('article/index.html.twig', [
             'articles' => $articles,
             'currentPage' => 'Categorie',
-            'currentCategory' => $category
+            'currentCategory' => $category,
+            'cart' => $cartElements
         ]);
     }
 
@@ -149,6 +158,13 @@ class ArticleController extends AbstractController
     {
         $article = $this->getDoctrine()->getRepository(Article::class)->find($id);
 
+        $imagesCollection = [];
+
+        foreach ($article->getImages() as $image)
+        {
+            $imagesCollection[] = $image->getLien();
+        }
+
         $arrayCollection[] = array(
             'id' => $article->getId(),
             'nom' => $article->getNom(),
@@ -156,6 +172,7 @@ class ArticleController extends AbstractController
             'description' => $article->getDescription(),
             'caracteristiques' => $article->getCaracteristiques(),
             'prix_unitaire' => $article->getPrixUnitaire(),
+            'images' => $imagesCollection,
             'poids' => $article->getPoids(),
             'qte_en_stock' => $article->getQteEnStock(),
             'is_new' => $article->getIsNew(),
