@@ -62,7 +62,7 @@
 
         var category = "";
 
-        var showAll = null;
+        var showAll = false;
         var min = 0;
 
         function checkNew() {
@@ -131,6 +131,12 @@
                     $('#sources').append('<option value="' + element + '">' + element + '</option>')
                 });
                 test();
+                {% if currentPage is same as('Categorie') %}
+                    {% if currentCategory is defined %}
+                        $(".custom-select-trigger").text('{{ currentCategory }}');
+                    {% endif %}
+                {%endif%}
+
             }
         });
 
@@ -144,6 +150,7 @@
             showAll = true;
 
             isNew, isStock, isPromo = null;
+            category = "";
             articles = [];
             $.ajax({
                 type: "GET",
@@ -177,6 +184,8 @@
                         newArticle['image'] = element.image;
                         articles.push(newArticle);
                     });
+                    $(".custom-select-trigger").text('Catégorie');
+
                     showArticles();
 
                     console.log(data);
@@ -187,6 +196,7 @@
         }
 
         function showArticles() {
+            console.log('showAll => ' +showAll, 'isNew => ' + isNew, 'isStock => ' + isStock, 'isPromo => ' +isPromo);
             $('.all-article').html('');
             articles.forEach(element => {
                 console.log(element.prixUnitaire);

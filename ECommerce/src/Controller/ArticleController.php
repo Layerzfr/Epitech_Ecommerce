@@ -39,6 +39,21 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * @Route("/categorie/{category}", name="article_categorie", methods={"GET"})
+     */
+    public function categorie($category)
+    {
+        $articles = $this->getDoctrine()->getRepository(Article::class)->findBy([
+            'categorie' => $category
+        ]);
+        return $this->render('article/index.html.twig', [
+            'articles' => $articles,
+            'currentPage' => 'Categorie',
+            'currentCategory' => $category
+        ]);
+    }
+
+    /**
      * @Route("/api/getAllArticles", name="apiGetAllArticles", methods={"GET"})
      */
     public function apiGetAllArticles()
