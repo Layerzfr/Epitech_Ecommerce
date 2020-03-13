@@ -44,9 +44,11 @@
 
         </div>
     </div>
-    <div class="admin-a">
-        <a href="{{ path('article_new') }}">Create new</a>
-    </div>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="admin-a">
+            <a href="{{ path('article_new') }}">Create new</a>
+        </div>
+    {% endif %}
 
 
     <script>
@@ -231,7 +233,12 @@
                     '                <p class="text-promotion">\n' + element.ispromotion + '</p>\n' +
                     '                <div class="show-edit">\n' +
                     '                    <a href="/article/' + element.id + '">show</a>\n' +
+                {% if is_granted('ROLE_ADMIN') %}
                     '                    <a href="/article/' + element.id + '/edit">Edit</a>\n'
+                {% else %}
+                    ''
+                        {% endif %}
+
                 );
             })
         }
