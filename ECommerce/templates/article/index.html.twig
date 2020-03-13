@@ -18,7 +18,7 @@
                 <div class="toggle-button">
                     <ul class="tg-list">
                         <div class="v-switcher-wrapper">
-                            <input type="range" id="switcher0" name="switcher0" {% if currentPage is same as('Nouveautés')%}  class="v-switcher v-switcher-mode--tri v-switcher-state--active" {% else %} class="v-switcher v-switcher-mode--tri v-switcher-state--neutral" {% endif %}   onchange="changeSwitch($(this), 'promo')" min="-1" max="1" step="1" {% if currentPage is same as('Nouveautés') %} value="1" {% endif %}/>
+                            <input type="range" id="switcher0" name="switcher0" {% if currentPage is same as('Nouveautés')%}  class="v-switcher v-switcher-mode--tri v-switcher-state--active" {% else %} class="v-switcher v-switcher-mode--tri v-switcher-state--neutral" {% endif %}   onchange="changeSwitch($(this), 'new')" min="-1" max="1" step="1" {% if currentPage is same as('Nouveautés') %} value="1" {% endif %}/>
                         </div>
                         <p class="text-toggle">Nouveaux</p>
                     </ul>
@@ -68,6 +68,14 @@
         var category = "";
 
         var showAll = false;
+        {% if currentPage is defined %}
+            {% if currentPage is same as('Promotions') %}
+                isPromo = true;
+        {% endif %}
+            {% if currentPage is same as('Nouveautés') %}
+                isNew = true;
+            {% endif %}
+        {% endif %}
         var min = 0;
 
         function checkNew() {
@@ -146,7 +154,6 @@
         });
 
         $('#sources').change(function () {
-            console.log('testset');
             category = $(this).val();
             showArticles();
         });
@@ -157,12 +164,8 @@
             isStock = null;
 
             category = "";
-
-            // showAll = true;
             $('.v-switcher').val(0);
             $('.v-switcher').attr('class', '').toggleClass('v-switcher v-switcher-mode--tri v-switcher-state--neutral');
-            // $('.v-switcher').toggleClass('v-switcher v-switcher-mode--tri v-switcher-state--neutral');
-            // $('.v-switcher').toggleClass('v-switcher v-switcher-mode--tri v-switcher-state--neutral');
             articles = [];
             $.ajax({
                 type: "GET",
@@ -387,7 +390,6 @@
 
 
         function changeSwitch(e, filter){
-            console.log(e.val());
             switch(e.val()) {
                 case '-1':
                     e.attr('class', '');

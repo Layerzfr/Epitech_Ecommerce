@@ -38,7 +38,7 @@ class ArticleController extends AbstractController
         $session = $this->get('session');
         $cartElements = $session->get('cartElements');
         return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->findAllPromo(),
+            'articles' => $articleRepository->findAll(),
             'currentPage' => 'Promotions',
             'cart' => $cartElements
         ]);
