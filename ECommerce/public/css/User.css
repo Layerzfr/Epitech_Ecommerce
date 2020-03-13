@@ -80,6 +80,8 @@ body {
 
 .disconnect a:hover {
     cursor: pointer;
+    color: #f3f3f3;
+    text-decoration: none;
     background-color: #733645;
 }
 

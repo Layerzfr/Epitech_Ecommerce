@@ -61,12 +61,6 @@ body {
     text-decoration: none;
 }
 
-.disconnect {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .disconnect a {
     font-family: 'Heebo', sans-serif, regular;
     padding: 8px;
@@ -76,6 +70,13 @@ body {
     margin-bottom: 1%;
     color: white;
     text-decoration: none;
+}
+
+.disconnect a:hover {
+    cursor: pointer;
+    color: #f3f3f3;
+    text-decoration: none;
+    background-color: #733645;
 }
 
 .disconnect a:hover {
