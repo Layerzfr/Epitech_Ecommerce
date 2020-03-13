@@ -100,9 +100,11 @@
 
 <script>
     var cartNumber = 0;
+    $('.dropdown-content').hide();
 
     function searchItem(term) {
         if(term === '') {
+            $('.dropdown-content').hide();
             $(".dropdown-content-row").html("")
             return
         }
@@ -117,6 +119,7 @@
             data: data,
             success: function (data) {
                 console.log(data);
+                $('.dropdown-content').show();
                 $(".dropdown-content-row").html("")
                 data.articles.forEach(item => {
                     $(".dropdown-content-row").append("<a href=\"/article/" + item.id + "\">" + item.nom + "</a>")
