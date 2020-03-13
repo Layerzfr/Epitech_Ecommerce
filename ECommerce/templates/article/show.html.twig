@@ -99,6 +99,7 @@
                 success: function (data) {
                     $('.Panier-line').replaceWith('<div class="Underline"></div>');
                     $('.Panier-number').replaceWith('<div class="Number"></div>');
+                    $('.CartLogo0').addClass('CartLogo1');
                     cartNumber++;
                     $('.Number').html(''+cartNumber+'');
                 }

@@ -185,7 +185,12 @@ class CommandeController extends AbstractController
 
         $entityManager->flush();
 
-        $arrayCollection['idCommande'] = $code_command->getCodeCommand() + 1;
+        if ($code_command) {
+            $arrayCollection['idCommande'] = $code_command->getCodeCommand() + 1;
+        } else {
+            $arrayCollection['idCommande'] = 1;
+        }
+
 
         $session = $this->get('session');
         $session->set('cartElements', array());
