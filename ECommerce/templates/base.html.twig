@@ -156,14 +156,14 @@
         }
     });
 
-    $('.categ-content-row').hide();
+    $('.categ-content').hide();
 
     $(document).click(function(e){
         var container = $("#colcateg");
         if (container.has(e.target).length === 0) {
-            $('.categ-content-row').hide();
+            $('.categ-content').hide();
         } else {
-            $('.categ-content-row').show();
+            $('.categ-content').show();
         }
     });
 
