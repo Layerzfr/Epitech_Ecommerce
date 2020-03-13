@@ -35,7 +35,8 @@
 
             <div class="NavbarColumn" id="colcateg">
                 <div class="ItemArrows">
-                    <a class="MenuText">Catégories</a>
+                    <a class="MenuText" style="
+    text-decoration: none;">Catégories</a>
                     <i class="fa fa-caret-down"></i>
                 </div>
                 <div class="categ-content">
@@ -46,7 +47,8 @@
 
             <div class="NavbarColumn">
                 <div class="Item">
-                    <a class="MenuText" href="/article" >Nouveautés</a>
+                    <a class="MenuText" href="/article" style="
+    text-decoration: none;" >Nouveautés</a>
                     {% if currentPage is defined %}
                         {% if currentPage is same as ('Nouveautés') %}
                             <div class="active UnderlineMenu"></div>
@@ -58,7 +60,8 @@
 
             <div class="NavbarColumn">
                 <div class="Item">
-                    <a class="MenuText"  href="/article/promotion">Promotions</a>
+                    <a class="MenuText" style="
+    text-decoration: none;" href="/article/promotion">Promotions</a>
                     {% if currentPage is defined %}
                         {% if currentPage is same as ('Promotions') %}
                             <div class="active UnderlineMenu"></div>

@@ -6,7 +6,7 @@
 
     <link href="{{ asset('css/All-Article.css') }}" rel="stylesheet"/>
 
-    <button class="bubbly-button">Ajouter</button>
+
 
     <div class="toggle">
         <input type="checkbox" class="check">
@@ -238,6 +238,7 @@
 
                     '                </div>\n' +
                     '                <p class="text-promotion">\n' + element.ispromotion + '</p>\n' +
+                        checkStock(element) +
                     '                <div class="show-edit">\n' +
                     '                    <a href="/article/' + element.id + '">show</a>\n' +
                 {% if is_granted('ROLE_ADMIN') %}
@@ -248,6 +249,16 @@
 
                 );
             })
+        }
+
+
+        function checkStock(article)
+        {
+            if(article.qteEnStock > 0) {
+                return "<button class=\"bubbly-button\" onclick='addToCart("+article.id+")'>Ajouter</button>";
+            }else {
+                return "";
+            }
         }
 
         showArticles();
@@ -313,6 +324,40 @@
                 category = $(this).data("value");
                 showArticles();
             });
+        }
+
+        function addToCart(articleId) {
+            console.log(articleId);
+            var cartNumber = {{ cart | length }};
+            let imageArticle = '';
+            $.ajax({
+                type: "GET",
+                url: '/article/api/getArticle/'+articleId,
+                success: function (data) {
+                    var article = data[0];
+                    imageArticle = article.images[0];
+                    let data2 = {
+                        id: article.id,
+                        nom: article.nom,
+                        qty: 1,
+                        unitPrice: article.prix_unitaire,
+                        image: imageArticle
+                    };
+                    $.ajax({
+                        type: "POST",
+                        url: '/addToCart',
+                        data: data2,
+                        success: function (data) {
+                            $('.Panier-line').replaceWith('<div class="Underline"></div>');
+                            $('.Panier-number').replaceWith('<div class="Number"></div>');
+                            $('.CartLogo0').addClass('CartLogo1');
+                            cartNumber++;
+                            $('.Number').html(''+cartNumber+'');
+                        }
+                    });
+                }
+            });
+
         }
 
 
