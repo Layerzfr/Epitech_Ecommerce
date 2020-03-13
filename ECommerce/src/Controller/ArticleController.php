@@ -35,9 +35,12 @@ class ArticleController extends AbstractController
      */
     public function promotion(ArticleRepository $articleRepository): Response
     {
+        $session = $this->get('session');
+        $cartElements = $session->get('cartElements');
         return $this->render('article/index.html.twig', [
             'articles' => $articleRepository->findAllPromo(),
-            'currentPage' => 'Promotions'
+            'currentPage' => 'Promotions',
+            'cart' => $cartElements
         ]);
     }
 
