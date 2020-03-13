@@ -151,7 +151,7 @@
         url: '/article/api/getCategories',
         success: function (data) {
             data.forEach(element => {
-                $('.categ-content-row').append('<a href="article/categorie/' + element + '">' + element + '</option>')
+                $('.categ-content-row').append('<a href="/article/categorie/' + element + '">' + element + '</option>')
             });
         }
     });

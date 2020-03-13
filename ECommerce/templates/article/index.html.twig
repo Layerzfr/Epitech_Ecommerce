@@ -131,6 +131,12 @@
                     $('#sources').append('<option value="' + element + '">' + element + '</option>')
                 });
                 test();
+                {% if currentPage is same as('Categorie') %}
+                    {% if currentCategory is defined %}
+                        $(".custom-select-trigger").text('{{ currentCategory }}');
+                    {% endif %}
+                {%endif%}
+
             }
         });
 
@@ -177,6 +183,9 @@
                         newArticle['image'] = element.image;
                         articles.push(newArticle);
                     });
+
+                    $(".custom-select-trigger").text('Catégorie');
+                    category = "";
                     showArticles();
 
                     console.log(data);
