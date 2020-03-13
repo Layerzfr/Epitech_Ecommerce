@@ -7,17 +7,6 @@
     <link href="{{ asset('css/All-Article.css') }}" rel="stylesheet"/>
 
 
-
-    <div class="toggle">
-        <input type="checkbox" class="check">
-        <b class="b switch"></b>
-        <b class="b track"></b>
-    </div>
-
-    <div class="v-switcher-wrapper">
-        <input type="range" id="switcher0" name="switcher0" class="v-switcher v-switcher-mode--tri v-switcher-state--neutral"  min="-1" max="1" step="1"/>
-    </div>
-
     <div class="articleWithFilter">
         <div class="filter" id="myBtnContainer">
             <div class="filterContainer">
@@ -28,18 +17,21 @@
                 </div>
                 <div class="toggle-button">
                     <ul class="tg-list">
-                        <input class="tgl tgl-skewed" id="cb3" type="checkbox" onclick="checkNew()"/>
-                        <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="cb3"></label>
+                        <div class="v-switcher-wrapper">
+                            <input type="range" id="switcher0" name="switcher0" {% if currentPage is same as('Nouveautés')%}  class="v-switcher v-switcher-mode--tri v-switcher-state--active" {% else %} class="v-switcher v-switcher-mode--tri v-switcher-state--neutral" {% endif %}   onchange="changeSwitch($(this), 'promo')" min="-1" max="1" step="1" {% if currentPage is same as('Nouveautés') %} value="1" {% endif %}/>
+                        </div>
                         <p class="text-toggle">Nouveaux</p>
                     </ul>
                     <ul class="tg-list">
-                        <input class="tgl tgl-skewed" id="cb4" type="checkbox" onclick="onlyPromo()"/>
-                        <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="cb4"></label>
+                        <div class="v-switcher-wrapper">
+                            <input type="range" id="switcher1" name="switcher1" {% if currentPage is same as('Promotions')%}  class="v-switcher v-switcher-mode--tri v-switcher-state--active" {% else %} class="v-switcher v-switcher-mode--tri v-switcher-state--neutral" {% endif %}   onchange="changeSwitch($(this), 'promo')" min="-1" max="1" step="1" {% if currentPage is same as('Promotions') %} value="1" {% endif %}/>
+                        </div>
                         <p class="text-toggle">Promotion</p>
                     </ul>
                     <ul class="tg-list">
-                        <input class="tgl tgl-skewed" id="cb5" type="checkbox" onclick="onlyStock()"/>
-                        <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="cb5"></label>
+                        <div class="v-switcher-wrapper">
+                            <input type="range" id="switcher2" name="switcher2" class="v-switcher v-switcher-mode--tri v-switcher-state--neutral" onchange="changeSwitch($(this), 'stock')" min="-1" max="1" step="1" />
+                        </div>
                         <p class="text-toggle">Stock</p>
                     </ul>
                 </div>
@@ -160,10 +152,17 @@
         });
 
         function filter() {
-            showAll = true;
+            isNew = null;
+            isPromo = null;
+            isStock = null;
 
-            isNew, isStock, isPromo = null;
             category = "";
+
+            // showAll = true;
+            $('.v-switcher').val(0);
+            $('.v-switcher').attr('class', '').toggleClass('v-switcher v-switcher-mode--tri v-switcher-state--neutral');
+            // $('.v-switcher').toggleClass('v-switcher v-switcher-mode--tri v-switcher-state--neutral');
+            // $('.v-switcher').toggleClass('v-switcher v-switcher-mode--tri v-switcher-state--neutral');
             articles = [];
             $.ajax({
                 type: "GET",
@@ -205,7 +204,7 @@
                 }
             });
 
-            showArticles();
+            // showArticles();
         }
 
         function showArticles() {
@@ -216,12 +215,13 @@
                 if (min >= parseInt(element.prixUnitaire)) {
                     return;
                 }
-                if (category !== "") {
-                    if (category !== element.categorie) {
-                        return;
-                    }
-                }
+
                 if (showAll === false) {
+                    if (category !== "") {
+                        if (category !== element.categorie) {
+                            return;
+                        }
+                    }
                     if (((isNew === true && element.isNew === '') || (isNew === false && element.isNew === 'New')) || ((isPromo === true && element.promotion <= 0) || (isPromo === false && element.promotion > 0))
                         || ((isStock === true && element.isqteEnStock === "<img src=\"{{ asset('icon/no-stock.png') }}\" class=\"stock\">") || (isStock === false && element.isqteEnStock === "<img src=\"{{ asset('icon/yes-stock.png') }}\" class=\"stock\">"))
                     ) {
@@ -384,20 +384,49 @@
             bubblyButtons[i].addEventListener('click', animateButton, false);
         }
 
-        document.addEventListener("DOMContentLoaded", function() {
-            document.querySelector('[type=range]').addEventListener('change', function(e){
-                switch(e.target.value) {
-                    case '-1':
-                        e.target.className = 'v-switcher v-switcher-mode--tri v-switcher-state--passive';
-                        break;
-                    case '0':
-                        e.target.className = 'v-switcher v-switcher-mode--tri v-switcher-state--neutral';
-                        break;
-                    case '1':
-                        e.target.className = 'v-switcher v-switcher-mode--tri v-switcher-state--active';
-                        break;
-                }
-            });
-        });
+
+
+        function changeSwitch(e, filter){
+            console.log(e.val());
+            switch(e.val()) {
+                case '-1':
+                    e.attr('class', '');
+                    e.toggleClass('v-switcher v-switcher-mode--tri v-switcher-state--passive');
+                    if(filter === 'new')
+                    {
+                        isNew = false;
+                    } else if( filter === 'promo') {
+                        isPromo = false;
+                    } else {
+                        isStock = false;
+                    }
+                    break;
+                case '0':
+                    e.attr('class', '');
+                    e.toggleClass('v-switcher v-switcher-mode--tri v-switcher-state--neutral');
+                    if(filter === 'new')
+                    {
+                        isNew = null;
+                    } else if( filter === 'promo') {
+                        isPromo = null;
+                    } else {
+                        isStock = null;
+                    }
+                    break;
+                case '1':
+                    e.attr('class', '');
+                    e.toggleClass('v-switcher v-switcher-mode--tri v-switcher-state--active');
+                    if(filter === 'new')
+                    {
+                        isNew = true;
+                    } else if( filter === 'promo') {
+                        isPromo = true;
+                    } else {
+                        isStock = true;
+                    }
+                    break;
+            }
+            showArticles();
+        }
     </script>
 {% endblock %}
