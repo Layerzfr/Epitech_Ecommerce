@@ -3,34 +3,61 @@
 {% block title %}Commande index{% endblock %}
 
 {% block body %}
-    <h1>Commande index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Etat</th>
-                <th>DateCommande</th>
-                <th>ModeLivraison</th>
-                <th>Qte</th>
-                <th>PrixArticleCommande</th>
-                <th>FraisPort</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <link href="{{ asset('css/Command.css') }}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-        {% set currentCommandId = 0 %}
-        {% for commande in commandes %}
-            {% if currentCommandId is not same as (commande.codeCommand) %}
-                <tr>
-                    <td>
-                        <a href="/commande/facture/{{ commande.codeCommand }}">Commande du {{ commande.dateCommande ? commande.dateCommande|date('Y-m-d H:i:s') : '' }}</a>
-                    </td>
-                </tr>
-                {% set currentCommandId = commande.codeCommand %}
-            {% endif %}
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="user-flex">
+        <div class="user-setting">
+            <div class="user-img">
+                <img src="{{ asset('icon/user.png') }}"/>
+            </div>
+            <p>Bonjour</p>
+            <p class="name">{{ app.user.username }}</p>
+            <div class="disconnect">
+                <a href="/logout">ME DÉCONNECTER</a>
+            </div>
+            <div class="information-setting" onclick="window.location.href ='/user/user' ">
+                <p style="margin: auto;">Mes informations</p>
+            </div>
+            <div class="information-commandes">
+                <p style="margin: auto;">Mes commandes</p>
+            </div>
+        </div>
+        <div class="user-info">
+
+            {% set currentCommandId = 0 %}
+            {% for commande in commandes %}
+                {% if currentCommandId is not same as (commande.codeCommand) %}
+                    <div class="pdf-block">
+                        <a class="pdf-text">Commande du {{ commande.dateCommande ? commande.dateCommande|date('Y-m-d H:i:s') : '' }}</a>
+                        <a class="pdf" href="/commande/facture/{{ commande.codeCommand }}"
+                           download><span>Download</span><span>PDF</span></a>
+                    </div>
+                    {% set currentCommandId = commande.codeCommand %}
+                {% endif %}
+            {% endfor %}
+
+        </div><!-- /.container -->
+    </div>
+
+    <script>
+        $('#update').click(function () {
+            var data = {
+                'email': $('#email').val(),
+                'username': $('#username').val()
+            };
+
+
+            $.ajax({
+                type: "POST",
+                data: data,
+                url: '/user/api/updateInfo',
+                success: function (data) {
+                    window.location.reload()
+                }
+            });
+        })
+    </script>
 {% endblock %}
