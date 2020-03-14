@@ -166,6 +166,9 @@
             category = "";
             $('.v-switcher').val(0);
             $('.v-switcher').attr('class', '').toggleClass('v-switcher v-switcher-mode--tri v-switcher-state--neutral');
+            $('#myRange').val(1);
+            $('#price').text('1');
+            min = 1;
             articles = [];
             $.ajax({
                 type: "GET",
