@@ -112,6 +112,22 @@
 
                 {% else %}
                     <a href="/login">Veuillez vous connecter</a>
+                    <script>
+                        function removeFromCart(id) {
+                            let data = {
+                                id: id
+                            };
+                            $.ajax({
+                                type: "POST",
+                                url: '/removeFromCart',
+                                data: data,
+                                success: function (data) {
+                                    console.log(data);
+                                    window.location.reload()
+                                }
+                            });
+                        }
+                    </script>
                 {% endif %}
                 {% else %}
                     <p>Votre panier est vide</p>

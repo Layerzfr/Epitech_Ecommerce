@@ -25,6 +25,10 @@ class UserController extends AbstractController
      */
     public function index()
     {
+        if(!$this->getUser())
+        {
+            return $this->redirectToRoute('home');
+        }
         return $this->render('user/index.html.twig', [
             'controller_name' => 'UserController',
             'user' => $this->getUser(),
