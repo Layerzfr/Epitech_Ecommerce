@@ -20,11 +20,11 @@
                 <img src="{{ asset('icon/user.png') }}">
                 <p onclick="window.location.href='/user/user'">Compte</p>
             </div>
-            {% else %}
-                <div class="user">
-                    <img src="{{ asset('icon/user.png') }}">
-                    <p onclick="window.location.href='/login'">Se connecter</p>
-                </div>
+        {% else %}
+            <div class="user">
+                <img src="{{ asset('icon/user.png') }}">
+                <p onclick="window.location.href='/login'">Se connecter</p>
+            </div>
         {% endif %}
         <div class="Navbar">
             <div class="NavbarColumnLogo">
@@ -48,7 +48,7 @@
             <div class="NavbarColumn">
                 <div class="Item">
                     <a class="MenuText" href="/article" style="
-    text-decoration: none;" >Nouveautés</a>
+    text-decoration: none;">Nouveautés</a>
                     {% if currentPage is defined %}
                         {% if currentPage is same as ('Nouveautés') %}
                             <div class="active UnderlineMenu"></div>
@@ -77,7 +77,8 @@
                     <div style="display: flex;height: 100%;width: 100%;margin-top: auto;margin-bottom: auto;padding-left: 7%;padding-right: 10%;">
                         <img src="{{ asset('../icon/SearchIcon.png') }}"
                              style="margin-right: 6%;align-self: center;width: 6%;height: 50%;">
-                        <input class="navSearch" name="search" placeholder="Chercher un produit, une marque…" onkeyup="searchItem(this.value)">
+                        <input class="navSearch" name="search" placeholder="Chercher un produit, une marque…"
+                               onkeyup="searchItem(this.value)">
                     </div>
                     <div class="dropdown-content">
                         <div class="dropdown-content-row">
@@ -100,20 +101,19 @@
 <body>
 {% block body %}{% endblock %}
 {% block javascripts %}{% endblock %}
-
 <script>
     var cartNumber = 0;
     $('.dropdown-content').hide();
 
     function searchItem(term) {
-        if(term === '') {
+        if (term === '') {
             $('.dropdown-content').hide();
             $(".dropdown-content-row").html("")
             return
         }
         console.log(term);
         let data = {
-            'term' : term,
+            'term': term,
         };
         $.ajax({
             type: "POST",
@@ -130,6 +130,7 @@
             }
         });
     }
+
     $(window).ready(function () {
         $.ajax({
             type: "POST",
@@ -164,7 +165,7 @@
 
     $('.categ-content').hide();
 
-    $(document).click(function(e){
+    $(document).click(function (e) {
         var container = $("#colcateg");
         if (container.has(e.target).length === 0) {
             $('.categ-content').hide();
@@ -176,4 +177,34 @@
 
 </script>
 </body>
+{% block footer %}
+    <div class="footer">
+        <div class="all-footer">
+            <div class="footer-container-logo">
+                <img class="footer-logo" src="{{ asset('icon/Logo_B&W.png') }}"/>
+            </div>
+            <div class="footer-liens">
+                <p class="footer-title">Liens rapides</p>
+                <p class="footer-link" onclick="window.location.href='/article/categorie/Carte%20mère'">Carte mère</p>
+                <p class="footer-link" onclick="window.location.href='/article/categorie/Disque%20SSD'">Disque SSD</p>
+                <p class="footer-link" onclick="window.location.href='/article/categorie/Carte%20graphique'">Carte
+                    graphique</p>
+                <p class="footer-link" onclick="window.location.href='/article/categorie/Processeur'">Processeur</p>
+                <p class="footer-link" onclick="window.location.href='/article/categorie/Ventilateur'">Ventilateur</p>
+            </div>
+            <div class="footer-compte">
+                <p class="footer-title">Compte</p>
+                <p class="footer-link" onclick="window.location.href='/user/user'">Informations</p>
+                <p class="footer-link" onclick="window.location.href='/commande'">Commandes</p>
+            </div>
+            <div class="footer-click">
+                <img class="footer-epitech" src="{{ asset('Epitech.png') }}"
+                     onclick="window.location.href='https://www.epitech.eu/fr/ecole-informatique-montpellier/'">
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <p>© 2020 Copyright</p>
+    </div>
+{% endblock %}
 </html>

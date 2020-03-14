@@ -11,6 +11,7 @@
 
 body {
     background-color: #FAFAFA;
+    margin: 0 !important;
 }
 
 .navSearch {
@@ -40,7 +41,9 @@ body {
     display: flex;
     margin-top: 2.5%;
     height: 58%;
-    width: 90%;
+    width: 100%;
+    margin-left: 5%;
+    margin-right: 3.85%;
     background-color: white;
     -webkit-box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
     -moz-box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
@@ -244,7 +247,7 @@ i.fa.fa-caret-down {
     margin-left: 0.1%;
 }
 
-.active .UnderlineMenu{
+.active .UnderlineMenu {
     margin-top: 0.3%;
     position: absolute;
     background-color: #DD5252;
@@ -281,14 +284,14 @@ i.fa.fa-caret-down {
 }
 
 .dropdown-content {
-     display: flex;
-     position: absolute;
-     background-color: white;
-     flex-direction: column;
-     margin-top: 4%;
-     width: 40%;
-     box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
- }
+    display: flex;
+    position: absolute;
+    background-color: white;
+    flex-direction: column;
+    margin-top: 4%;
+    width: 40%;
+    box-shadow: 0px 2px 5px 2px rgba(191, 191, 191, 0.36);
+}
 
 .dropdown-content-row {
     display: flex;
@@ -303,14 +306,14 @@ i.fa.fa-caret-down {
     font-family: 'Heebo', sans-serif, medium;
     padding-top: 5px;
     padding-bottom: 5px;
-    padding-left : 5px;
-    padding-right : 5px;
+    padding-left: 5px;
+    padding-right: 5px;
     font-size: 14px;
     color: #707070;
     text-decoration: none;
 }
 
-.dropdown-content-row a:hover{
+.dropdown-content-row a:hover {
     background-color: lightgray;
 }
 
@@ -339,13 +342,107 @@ i.fa.fa-caret-down {
     font-family: 'Heebo', sans-serif, medium;
     padding-top: 5px;
     padding-bottom: 5px;
-    padding-left : 5px;
-    padding-right : 5px;
+    padding-left: 5px;
+    padding-right: 5px;
     font-size: 14px;
     color: #707070;
     text-decoration: none;
 }
 
-.categ-content-row a:hover{
+.categ-content-row a:hover {
     background-color: lightgray;
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 220px;
+    bottom: 0;
+    margin-top: 3%;
+    width: 100%;
+    background-color: #3A3535;
+}
+
+.all-footer {
+    display: flex;
+}
+
+.footer-logo {
+    margin: auto;
+    width: 70px;
+    height: 95px;
+}
+
+.footer-liens {
+    display: flex;
+    flex-direction: column;
+    width: 55%;
+}
+
+.footer-title {
+    font-family: 'Heebo', sans-serif;
+    font-weight: bolder;
+    color: white;
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 5px;
+
+}
+
+.footer-compte {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+}
+
+.footer-link {
+    margin: 2px;
+    width: auto;
+    font-family: 'Heebo', sans-serif;
+    font-weight: lighter;
+    color: white;
+    font-size: 14px;
+}
+
+.footer-link:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.footer-click {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.footer-epitech {
+    width: 10%;
+    margin: auto;
+}
+
+.footer-epitech:hover {
+    cursor: pointer;
+}
+
+.footer-copyright {
+    font-family: 'Heebo', sans-serif;
+    color: white;
+    font-size: 16px;
+}
+
+.footer-container-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+}
+
+.footer-copyright {
+    background-color: #3A3535;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
