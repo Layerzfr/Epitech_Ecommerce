@@ -108,6 +108,7 @@
                 url: '/addToCart',
                 data: data,
                 success: function (data) {
+                    console.log(data);
                     $('.Panier-line').replaceWith('<div class="Underline"></div>');
                     $('.Panier-number').replaceWith('<div class="Number"></div>');
                     $('.CartLogo0').addClass('CartLogo1');

@@ -136,9 +136,9 @@
             type: "POST",
             url: '/getCart',
             success: function (data) {
-                cartNumber = data.cart.length;
+                cartNumber = Object.keys(data.cart).length;
                 if (cartNumber > 0) {
-                    $('.Panier-number').replaceWith('<div class="Panier-number">' + data.cart.length + '</div>');
+                    $('.Panier-number').replaceWith('<div class="Panier-number">' + Object.keys(data.cart).length + '</div>');
                 }
                 if (cartNumber > 0) {
                     $('.CartLogo0').addClass('CartLogo1');
@@ -148,7 +148,7 @@
                     $('.Panier-number').addClass('Number');
                     $('.Number').removeClass('Panier-number');
                 }
-                console.log(data);
+                console.log(cartNumber);
             }
         });
     })

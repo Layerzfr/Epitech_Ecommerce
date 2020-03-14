@@ -55,6 +55,25 @@ class CartController extends AbstractController
             $cartElements = array();
         }
 
+        foreach($cartElements as $key => $element)
+        {
+            if($element['id'] === $_POST['id'])
+            {
+                $newArray = array();
+                $newArray['id'] = $element['id'];
+                $newArray['qty'] = $element['qty'] + $_POST['qty'];
+                $newArray['nom'] = $element['nom'];
+                $newArray['unitPrice'] = $element['unitPrice'];
+                $newArray['image'] = $element['image'];
+                unset($cartElements[$key]);
+                array_push($cartElements, $newArray);
+                $session->set('cartElements', $cartElements);
+                return new JsonResponse(array(
+                    'success' => true,
+                ));
+            }
+        }
+
         array_push($cartElements, $_POST);
 //
         $session->set('cartElements', $cartElements);
