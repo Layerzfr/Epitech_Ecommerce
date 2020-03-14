@@ -2,14 +2,147 @@
         src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
         crossorigin="anonymous"></script>
-{{ form_start(form) }}
+{#{{ form_start(form) }}#}
 {#    {{ form_widget(form) }}#}
 
-    <ul class="images" data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">
-        {{ form_widget(form.images) }}
-    </ul>
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+{#    <div id="slideBox">#}
+{#        <div class="topLayer">#}
+{#            <div class="right">#}
+{#                <div class="articleWithFilter">#}
+{#                <div class="add-container">#}
+{#                    <div class="form-title">#}
+{#                        <h2>Create New Article</h2>#}
+{#                    </div>#}
+{#                    <div class="form-container">#}
+{#                        <form id="form-login" method="post" onsubmit="return false;">#}
+{#                            <div class="form-element form-stack">#}
+{#                                <ul class="images" data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">#}
+{#                                    {{ form_widget(form.images) }}#}
+{#                                </ul>#}
+{#                            </div>#}
+{#                            <div class="form-element form-stack">#}
+{#                                <label class="form-label">Nom</label>#}
+{#                                {{ form_widget(form.nom) }}#}
+{#                            </div>#}
+{#                            <div class="form-element form-stack">#}
+{#                                <label class="form-label">Catégorie</label>#}
+{#                                {{ form_widget(form.categorie) }}#}
+{#                            </div>#}
+{#                            <div class="form-element form-stack">#}
+{#                                <label class="form-label">Prix Unitaire</label>#}
+{#                                {{ form_widget(form.prixUnitaire) }}#}
+{#                            </div>#}
+{#                            <div class="form-element form-stack">#}
+{#                                <label class="form-label">Poids</label>#}
+{#                                {{ form_widget(form.poids) }}#}
+{#                            </div>#}
+{#                            <div class="form-element form-stack">#}
+{#                                <label class="form-label">Quantité en Stock</label>#}
+{#                                {{ form_widget(form.qteEnStock) }}#}
+{#                            </div>#}
+{#                            <div class="form-element form-stack">#}
+{#                                <label class="form-label">Promotion</label>#}
+{#                                {{ form_widget(form.promotion) }}#}
+{#                            </div>#}
+{#                            <div class="form-element form-stack">#}
+{#                                <label class="form-label">Description</label>#}
+{#                                {{ form_widget(form.description) }}#}
+{#                            </div>#}
+{#                            <div class="form-element form-stack">#}
+{#                                <label class="form-label">Caractéristiques</label>#}
+{#                                {{ form_widget(form.caracteristiques) }}#}
+{#                            </div>#}
+{#                            <div class="form-element form-stack">#}
+{#                                <label class="form-label">Nouveauté</label>#}
+{#                                {{ form_widget(form.isNew) }}#}
+{#                            </div>#}
+{#                            <div class="form-element form-submit">#}
+{#                                <button class="login">{{ button_label|default('Ajouter') }}</button>#}
+{#                            </div>#}
+{#                        </form>#}
+{#                    </div>#}
+{#                </div>#}
+{#                    <a id="goRight" class="login off" href="{{ path('article_index') }}">#}
+{#                        back to list#}
+{#                    </a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+<div id="slideBox">
+    <div class="topLayer">
+        <div class="right">
+            <div class="content">
+                <h2>Nouvel article</h2>
+                {{form_start(form)}}
+                    <div class="form-element form-stack">
+                        <ul class="images" data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">
+                            {{ form_widget(form.images) }}
+                        </ul>
+                    </div>
+                    <div class="form-element form-stack">
+                        <label class="form-label">Nom</label>
+                        {{ form_widget(form.nom) }}
+                    </div>
+                    <div class="form-element form-stack">
+                        <label class="form-label">Catégorie</label>
+                        {{ form_widget(form.categorie) }}
+                    </div>
+                    <div class="form-element form-stack">
+                        <label class="form-label">Prix Unitaire</label>
+                        {{ form_widget(form.prixUnitaire) }}
+                    </div>
+                    <div class="form-element form-stack">
+                        <label class="form-label">Poids</label>
+                        {{ form_widget(form.poids) }}
+                    </div>
+                    <div class="form-element form-stack">
+                        <label class="form-label">Quantité en Stock</label>
+                        {{ form_widget(form.qteEnStock) }}
+                    </div>
+                    <div class="form-element form-stack">
+                        <label class="form-label">Promotion</label>
+                        {{ form_widget(form.promotion) }}
+                    </div>
+                    <div class="form-element form-stack">
+                        <label class="form-label">Description</label>
+                        {{ form_widget(form.description) }}
+                    </div>
+                    <div class="form-element form-stack">
+                        <label class="form-label">Caractéristiques</label>
+                        {{ form_widget(form.caracteristiques) }}
+                    </div>
+                    <div class="form-element form-stack">
+                        <div class="checknew">
+                            {{ form_widget(form.isNew) }}
+                            <label class="form-label">Nouveauté</label>
+                        </div>
+                    </div>
+                    <div class="form-element form-submit">
+                        <button class="login" type="submit">{{ button_label|default('Ajouter') }}</button>
+                    </div>
+                    <div style="padding-top: 10px; text-align: center; padding-bottom: 10px;">
+                        <button class="login" onclick="window.location.href = '{{ path('article_index') }}';">back to list</button>
+                    </div>
+                {{form_end(form)}}
+            </div>
+        </div>
+    </div>
+</div>
+{#    <ul class="images" data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">#}
+{#        {{ form_widget(form.images) }}#}
+{#    </ul>#}
+{#    {{ form_widget(form.nom) }}#}
+{#    {{ form_widget(form.categorie) }}#}
+{#    {{ form_widget(form.description) }}#}
+{#    {{ form_widget(form.caracteristiques) }}#}
+{#    {{ form_widget(form.prixUnitaire) }}#}
+{#    {{ form_widget(form.poids) }}#}
+{#    {{ form_widget(form.qteEnStock) }}#}
+{#    {{ form_widget(form.isNew) }}#}
+{#    {{ form_widget(form.promotion) }}#}
+{#    <button class="btn">{{ button_label|default('Save') }}</button>#}
+{#{{ form_end(form) }}#}
 
 <script>
     var $collectionHolder;
