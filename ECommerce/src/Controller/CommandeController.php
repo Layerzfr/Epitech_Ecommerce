@@ -13,6 +13,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use Swagger\Annotations as SWG;
+use Nelmio\ApiDocBundle\Annotation as Doc;
 
 /**
  * @Route("/commande")
@@ -57,6 +61,13 @@ class CommandeController extends AbstractController
 
     /**
      * @Route("/api/getAllCommandes", name="apiGetAllCommandes", methods={"GET"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourne la liste des commandes",
+     *
+     * )
+     *
+     * @SWG\Tag(name="Commande")
      */
     public function apiGetAllCommandes()
     {
@@ -88,10 +99,29 @@ class CommandeController extends AbstractController
 
     /**
      * @Route("/api/getCommande/{code_command}", name="apiGetCommande", methods={"GET"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourne la commande correspondant au code commande",
+     *
+     * )
+     * @SWG\Response(
+     *     response=404,
+     *     description="Retourne commande_not_found",
+     *
+     * )
+     *
+     * @SWG\Tag(name="Commande")
      */
     public function apiGetCommande($code_command)
     {
         $commande = $this->getDoctrine()->getRepository(Commande::class)->findBy(['code_command' => $code_command]);
+
+        if(!$commande)
+        {
+            return new JsonResponse(array(
+                'status' => 'commande_not_found'
+            ), 404);
+        }
 
         $arrayCollection = [];
 
@@ -120,8 +150,9 @@ class CommandeController extends AbstractController
 
     /**
      * @Route("/api/createCommande", name="apiCreateCommande", methods={"POST"})
+     *
      */
-    public function apiCreateCommande()
+    public function apiCreateCommande(Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -202,6 +233,19 @@ class CommandeController extends AbstractController
 
     /**
      * @Route("/api/manageCommande/{id}", name="apiManageCommande", methods={"POST"})
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourne la commande modifiée au code commande",
+     *
+     * )
+     * @SWG\Response(
+     *     response=404,
+     *     description="Retourne commande_not_found",
+     *
+     * )
+     *
+     * @SWG\Tag(name="Commande")
      */
     public function apiManageCommande($id)
     {
@@ -249,11 +293,30 @@ class CommandeController extends AbstractController
 
     /**
      * @Route("/api/deleteCommande/{code_command}", name="apiDeleteCommande", methods={"POST"})
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourne deletion_success",
+     *
+     * )
+     * @SWG\Response(
+     *     response=404,
+     *     description="Retourne une erreur 404 commande_not_found",
+     *
+     * )
+     * @SWG\Tag(name="Commande")
      */
     public function apiDeleteCommande($code_command)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $commande = $this->getDoctrine()->getRepository(Commande::class)->findBy(['code_command' => $code_command]);
+
+        if(!$commande)
+        {
+            return new JsonResponse(array(
+                'status' => 'commande_not_found'
+            ), 404);
+        }
 
         /** @var Commande $item */
         foreach($commande as $item) {

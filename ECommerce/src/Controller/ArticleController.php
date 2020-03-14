@@ -10,6 +10,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use Swagger\Annotations as SWG;
+use Nelmio\ApiDocBundle\Annotation as Doc;
 
 /**
  * @Route("/article")
@@ -64,6 +68,12 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/api/getAllArticles", name="apiGetAllArticles", methods={"GET"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourne une liste de tous les articles",
+     *
+     * )
+     * @SWG\Tag(name="Article")
      */
     public function apiGetAllArticles()
     {
@@ -96,6 +106,12 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/api/getCategories", name="apiGetCategories", methods={"GET"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourne une liste de toutes les catégories",
+     *
+     * )
+     * @SWG\Tag(name="Article")
      */
     public function apiGetCategories()
     {
@@ -114,12 +130,23 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/api/searchByterm", name="apiSearchArticle", methods={"POST"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourne une liste de tous les articles",
+     *
+     * )
+     * @SWG\Tag(name="Article")
+     * @SWG\Parameter(
+     *     name="term",
+     *     in="query",
+     *     type="string",
+     *     description="Le nom de l'article recherché"
+     * )
      */
-    public function searchByTerm()
+    public function searchByTerm(Request $response)
     {
         $content = $_POST;
-
-        $term = $content['term'];
+        $term =  $response->get('term');
 
         /** @var Article $articles */
         $articles = $this->getDoctrine()->getRepository(Article::class)->findByTerm($term);
@@ -153,10 +180,27 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/api/getArticle/{id}", name="apiGetArticle", methods={"GET"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourne l'article trouvé par id",
+     *
+     * )
+     * @SWG\Response(
+     *     response=404,
+     *     description="Retourne une erreur 404 article_not_found",
+     *
+     * )
+     * @SWG\Tag(name="Article")
      */
     public function apiGetArticle($id)
     {
         $article = $this->getDoctrine()->getRepository(Article::class)->find($id);
+
+        if(!$article) {
+            return new JsonResponse(array(
+                'status' => 'article_not_found',
+            ), 404);
+        }
 
         $imagesCollection = [];
 
@@ -184,21 +228,85 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/api/createArticle", name="apiCreateArticle", methods={"POST"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourne l'article nouvellement créé",
+     *
+     * )
+     * @SWG\Parameter(
+     *     name="nom",
+     *     in="query",
+     *     type="string",
+     *     description="Nom de l'article"
+     * )
+     * @SWG\Parameter(
+     *     name="poids",
+     *     in="query",
+     *     type="integer",
+     *     description="Poids de l'article"
+     * )
+     * @SWG\Parameter(
+     *     name="prix",
+     *     in="query",
+     *     type="integer",
+     *     description="Prix unitaire de l'article"
+     * )
+     * @SWG\Parameter(
+     *     name="description",
+     *     in="query",
+     *     type="string",
+     *     description="Description de l'article"
+     * )
+     * @SWG\Parameter(
+     *     name="categorie",
+     *     in="query",
+     *     type="string",
+     *     description="Categorie de l'article"
+     * )
+     * @SWG\Parameter(
+     *     name="caracteristiques",
+     *     in="query",
+     *     type="string",
+     *     description="Caracteristiques de l'article"
+     * )
+     *
+     * @SWG\Parameter(
+     *     name="qty",
+     *     in="query",
+     *     type="integer",
+     *     description="Quantité en stock de l'article"
+     * )
+     *
+     * @SWG\Parameter(
+     *     name="isNew",
+     *     in="query",
+     *     type="boolean",
+     *     description="Nouveauté ou non de l'article"
+     * )
+     *
+     * @SWG\Parameter(
+     *     name="promotion",
+     *     in="query",
+     *     type="integer",
+     *     description="Promotion en pourcentage de l'article"
+     * )
+     *
+     * @SWG\Tag(name="Article")
      */
-    public function apiCreateArticle()
+    public function apiCreateArticle(Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
         $article = new Article();
-        $article->setNom('test');
-        $article->setPoids(0);
-        $article->setPrixUnitaire(0);
-        $article->setDescription('');
-        $article->setCategorie('');
-        $article->setCaracteristiques('');
-        $article->setQteEnStock(0);
-        $article->setIsNew(true);
-        $article->setPromotion(0);
+        $article->setNom($request->get('nom'));
+        $article->setPoids($request->get('poids'));
+        $article->setPrixUnitaire($request->get('prix'));
+        $article->setDescription($request->get('description'));
+        $article->setCategorie($request->get('categorie'));
+        $article->setCaracteristiques($request->get('caracteristiques'));
+        $article->setQteEnStock($request->get('qty'));
+        $article->setIsNew($request->get('isNew'));
+        $article->setPromotion($request->get('promotion'));
 
         $arrayCollection[] = array(
             'id' => $article->getId(),
@@ -222,21 +330,100 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/api/manageArticle/{id}", name="apiManageArticle", methods={"POST"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourne l'article modifié",
+     *
+     * )
+     *
+     * @SWG\Response(
+     *     response=404,
+     *     description="Retourne une erreur 404 article_not_found",
+     *
+     * )
+     *
+     * @SWG\Parameter(
+     *     name="nom",
+     *     in="query",
+     *     type="string",
+     *     description="Nom de l'article"
+     * )
+     * @SWG\Parameter(
+     *     name="poids",
+     *     in="query",
+     *     type="integer",
+     *     description="Poids de l'article"
+     * )
+     * @SWG\Parameter(
+     *     name="prix",
+     *     in="query",
+     *     type="integer",
+     *     description="Prix unitaire de l'article"
+     * )
+     * @SWG\Parameter(
+     *     name="description",
+     *     in="query",
+     *     type="string",
+     *     description="Description de l'article"
+     * )
+     * @SWG\Parameter(
+     *     name="categorie",
+     *     in="query",
+     *     type="string",
+     *     description="Categorie de l'article"
+     * )
+     * @SWG\Parameter(
+     *     name="caracteristiques",
+     *     in="query",
+     *     type="string",
+     *     description="Caracteristiques de l'article"
+     * )
+     *
+     * @SWG\Parameter(
+     *     name="qty",
+     *     in="query",
+     *     type="integer",
+     *     description="Quantité en stock de l'article"
+     * )
+     *
+     * @SWG\Parameter(
+     *     name="isNew",
+     *     in="query",
+     *     type="boolean",
+     *     description="Nouveauté ou non de l'article"
+     * )
+     *
+     * @SWG\Parameter(
+     *     name="promotion",
+     *     in="query",
+     *     type="integer",
+     *     description="Promotion en pourcentage de l'article"
+     * )
+     *
+     * @SWG\Tag(name="Article")
      */
-    public function apiManageArticle($id)
+    public function apiManageArticle(Request $request, $id)
     {
         $entityManager = $this->getDoctrine()->getManager();
+        /** @var Article $article */
         $article = $this->getDoctrine()->getRepository(Article::class)->find($id);
 
-        $article->setNom('modifnom');
-        $article->setCategorie('modif');
-        $article->setDescription('modif');
-        $article->setCaracteristiques('modif');
-        $article->setPrixUnitaire(60);
-        $article->setPoids(9.2);
-        $article->setQteEnStock(10);
-        $article->setIsNew(true);
-        $article->setPromotion(10);
+        if(!$article) {
+            return new JsonResponse(array(
+                'status' => 'article_not_found',
+            ), 404);
+        }
+
+
+        $article->setNom($request->get('nom')=== null ? $article->getNom() : $request->get('nom'));
+        $article->setPoids($request->get('poids') === null ? $article->getPoids() : $request->get('poids'));
+        $article->setPrixUnitaire($request->get('prix') === null ? $article->getPrixUnitaire() : $request->get('prix'));
+        $article->setDescription($request->get('description') === null ? $article->getDescription() : $request->get('description'));
+        $article->setCategorie($request->get('categorie') === null ? $article->getCategorie() : $request->get('categorie'));
+        $article->setCaracteristiques($request->get('caracteristiques') === null ? $article->getCaracteristiques() : $request->get('caracteristiques'));
+        $article->setQteEnStock($request->get('qty') === null ? $article->getQteEnStock() : $request->get('qty') );
+        $article->setIsNew($request->get('isNew') === null ? $article->getIsNew() : $request->get('isNew'));
+        $article->setPromotion($request->get('promotion') === null ? $article->getPromotion() : $request->get('promotion'));
 
         $arrayCollection[] = array(
             'id' => $article->getId(),
@@ -260,11 +447,27 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/api/deleteArticle/{id}", name="apiDeleteArticle", methods={"POST"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourne deletion_success",
+     *
+     * )
+     * @SWG\Response(
+     *     response=404,
+     *     description="Retourne une erreur 404 article_not_found",
+     *
+     * )
+     * @SWG\Tag(name="Article")
      */
     public function apiDeleteArticle($id)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $article = $this->getDoctrine()->getRepository(Article::class)->find($id);
+        if(!$article) {
+            return new JsonResponse(array(
+                'status' => 'article_not_found',
+            ), 404);
+        }
 
         $entityManager->remove($article);
 

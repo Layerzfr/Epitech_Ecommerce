@@ -6,8 +6,14 @@ use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Constraints\Json;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use Swagger\Annotations as SWG;
+use Nelmio\ApiDocBundle\Annotation as Doc;
 
 /**
  * @Route("/user")
@@ -27,18 +33,57 @@ class UserController extends AbstractController
 
     /**
      * @Route("/api/updateInfo", name="updateInfo", methods={"POST"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourne success true",
+     *
+     * )
+     *
+     * @SWG\Response(
+     *     response=404,
+     *     description="Retourne une erreur 404 user_not_found",
+     *
+     * )
+     *
+     * @SWG\Parameter(
+     *     name="email",
+     *     in="query",
+     *     type="string",
+     *     description="Email de l'utilisateur"
+     * )
+     * @SWG\Parameter(
+     *     name="username",
+     *     in="query",
+     *     type="string",
+     *     description="Username de l'utilisateur"
+     * )
+     * @SWG\Parameter(
+     *     name="User",
+     *     in="query",
+     *     type="string",
+     *     required=true,
+     *     description="Object User"
+     * )
+     *
+     * @SWG\Tag(name="User")
      */
-    public function updateInfo()
+    public function updateInfo(Request $request)
     {
         $content = $_POST;
         /** @var User $user */
         $user = $this->getUser();
 
+        if(!$user) {
+            return new JsonResponse(array(
+                'status' => 'user_not_found'
+            ), 404);
+        }
+
         $entityManager = $this->getDoctrine()->getManager();
 
 
-        $user->setEmail($content['email']);
-        $user->setUsername($content['username']);
+        $user->setEmail($request->get('email')=== null ? $user->getEmail() : $request->get('email'));
+        $user->setUsername($request->get('username')=== null ? $user->getUsername() : $request->get('username'));
 
 
         $entityManager->persist($user);
@@ -54,6 +99,15 @@ class UserController extends AbstractController
 
     /**
      * @Route("/api/getAllUsers", name="apiGetAllUsers", methods={"GET"})
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourne la liste de tous les utilisateurs",
+     *
+     * )
+     *
+     *
+     * @SWG\Tag(name="User")
      */
     public function apiGetAllUsers()
     {
@@ -69,14 +123,6 @@ class UserController extends AbstractController
                 'email' => $item->getEmail(),
                 'enabled' => $item->isEnabled(),
                 'roles' => $item->getRoles(),
-                'delivery_country' => $item->getDeliveryCountry(),
-                'delivery_city' => $item->getDeliveryCity(),
-                'delivery_zip' => $item->getDeliveryZip(),
-                'delivery_address' => $item->getDeliveryAddress(),
-                'promotion_percent' => $item->getPromotionPercent(),
-                'birth_date' => $item->getBirthDate(),
-                'creation_date' => $item->getCreationDate(),
-                'image' => $item->getImage()
             );
         }
         return new JsonResponse($arrayCollection);
@@ -84,10 +130,31 @@ class UserController extends AbstractController
 
     /**
      * @Route("/api/getUser/{id}", name="apiGetUser", methods={"GET"})
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourne l'utilisateur trouvé par id",
+     *
+     * )
+     *
+     * @SWG\Response(
+     *     response=404,
+     *     description="Retourne user_not_found",
+     *
+     * )
+     *
+     *
+     * @SWG\Tag(name="User")
      */
     public function apiGetUser($id)
     {
         $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+
+        if(!$user) {
+            return new JsonResponse(array(
+                'status' => 'user_not_found'
+            ), 404);
+        }
 
         $arrayCollection[] = array(
             'id' => $user->getId(),
@@ -95,14 +162,6 @@ class UserController extends AbstractController
             'email' => $user->getEmail(),
             'enabled' => $user->isEnabled(),
             'roles' => $user->getRoles(),
-            'delivery_country' => $user->getDeliveryCountry(),
-            'delivery_city' => $user->getDeliveryCity(),
-            'delivery_zip' => $user->getDeliveryZip(),
-            'delivery_address' => $user->getDeliveryAddress(),
-            'promotion_percent' => $user->getPromotionPercent(),
-            'birth_date' => $user->getBirthDate(),
-            'creation_date' => $user->getCreationDate(),
-            'image' => $user->getImage()
         );
 
         return new JsonResponse($arrayCollection);
@@ -110,25 +169,63 @@ class UserController extends AbstractController
 
     /**
      * @Route("/api/createUser", name="apiCreateUser", methods={"POST"})
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourne l'utilisateur nouvellement créé",
+     *
+     * )
+     *
+     * @SWG\Response(
+     *     response=500,
+     *     description="Retourne username_taken ou email_taken",
+     *
+     * )
+     *
+     * @SWG\Parameter(
+     *     name="email",
+     *     in="query",
+     *     type="string",
+     *     description="Email de l'utilisateur",
+     *     required=true
+     * )
+     * @SWG\Parameter(
+     *     name="username",
+     *     in="query",
+     *     type="string",
+     *     description="Username de l'utilisateur",
+     *     required=true
+     * )
+     *
+     * @SWG\Parameter(
+     *     name="password",
+     *     in="query",
+     *     type="string",
+     *     description="Mot de passe de l'utilisateur",
+     *     required=true
+     * )
+     *
+     * @SWG\Tag(name="User")
+     *
      */
-    public function apiCreateUser()
+    public function apiCreateUser(UserPasswordEncoderInterface $encoder, Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
+
+
+
+
         $user = new User();
-        $user->setUsername('crdseate');
-        $user->setEmail('creatdfde@mail.com');
+
+        $password = $encoder->encodePassword($user, $request->get('password'));
+        $user->setPassword($password);
+
+
+        $user->setUsername($request->get('username'));
+        $user->setEmail($request->get('email'));
         $user->setEnabled(true);
-        $user->setPassword('lol');
         $user->addRole('ROLE_USER');
-        $user->setDeliveryCountry('xreate');
-        $user->setDeliveryCity('xreate');
-        $user->setDeliveryZip('xreate');
-        $user->setDeliveryAddress('xreate');
-        $user->setPromotionPercent(10);
-        $user->setBirthDate(new \DateTime());
-        $user->setCreationDate(new \DateTime());
-        $user->setImage('xreate');
 
         $arrayCollection[] = array(
             'id' => $user->getId(),
@@ -136,14 +233,6 @@ class UserController extends AbstractController
             'email' => $user->getEmail(),
             'enabled' => $user->isEnabled(),
             'roles' => $user->getRoles(),
-            'delivery_country' => $user->getDeliveryCountry(),
-            'delivery_city' => $user->getDeliveryCity(),
-            'delivery_zip' => $user->getDeliveryZip(),
-            'delivery_address' => $user->getDeliveryAddress(),
-            'promotion_percent' => $user->getPromotionPercent(),
-            'birth_date' => $user->getBirthDate(),
-            'creation_date' => $user->getCreationDate(),
-            'image' => $user->getImage()
         );
 
         $entityManager->persist($user);
@@ -167,14 +256,6 @@ class UserController extends AbstractController
         $user->setEnabled(true);
         $user->setPassword('caca');
         $user->addRole('ROLE_USER');
-        $user->setDeliveryCountry('modif');
-        $user->setDeliveryCity('modif');
-        $user->setDeliveryZip('modif');
-        $user->setDeliveryAddress('modif');
-        $user->setPromotionPercent(0);
-        $user->setBirthDate(new \DateTime());
-        $user->setCreationDate(new \DateTime());
-        $user->setImage('modif');
 
         $arrayCollection[] = array(
             'id' => $user->getId(),
@@ -182,14 +263,6 @@ class UserController extends AbstractController
             'email' => $user->getEmail(),
             'enabled' => $user->isEnabled(),
             'roles' => $user->getRoles(),
-            'delivery_country' => $user->getDeliveryCountry(),
-            'delivery_city' => $user->getDeliveryCity(),
-            'delivery_zip' => $user->getDeliveryZip(),
-            'delivery_address' => $user->getDeliveryAddress(),
-            'promotion_percent' => $user->getPromotionPercent(),
-            'birth_date' => $user->getBirthDate(),
-            'creation_date' => $user->getCreationDate(),
-            'image' => $user->getImage()
         );
 
         $entityManager->persist($user);
@@ -201,11 +274,32 @@ class UserController extends AbstractController
 
     /**
      * @Route("/api/deleteUser/{id}", name="apiDeleteUser", methods={"POST"})
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourne deletion succes",
+     *
+     * )
+     *
+     * @SWG\Response(
+     *     response=404,
+     *     description="Retourne user_not_found",
+     *
+     * )
+     *
+     * @SWG\Tag(name="User")
      */
     public function apiDeleteUser($id)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+
+        if(!$user)
+        {
+            return new JsonResponse(array(
+                'status' => 'user_not_found'
+            ));
+        }
 
         $entityManager->remove($user);
 
