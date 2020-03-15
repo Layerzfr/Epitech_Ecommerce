@@ -22,14 +22,13 @@
                     {% set total = total + item.qty * item.unitPrice %}
 
                     <div class="container">
-                        <label for="delete">
+                        <label for="delete" onclick="removeFromCart({{ item.id }})">
                             <div class="wrapper">
                                 <div class="lid"></div>
                                 <div class="can"></div>
                                 <span>delete</span>
                             </div>
                         </label>
-                        <input onclick="removeFromCart({{ item.id }})" type="checkbox" name="" id="delete">
                     </div>
                 </div>
                 <p class="trait-cart"></p>
