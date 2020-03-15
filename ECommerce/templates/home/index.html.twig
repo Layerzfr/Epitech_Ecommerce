@@ -29,20 +29,20 @@
                 <div class="horizontal-big"></div>
                 <div class="trait-horizontal"></div>
             </div>
-            <div class="promotion-produit">
+            <div class="promotion-produit" id="promotion">
 
-                    {% for article in articles %}
-                <div class="produit-home-promotion">
-                            {% for image in article.images %}
-                                {% if loop.first %}
-                                    <img src="{{ image.lien }}" class="img-100"
-                                         onclick="window.location.href='article/{{article.id}}'"/>
-                                {% endif %}
-                            {% endfor %}
-                            <p onclick="window.location.href='article/{{article.id}}'">{{ article.nom }}</p>
-                            <a> {{ article.prixUnitaire }} &#8364</a>
-                </div>
-                    {% endfor %}
+{#                    {% for article in articles %}#}
+{#                <div class="produit-home-promotion">#}
+{#                            {% for image in article.images %}#}
+{#                                {% if loop.first %}#}
+{#                                    <img src="{{ image.lien }}" class="img-100"#}
+{#                                         onclick="window.location.href='article/{{article.id}}'"/>#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+{#                            <p onclick="window.location.href='article/{{article.id}}'">{{ article.nom }}</p>#}
+{#                            <a> {{ article.prixUnitaire }} &#8364</a>#}
+{#                </div>#}
+{#                    {% endfor %}#}
 
             </div>
             <div class="voir-plus">
@@ -56,19 +56,19 @@
                 <div class="horizontal-big"></div>
                 <div class="trait-horizontal"></div>
             </div>
-            <div class="promotion-produit">
-                    {% for article in articles %}
-                    <div class="produit-home-promotion">
-                            {% for image in article.images %}
-                                {% if loop.first %}
-                                    <img src="{{ image.lien }}" class="img-100"
-                                         onclick="window.location.href='article/{{article.id}}'"/>
-                                {% endif %}
-                            {% endfor %}
-                            <p onclick="window.location.href='article/{{ article.id }}'">{{ article.nom }}</p>
-                            <a> {{ article.prixUnitaire }} &#8364</a>
-                    </div>
-                    {% endfor %}
+            <div class="promotion-produit" id="new">
+{#                    {% for article in articles %}#}
+{#                    <div class="produit-home-promotion">#}
+{#                            {% for image in article.images %}#}
+{#                                {% if loop.first %}#}
+{#                                    <img src="{{ image.lien }}" class="img-100"#}
+{#                                         onclick="window.location.href='article/{{article.id}}'"/>#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+{#                            <p onclick="window.location.href='article/{{ article.id }}'">{{ article.nom }}</p>#}
+{#                            <a> {{ article.prixUnitaire }} &#8364</a>#}
+{#                    </div>#}
+{#                    {% endfor %}#}
             </div>
             <div class="voir-plus">
                 <img src="{{ asset('icon/cross_01.png') }}" onclick="window.location.href='article/'">
@@ -109,5 +109,48 @@
             x[slideIndex - 1].style.display = "block";
             dots[slideIndex - 1].className += " w3-white";
         }
+
+        function getPromo() {
+            $.ajax({
+                type: "GET",
+                url: '/article/api/getPromo',
+                success: function (data) {
+                    console.log(data);
+                    data.forEach(element => {
+                        $('#promotion').append('<div class="produit-home-promotion">\n' +
+
+                            '                                    <img src="'+element.image+'" class="img-100"\n' +
+                            '                                         onclick="window.location.href=\'article/'+element.id+'\'"/>\n' +
+                            '                            <p onclick="window.location.href=\'article/'+element.id+'\'">'+element.nom+'</p>\n' +
+                            '                            <a> '+element.nom+' &#8364</a>\n' +
+                            '                    </div>')
+                    });
+
+                }
+            });
+        }
+
+        function getNew() {
+            $.ajax({
+                type: "GET",
+                url: '/article/api/getNew',
+                success: function (data) {
+                    console.log(data);
+                    data.forEach(element => {
+                        $('#new').append('<div class="produit-home-promotion">\n' +
+
+                            '                                    <img src="'+element.image+'" class="img-100"\n' +
+                            '                                         onclick="window.location.href=\'article/'+element.id+'\'"/>\n' +
+                            '                            <p onclick="window.location.href=\'article/'+element.id+'\'">'+element.nom+'</p>\n' +
+                            '                            <a> '+element.nom+' &#8364</a>\n' +
+                            '                    </div>')
+                    });
+
+                }
+            });
+        }
+
+        getPromo();
+        getNew()
     </script>
 {% endblock %}

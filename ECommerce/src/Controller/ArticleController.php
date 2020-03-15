@@ -67,6 +67,81 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * @Route("/api/getPromo", name="apiGetPromo", methods={"GET"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourne une liste de 5 articles en promo",
+     *
+     * )
+     * @SWG\Tag(name="Article")
+     */
+    public function apiGetPromo()
+    {
+
+        $articles = $this->getDoctrine()->getRepository(Article::class)->findAllPromo();
+
+        $arrayCollection = [];
+
+        /** @var Article $item */
+        foreach($articles as $item) {
+
+
+            $arrayCollection[] = array(
+                'id' => $item->getId(),
+                'nom' => $item->getNom(),
+                'categorie' => $item->getCategorie(),
+                'description' => $item->getDescription(),
+                'caracteristiques' => $item->getCaracteristiques(),
+                'prix_unitaire' => $item->getPrixUnitaire(),
+                'poids' => $item->getPoids(),
+                'qte_en_stock' => $item->getQteEnStock(),
+                'is_new' => $item->getIsNew(),
+                'promotion' => $item->getPromotion(),
+                'image' => $item->getImages()->first()->getLien(),
+            );
+        }
+        return new JsonResponse($arrayCollection);
+    }
+
+
+    /**
+     * @Route("/api/getNew", name="apiGetNew", methods={"GET"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourne une liste de 5 nouveaux articles",
+     *
+     * )
+     * @SWG\Tag(name="Article")
+     */
+    public function apiGetNew()
+    {
+
+        $articles = $this->getDoctrine()->getRepository(Article::class)->findAllNew();
+
+        $arrayCollection = [];
+
+        /** @var Article $item */
+        foreach($articles as $item) {
+
+
+            $arrayCollection[] = array(
+                'id' => $item->getId(),
+                'nom' => $item->getNom(),
+                'categorie' => $item->getCategorie(),
+                'description' => $item->getDescription(),
+                'caracteristiques' => $item->getCaracteristiques(),
+                'prix_unitaire' => $item->getPrixUnitaire(),
+                'poids' => $item->getPoids(),
+                'qte_en_stock' => $item->getQteEnStock(),
+                'is_new' => $item->getIsNew(),
+                'promotion' => $item->getPromotion(),
+                'image' => $item->getImages()->first()->getLien(),
+            );
+        }
+        return new JsonResponse($arrayCollection);
+    }
+
+    /**
      * @Route("/api/getAllArticles", name="apiGetAllArticles", methods={"GET"})
      * @SWG\Response(
      *     response=200,

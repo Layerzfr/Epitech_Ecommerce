@@ -35,6 +35,17 @@ class ArticleRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('a')
             ->andWhere('a.promotion > 0')
             ->getQuery()
+            ->setMaxResults(5)
+            ->getResult()
+            ;
+    }
+
+    public function findAllNew()
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.isNew = 1')
+            ->getQuery()
+            ->setMaxResults(5)
             ->getResult()
             ;
     }
