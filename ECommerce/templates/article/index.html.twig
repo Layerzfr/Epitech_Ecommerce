@@ -342,9 +342,11 @@
             });
         }
 
+        var addedToCart = 0;
+
         function addToCart(articleId) {
             console.log(articleId);
-            var cartNumber = {{ cart | length }};
+            var cartNumber = {{ cart | length }} + addedToCart;
             let imageArticle = '';
             $.ajax({
                 type: "GET",
@@ -368,6 +370,7 @@
                             $('.Panier-number').replaceWith('<div class="Number"></div>');
                             $('.CartLogo0').addClass('CartLogo1');
                             cartNumber++;
+                            addedToCart++;
                             $('.Number').html(''+cartNumber+'');
                         }
                     });
