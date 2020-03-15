@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Commande;
+use App\Entity\User;
 use App\Form\CommandeType;
 use App\Repository\CommandeRepository;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
@@ -97,6 +98,68 @@ class CommandeController extends AbstractController
                 'nom_vendeur' => $item->getNomVendeur(),
                 'code_command' => $item->getCodeCommand()
             );
+        }
+        return new JsonResponse($arrayCollection);
+    }
+
+    /**
+     * @Route("/api/apiGetCommandeByUserId/{id}", name="apiGetCommandeByUserId", methods={"GET"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourne la liste des commandes de l'utilisateur",
+     *
+     * )
+     *
+     * @SWG\Response(
+     *     response=404,
+     *     description="Retourne user_not_found",
+     *
+     * )
+     *
+     * @SWG\Tag(name="Commande")
+     */
+    public function apiGetCommandeByUserId($id)
+    {
+
+        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+
+        if(!$user)
+        {
+            return new JsonResponse([
+                'status' => 'user_not_found'
+            ], 404);
+        }
+
+        $commandes = $this->getDoctrine()->getRepository(Commande::class)->findBy([
+            'user' => $user
+        ]);
+
+        $arrayCollection = [];
+
+        $currentCommandId = 0;
+
+        /** @var Commande $item */
+        foreach($commandes as $item) {
+            if($currentCommandId !== $item->getCodeCommand()) {
+                $arrayCollection[] = array(
+                    'id' => $item->getId(),
+                    'etat' => $item->getEtat(),
+                    'date_commande' => $item->getDateCommande()->format('d-m-Y'),
+                    'mode_livraison' => $item->getModeLivraison(),
+                    'qte' => $item->getQte(),
+                    'prix_article_commande' => $item->getPrixArticleCommande(),
+                    'frais_port' => $item->getFraisPort(),
+                    'delivery_country' => $item->getDeliveryCountry(),
+                    'delivery_city' => $item->getDeliveryCity(),
+                    'delivery_zip' => $item->getDeliveryZip(),
+                    'delivery_address' => $item->getDeliveryAddress(),
+                    'mail_vendeur' => $item->getMailVendeur(),
+                    'nom_vendeur' => $item->getNomVendeur(),
+                    'code_command' => $item->getCodeCommand()
+                );
+
+                $currentCommandId = $item->getCodeCommand();
+            }
         }
         return new JsonResponse($arrayCollection);
     }
