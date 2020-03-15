@@ -292,6 +292,7 @@ class ArticleController extends AbstractController
             'caracteristiques' => $article->getCaracteristiques(),
             'prix_unitaire' => $article->getPrixUnitaire(),
             'images' => $imagesCollection,
+            'image' => $article->getImages()->first()->getLien(),
             'poids' => $article->getPoids(),
             'qte_en_stock' => $article->getQteEnStock(),
             'is_new' => $article->getIsNew(),
@@ -582,7 +583,7 @@ class ArticleController extends AbstractController
         $session = $this->get('session');
         $cartElements = $session->get('cartElements');
         return $this->render('article/show.html.twig', [
-            'article' => $article,
+            'article' => $article->getId(),
             'cart' => $cartElements
         ]);
     }
